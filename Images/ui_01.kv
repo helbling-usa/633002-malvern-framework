@@ -1,0 +1,1106 @@
+
+FloatLayout:
+    canvas:
+        Color:
+            rgba: [0.937, 0.937, 0.937, 0.8]
+        Rectangle:
+            pos:self.pos
+            size: self.size
+
+
+    ##-------------------- COLUMN 1 ----------------------------------------------
+    # PUMP 1 : 
+    MDLabel:
+        text: "PUMP 1:" 
+        halign: "left"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.col1_left , "center_y": app.row1}
+    MDLabel:
+        text : "Current Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .1
+        pos_hint:{"center_x":app.col1_left + app.dx1, "center_y":  app.row2}
+
+    MDTextField:
+        id: pump1_cur
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col1_left - 0.012 , "center_y": app.row2}
+        size_hint_x: .055
+        size_hint_y: .038
+    MDLabel:
+        text : "New Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col1_left+ app.dx1, "center_y":  app.row3}
+
+    MDTextField:
+        id: pump1_new
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col1_left+ app.dx2 , "center_y": app.row3}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+
+    MDIconButton:
+        id: pump1_set
+        icon:"./images/go3.png"
+        size_hint: .03, .03
+        pos_hint : {"center_x":app.col1_left+ app.dx4 -.015, "center_y": app.row3}
+    # VALVE 1 : 
+    MDLabel:
+        text: "VALVE 1:" 
+        halign: "left"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.col1_left , "center_y": app.row4}
+    MDLabel:
+        text : "Current Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col1_left + app.dx1, "center_y":  app.row5}
+
+    MDTextField:
+        id: valve_1_cur
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col1_left + app.dx2 , "center_y": app.row5}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDLabel:
+        text : "New Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col1_left + app.dx1, "center_y":  app.row6}
+
+    MDTextField:
+        id: valve_1_new
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col1_left + app.dx2 , "center_y": app.row6}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    
+    MDIconButton:
+        id: valve1_set
+        icon:"./images/go3.png"
+        size_hint: .03, .03
+        pos_hint : {"center_x":app.col1_left+ app.dx4 -.015, "center_y": app.row6}
+
+    # VALVE 3 : 
+    MDLabel:
+        text: "VALVE 3:" 
+        halign: "left"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.col1_left , "center_y": app.row7}
+    MDLabel:
+        text : "Current Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col1_left + app.dx1, "center_y":  app.row8}
+
+    MDTextField:
+        id: valve_3_cur
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col1_left + app.dx2 , "center_y": app.row8}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDLabel:
+        text : "New Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col1_left + app.dx1, "center_y":  app.row9}
+
+    MDTextField:
+        id: valve_3_new
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col1_left + app.dx2 , "center_y": app.row9}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+
+    MDIconButton:
+        id: valve3_set
+        icon:"./images/go3.png"
+        size_hint: .03, .03
+        pos_hint : {"center_x":app.col1_left+ app.dx4 -.015, "center_y": app.row9}
+
+    # VALVE 5 : 
+    MDLabel:
+        text: "VALVE 5:" 
+        halign: "left"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.col1_left , "center_y": app.row10}
+    MDLabel:
+        text : "Current Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col1_left + app.dx1, "center_y":  app.row11}
+
+    MDTextField:
+        id: valve_5_cur
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col1_left + app.dx2 , "center_y": app.row11}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDLabel:
+        text : "New Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col1_left + app.dx1, "center_y":  app.row12}
+
+    MDTextField:
+        id: valve_5_new
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col1_left + app.dx2 , "center_y": app.row12}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+
+    MDIconButton:
+        id: valve5_set
+        icon:"./images/go3.png"
+        size_hint: .03, .03
+        pos_hint : {"center_x":app.col1_left+ app.dx4 -.015, "center_y": app.row12}
+
+    # VALVE 9 : 
+    MDLabel:
+        text: "VALVE 9:" 
+        halign: "left"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.col1_left , "center_y": app.row13}
+    MDLabel:
+        text : "Current Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col1_left + app.dx1, "center_y":  app.row14}
+
+    MDTextField:
+        id: valve_9_cur
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col1_left + app.dx2 , "center_y": app.row14}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDLabel:
+        text : "New Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col1_left + app.dx1, "center_y":  app.row15}
+
+    MDTextField:
+        id: valve_9_new
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col1_left + app.dx2 , "center_y": app.row15}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+
+    MDIconButton:
+        id: valve9_set
+        icon:"./images/go3.png"
+        size_hint: .03, .03
+        pos_hint : {"center_x":app.col1_left+ app.dx4 -.015, "center_y": app.row15}
+
+
+
+
+
+
+
+
+
+##-------------------- COLUMN 2 ----------------------------------------------
+    # PUMP 2 : 
+    MDLabel:
+        text: "PUMP 2:" 
+        halign: "left"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.col2_left , "center_y": app.row1}
+    MDLabel:
+        text : "Current Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col2_left+ app.dx1, "center_y":  app.row2}
+
+    MDTextField:
+        id: pump2_cur
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col2_left+ app.dx2 , "center_y": app.row2}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDLabel:
+        text : "New Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col2_left+ app.dx1, "center_y":  app.row3}
+
+    MDTextField:
+        id: pump2_new
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col2_left+ app.dx2 , "center_y": app.row3}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+
+    MDIconButton:
+        id: pump2_set
+        icon:"./images/go3.png"
+        size_hint: .03, .03
+        pos_hint : {"center_x":app.col2_left+ app.dx4 -.015, "center_y": app.row3}
+
+    # VALVE 2 : 
+    MDLabel:
+        text: "VALVE 2:" 
+        halign: "left"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.col2_left , "center_y": app.row4}
+    MDLabel:
+        text : "Current Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col2_left + app.dx1, "center_y":  app.row5}
+
+    MDTextField:
+        id: valve_2_cur
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col2_left + app.dx2 , "center_y": app.row5}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDLabel:
+        text : "New Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col2_left + app.dx1, "center_y":  app.row6}
+
+    MDTextField:
+        id: valve_2_new
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col2_left + app.dx2 , "center_y": app.row6}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    
+    MDIconButton:
+        id: valve2_set
+        icon:"./images/go3.png"
+        size_hint: .03, .03
+        pos_hint : {"center_x":app.col2_left+ app.dx4 -.015, "center_y": app.row6}
+    
+    # VALVE 4: 
+    MDLabel:
+        text: "VALVE 4:" 
+        halign: "left"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.col2_left , "center_y": app.row7}
+    MDLabel:
+        text : "Current Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col2_left + app.dx1, "center_y":  app.row8}
+
+    MDTextField:
+        id: valve_4_cur
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col2_left + app.dx2 , "center_y": app.row8}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDLabel:
+        text : "New Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col2_left + app.dx1, "center_y":  app.row9}
+
+    MDTextField:
+        id: valve_4_new
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col2_left + app.dx2 , "center_y": app.row9}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+
+    MDIconButton:
+        id: valve4_set
+        icon:"./images/go3.png"
+        size_hint: .03, .03
+        pos_hint : {"center_x":app.col2_left+ app.dx4 -.015, "center_y": app.row9}
+
+    # VALVE 6 : 
+    MDLabel:
+        text: "VALVE 6:" 
+        halign: "left"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.col2_left , "center_y": app.row10}
+    MDLabel:
+        text : "Current Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col2_left + app.dx1, "center_y":  app.row11}
+
+    MDTextField:
+        id: valve_6_cur
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col2_left + app.dx2 , "center_y": app.row11}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDLabel:
+        text : "New Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col2_left + app.dx1, "center_y":  app.row12}
+
+    MDTextField:
+        id: valve_6_new
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col2_left + app.dx2 , "center_y": app.row12}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDIconButton:
+        id: valve6_set
+        icon:"./images/go3.png"
+        size_hint: .03, .03
+        pos_hint : {"center_x":app.col2_left+ app.dx4 -.015, "center_y": app.row12}
+
+    # VALVE 7 : 
+    MDLabel:
+        text: "VALVE 7:" 
+        halign: "left"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.col2_left , "center_y": app.row13}
+    MDLabel:
+        text : "Current Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col2_left + app.dx1, "center_y":  app.row14}
+
+    MDTextField:
+        id: valve_7_cur
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col2_left + app.dx2 , "center_y": app.row14}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDLabel:
+        text : "New Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col2_left + app.dx1, "center_y":  app.row15}
+
+    MDTextField:
+        id: valve_7_new
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col2_left + app.dx2 , "center_y": app.row15}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDIconButton:
+        id: valve7_set
+        icon:"./images/go3.png"
+        size_hint: .03, .03
+        pos_hint : {"center_x":app.col2_left+ app.dx4 -.015, "center_y": app.row15}
+    # VALVE 8 : 
+    MDLabel:
+        text: "VALVE 8:" 
+        halign: "left"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.col2_left , "center_y": app.row16}
+    MDLabel:
+        text : "Current Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col2_left + app.dx1, "center_y":  app.row17}
+
+    MDTextField:
+        id: valve_8_cur
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col2_left + app.dx2 , "center_y": app.row17}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDLabel:
+        text : "New Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col2_left + app.dx1, "center_y":  app.row18}
+
+    MDTextField:
+        id: valve_8_new
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col2_left + app.dx2 , "center_y": app.row18}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDIconButton:
+        id: valve8_set
+        icon:"./images/go3.png"
+        size_hint: .03, .03
+        pos_hint : {"center_x":app.col2_left+ app.dx4 -.015, "center_y": app.row18}
+
+
+
+
+
+
+
+##-------------------- COLUMN 3 ----------------------------------------------
+    # Degas Temperature : 
+    MDLabel:
+        text: "DEGAS TEMP.:" 
+        halign: "left"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.col3_left , "center_y": app.row1}
+    MDLabel:
+        text : "Current Temp"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col3_left+ app.dx1, "center_y":  app.row2}
+
+    MDTextField:
+        id: temp_cur
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col3_left+ app.dx3 -.028 , "center_y": app.row2}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDLabel:
+        text : "New Temp"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col3_left+ app.dx1, "center_y":  app.row3}
+
+    MDTextField:
+        id: temp2_new
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col3_left+ app.dx3 -.028, "center_y": app.row3}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDIconButton:
+        id: temp_set
+        icon:"./images/go3.png"
+        # size_hint: .03, .053
+        pos_hint : {"center_x":app.col3_left+ app.dx4 -.008, "center_y": app.row3}
+        
+
+    MDTextField:
+        hint_text: "oooo"
+        font_size:12        
+        # helper_text_mode: "on_focus"
+        # size_hint: .06, .05
+        # max_height: 20
+        # size_hint_x: app.edit_box_size
+        # size_hint_y: .053
+        
+        # mode : "fill"
+        # fill_color: 0, 0, 0, .4
+        pos_hint : {"center_x":app.col3_left+ app.dx4 -.008, "center_y": app.row6}
+
+
+
+
+##-------------------- COLUMN 4 ----------------------------------------------
+    # Motor 1 : 
+    MDLabel:
+        text: "MOTOR 1:" 
+        halign: "left"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.col4_left , "center_y": app.row1}
+    MDLabel:
+        text : "Current Spd"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col4_left+ app.dx1, "center_y":  app.row2}
+
+    MDTextField:
+        id: motor1_cur
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col4_left+ app.dx2 , "center_y": app.row2}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDLabel:
+        text : "New Spd"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col4_left+ app.dx1, "center_y":  app.row3}
+
+    MDTextField:
+        id: motor1_new
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col4_left+ app.dx2 , "center_y": app.row3}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+
+    MDIconButton:
+        id: motor1_set
+        icon:"./images/go3.png"
+        size_hint: .03, .03
+        pos_hint : {"center_x":app.col4_left+ app.dx4 -.015, "center_y": app.row3}
+        on_press: app.motor1_set(*args)
+
+    # Gantry Horizontal : 
+    MDLabel:
+        text: "Gantry Horizontal:" 
+        halign: "left"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.col4_left , "center_y": app.row4}
+    MDLabel:
+        text : "Current Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col4_left + app.dx1, "center_y":  app.row5}
+
+    MDTextField:
+        id: gantry_h_cur
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col4_left + app.dx2 , "center_y": app.row5}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDLabel:
+        text : "New Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col4_left + app.dx1, "center_y":  app.row6}
+
+    MDTextField:
+        id: gantry_h_new
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col4_left + app.dx2 , "center_y": app.row6}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDIconButton:
+        id: gantry_h_motor_set
+        icon:"./images/go3.png"
+        size_hint: .03, .03
+        pos_hint : {"center_x":app.col4_left+ app.dx4 -.015, "center_y": app.row6}
+    
+    # Gantry Vertical: 
+    MDLabel:
+        text: "GANTRY VERTICAL:" 
+        halign: "left"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.col4_left , "center_y": app.row7}
+    MDLabel:
+        text : "Current Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col4_left + app.dx1, "center_y":  app.row8}
+
+    MDTextField:
+        id: gantry_v_cur
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col4_left + app.dx2 , "center_y": app.row8}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+    MDLabel:
+        text : "New Pos"
+        halign: "left"
+        font_size:14
+        size_hint: .1, .15
+        pos_hint:{"center_x":app.col4_left + app.dx1, "center_y":  app.row9}
+
+    MDTextField:
+        id: gantry_v_new
+        hint_text : "???"
+        font_size:12
+        mode: "round"
+        halign: "left"
+        pos_hint : {"center_x":app.col4_left + app.dx2 , "center_y": app.row9}
+        size_hint_x: app.edit_box_size
+        size_hint_y: .038
+
+    MDIconButton:
+        id: gantry_v__set
+        icon:"./images/go3.png"
+        size_hint: .03, .03
+        pos_hint : {"center_x":app.col4_left+ app.dx4 -.015, "center_y": app.row9}
+
+
+
+
+
+
+##-------------------- COLUMN 5 ----------------------------------------------
+    # BUBBLE SENSORS: 
+    MDLabel:
+        text: "BUBBLE SENSORS" 
+        halign: "left"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.col5_left+0.02 , "center_y": app.row1}
+    # BS 1 : 
+    MDLabel:
+        text : "BS 1"
+        halign: "left"
+        font_size:14
+        size_hint: .05, .15
+        pos_hint:{"center_x":app.col5_left+ .005, "center_y":  app.bs_row1}
+    Image:
+        id: bs1_off
+        source: "Images/green-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row1 }
+        opacity: 1
+    Image:
+        id: bs1_on
+        source: "Images/green-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row1 }
+        opacity: 0
+
+    # BS 2 : 
+    MDLabel:
+        text : "BS 2"
+        halign: "left"
+        font_size:14
+        size_hint: .05, .15
+        pos_hint:{"center_x":app.col5_left+ .005, "center_y":  app.bs_row2}
+    Image:
+        id: bs2_off
+        source: "Images/green-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row2 }
+        opacity: 1
+    Image:
+        id: bs2_on
+        source: "Images/green-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row2 }
+        opacity: 0
+
+    # BS 3 : 
+    MDLabel:
+        text : "BS 3"
+        halign: "left"
+        font_size:14
+        size_hint: .05, .15
+        pos_hint:{"center_x":app.col5_left+ .005, "center_y":  app.bs_row3}
+    Image:
+        id: bs3_off
+        source: "Images/green-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row3 }
+        opacity: 1
+    Image:
+        id: bs3_on
+        source: "Images/green-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row3 }
+        opacity: 0
+
+    # BS 4 : 
+    MDLabel:
+        text : "BS 4"
+        halign: "left"
+        font_size:14
+        size_hint: .05, .15
+        pos_hint:{"center_x":app.col5_left+ .005, "center_y":  app.bs_row4}
+    Image:
+        id: bs4_off
+        source: "Images/green-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row4 }
+        opacity: 1
+    Image:
+        id: bs4_on
+        source: "Images/green-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row4 }
+        opacity: 0
+
+    # BS 5 : 
+    MDLabel:
+        text : "BS 5"
+        halign: "left"
+        font_size:14
+        size_hint: .05, .15
+        pos_hint:{"center_x":app.col5_left+ .005, "center_y":  app.bs_row5}
+    Image:
+        id: bs3_off
+        source: "Images/green-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row5 }
+        opacity: 1
+    Image:
+        id: bs3_on
+        source: "Images/green-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row5 }
+        opacity: 0
+
+    # BS 6: 
+    MDLabel:
+        text : "BS 6"
+        halign: "left"
+        font_size:14
+        size_hint: .05, .15
+        pos_hint:{"center_x":app.col5_left+ .005, "center_y":  app.bs_row6}
+    Image:
+        id: bs3_off
+        source: "Images/green-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row6 }
+        opacity: 1
+    Image:
+        id: bs3_on
+        source: "Images/green-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row6 }
+        opacity: 0
+
+    # BS 7 : 
+    MDLabel:
+        text : "BS 7"
+        halign: "left"
+        font_size:14
+        size_hint: .05, .15
+        pos_hint:{"center_x":app.col5_left+ .005, "center_y":  app.bs_row7}
+    Image:
+        id: bs3_off
+        source: "Images/green-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row7 }
+        opacity: 1
+    Image:
+        id: bs3_on
+        source: "Images/green-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row7 }
+        opacity: 0
+
+    # BS 8: 
+    MDLabel:
+        text : "BS 8"
+        halign: "left"
+        font_size:14
+        size_hint: .05, .15
+        pos_hint:{"center_x":app.col5_left+ .005, "center_y":  app.bs_row8}
+    Image:
+        id: bs3_off
+        source: "Images/green-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row8 }
+        opacity: 1
+    Image:
+        id: bs3_on
+        source: "Images/green-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row8 }
+        opacity: 0
+
+    # BS 9 : 
+    MDLabel:
+        text : "BS 9"
+        halign: "left"
+        font_size:14
+        size_hint: .05, .15
+        pos_hint:{"center_x":app.col5_left+ .005, "center_y":  app.bs_row9}
+    Image:
+        id: bs3_off
+        source: "Images/green-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row9 }
+        opacity: 1
+    Image:
+        id: bs3_on
+        source: "Images/green-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row9 }
+        opacity: 0
+
+    # BS 10 : 
+    MDLabel:
+        text : "BS10"
+        halign: "left"
+        font_size:14
+        size_hint: .05, .15
+        pos_hint:{"center_x":app.col5_left+ .005, "center_y":  app.bs_row10}
+    Image:
+        id: bs3_off
+        source: "Images/green-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row10 }
+        opacity: 1
+    Image:
+        id: bs3_on
+        source: "Images/green-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row10 }
+        opacity: 0
+
+        # BS 11 : 
+    MDLabel:
+        text : "BS11"
+        halign: "left"
+        font_size:14
+        size_hint: .05, .15
+        pos_hint:{"center_x":app.col5_left+ .005, "center_y":  app.bs_row11}
+    Image:
+        id: bs3_off
+        source: "Images/green-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row11 }
+        opacity: 1
+    Image:
+        id: bs3_on
+        source: "Images/green-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row11 }
+        opacity: 0
+
+    # BS 12 : 
+    MDLabel:
+        text : "BS12"
+        halign: "left"
+        font_size:14
+        size_hint: .05, .15
+        pos_hint:{"center_x":app.col5_left+ .005, "center_y":  app.bs_row12}
+    Image:
+        id: bs3_off
+        source: "Images/green-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row12 }
+        opacity: 1
+    Image:
+        id: bs3_on
+        source: "Images/green-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row12 }
+        opacity: 0
+
+    # BS 13 : 
+    MDLabel:
+        text : "BS13"
+        halign: "left"
+        font_size:14
+        size_hint: .05, .15
+        pos_hint:{"center_x":app.col5_left+ .005, "center_y":  app.bs_row13}
+    Image:
+        id: bs3_off
+        source: "Images/green-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row13 }
+        opacity: 1
+    Image:
+        id: bs3_on
+        source: "Images/green-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row13 }
+        opacity: 0
+
+    # BS 14 : 
+    MDLabel:
+        text : "BS14"
+        halign: "left"
+        font_size:14
+        size_hint: .05, .15
+        pos_hint:{"center_x":app.col5_left+ .005, "center_y":  app.bs_row14}
+    Image:
+        id: bs3_off
+        source: "Images/green-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row14 }
+        opacity: 1
+    Image:
+        id: bs3_on
+        source: "Images/green-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.col5_left + .02, "center_y": app.bs_row14 }
+        opacity: 0
+
+
+
+    MDLabel:
+
+        canvas:
+            Color:
+                rgba: [0.2, .21, .21, 1.0]        
+            # VERTICAL LINES
+            Line:                
+                points: [220, 800, 220, 0]
+                width: dp(1)
+            Line:                
+                points: [440, 800, 440, 0]
+                width: dp(1)
+            Line:                
+                points: [670, 800, 670, 0]
+                width: dp(1)
+            Line:                
+                points: [900, 800, 900, 0]
+                width: dp(1)
+
+            # HORIZONTAL LINES
+            Line:                
+                points: [0, 800, 900, 800]
+                width: dp(1)
+            Line:                
+                points: [0, 660, 900, 660]
+                width: dp(1)
+            Line:                
+                points: [0, 530, 900, 530]
+                width: dp(1)
+            Line:                
+                points: [0, 390, 900, 390]
+                width: dp(1)
+            Line:                
+                points: [0, 260, 900, 260]
+                width: dp(1)
+            Line:                
+                points: [0, 120, 900, 120]
+                width: dp(1)

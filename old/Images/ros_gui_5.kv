@@ -1,0 +1,945 @@
+FloatLayout:
+    canvas:
+        Color:
+            rgba: [0.937, 0.937, 0.937, 0.8]
+        Rectangle:
+            pos:self.pos
+            size: self.size
+
+    
+
+    #Joggint Sectoin
+    MDLabel:
+        text: "JOGGING" 
+        halign: "center"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.joging_left , "center_y": app.joging_top + .02}
+    #Activate button
+    MDRaisedButton:
+        id: Activate_Jogging
+        text: "Activate"
+        font_size: 20
+        opacity: 1
+        size_hint: .2, .075
+        pos_hint:{"center_x": app.joging_left , "center_y": app.joging_top - .05}
+        on_press: app.activate_joging(*args)
+        disabled: False
+    #LED
+    Image:
+        id: led_01_off
+        source: "Images/green-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.joging_left + .12, "center_y": app.joging_top - .05}
+        opacity: 0.05
+    Image:
+        id: led_01_on
+        source: "Images/green-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.joging_left + .12, "center_y": app.joging_top - .05}
+        opacity: 0.95
+    MDSlider:
+        id: slider_J6
+        min: -350
+        max: 350
+        value: 0
+        step:.5
+        hint: True
+        on_touch_move: app.slider_J6_function(slider_J6.value)
+        size_hint: .35, .05
+        pos_hint:{"center_x": app.joging_left, "center_y": app.joging_top - .14} 
+        disabled: True
+    MDLabel:
+        text: "J6: %.1f°" % slider_J6.value
+        halign: "center"
+        size_hint: .25, .05
+        pos_hint:{"center_x": app.joging_left + .2, "center_y": app.joging_top - .14}
+    MDSlider:
+        id: slider_J7
+        min: -172
+        max: 172
+        value: 0
+        step:.5
+        hint: True        
+        on_touch_move: app.slider_J7_function(slider_J7.value)
+        size_hint: .35, .05
+        pos_hint:{"center_x": app.joging_left , "center_y": app.joging_top - .2} 
+        disabled: True
+    MDLabel:
+        text: "J7: %.1f°" % slider_J7.value
+        halign: "center"
+        size_hint: .25, .05
+        pos_hint:{"center_x": app.joging_left + .2, "center_y": app.joging_top - .2}
+    MDSlider:
+        id: slider_J8
+        min: -.178
+        max: .2
+        step:.01
+        value: 0
+        hint: True       
+        on_touch_move: app.slider_J8_function(slider_J8.value)
+        size_hint: .35, .05
+        pos_hint:{"center_x": app.joging_left , "center_y": app.joging_top - .26} 
+        disabled: True
+    MDLabel:
+        text: "J8: %.3f m" % slider_J8.value
+        halign: "center"
+        size_hint: .25, .05
+        pos_hint:{"center_x": app.joging_left + .215, "center_y": app.joging_top - .26}
+    MDSlider:
+        id: slider_J9
+        min: -172
+        max: 172
+        value: 0
+        step:.5
+        hint: True        
+        on_touch_move: app.slider_J9_function(slider_J9.value)
+        size_hint: .35, .05
+        pos_hint:{"center_x": app.joging_left , "center_y": app.joging_top - .32} 
+        disabled: True
+    MDLabel:
+        text: "J9: %.1f°" % slider_J9.value
+        halign: "center"
+        size_hint: .2, .05
+        pos_hint:{"center_x":app.joging_left + .2, "center_y": app.joging_top - .32}
+    MDSlider:
+        id: slider_J10
+        min: -.31
+        max: 0
+        value: 0
+        step:.01
+        hint: True        
+        on_touch_move: app.slider_J10_function(slider_J10.value)
+        size_hint: .35, .05
+        pos_hint:{"center_x": app.joging_left , "center_y": app.joging_top - .38 }
+        disabled: True
+    MDLabel:
+        text: "J10: %.0f mm" % (1000*slider_J10.value)
+        halign: "center"
+        size_hint: .2, .05
+        pos_hint:{"center_x": app.joging_left + .218, "center_y": app.joging_top - .38}
+
+
+
+
+
+
+    #UID section
+    MDLabel:
+        text: "UID" 
+        halign: "center"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.uid_left, "center_y": app.uid_top}
+    MDSlider:
+        id: slider_gui_x
+        min: -2
+        max: 2
+        value: 0
+        hint: True
+        #on_touch_up: app.slider_function(self.value)
+        #on_touch_move: app.slider_J9_function(slider_J9.value)
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.uid_left, "center_y": app.uid_top - .05} 
+        disabled: 'True'
+    MDLabel:
+        text: "X: %.5s" % (slider_gui_x.value)
+        halign: "center"
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.uid_left + .12, "center_y": app.uid_top - .05}
+    MDSlider:
+        id: slider_gui_y
+        min: -1
+        max: 1
+        value: 0
+        hint: True
+        #on_touch_up: app.slider_function(self.value)
+        #on_touch_move: app.slider_J9_function(slider_J9.value)
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.uid_left, "center_y": app.uid_top - .1} 
+        disabled: 'True'
+    MDLabel:
+        text: "Y: %.5s" % (slider_gui_y.value)
+        halign: "center"
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.uid_left + .12, "center_y": app.uid_top - .1}
+    MDSlider:
+        id: slider_gui_z
+        min: -1
+        max: 1
+        value: 0
+        hint: True
+        #on_touch_up: app.slider_function(self.value)
+        #on_touch_move: app.slider_J9_function(slider_J9.value)
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.uid_left, "center_y": app.uid_top - .15} 
+        disabled: 'True'
+    MDLabel:
+        text: "Z: %.5s" % (slider_gui_z.value)
+        halign: "center"
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.uid_left + .12, "center_y": app.uid_top - .15}
+    MDLabel:
+        text: "Clutch"  
+        halign: "center"
+        font_size: 20
+        size_hint: .25, .25
+        pos_hint:{"center_x": app.uid_left + .01, "center_y": app.uid_top - .2}
+
+    #LED clutch
+    Image:
+        id: led_02_off
+        source: "Images/green-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.uid_left + .074, "center_y": app.uid_top - .2}
+        opacity: 1
+    Image:
+        id: led_02_on
+        source: "Images/green-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.uid_left + .074, "center_y": app.uid_top - .2}
+        opacity: 0
+
+    MDLabel:
+        text: "Joint Limits"  
+        halign: "center"
+        font_size: 20
+        size_hint: .25, .25
+        pos_hint:{"center_x": app.uid_left - .02, "center_y": app.uid_top - .25}
+
+    #LED out of bound
+    Image:
+        id: led_05_off
+        source: "Images/red-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.uid_left + .074, "center_y": app.uid_top - .25}
+        opacity: 1
+    Image:
+        id: led_05_on
+        source: "Images/red-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.uid_left + .074, "center_y": app.uid_top - .25}
+        opacity: 0
+
+
+    MDLabel:
+
+        canvas:
+            Color:
+                rgba: [0.2, .21, .21, 1.0]        
+            # HORIZONTAL LINES
+            Line:                
+                points: [app.motor_data_left + 0, 740,app.motor_data_left + 324, 740]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +0, 700, app.motor_data_left +324, 700]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +0, 660, app.motor_data_left +324, 660]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +0, 620, app.motor_data_left +324, 620]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +0, 580, app.motor_data_left +324, 580]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +0, 540, app.motor_data_left +324, 540]
+                width: dp(1)
+
+            Line:                
+                points: [app.motor_data_left +360, 740, app.motor_data_left +530, 740]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +360, 700, app.motor_data_left +530, 700]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +360, 660, app.motor_data_left +530, 660]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +360, 620, app.motor_data_left +530, 620]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +360, 580, app.motor_data_left +530, 580]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +360, 540, app.motor_data_left +530, 540]
+                width: dp(1)
+            # Line:                
+            #     points: [570, 740, 800, 740]
+            #     width: dp(1)
+            # VERTICAL LINES
+            Line:                
+                points: [app.motor_data_left +0, 740,app.motor_data_left + 0, 490]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +31, 740,app.motor_data_left + 31, 490]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +126, 740, app.motor_data_left +126, 490]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +166, 740, app.motor_data_left +166, 490]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +224, 740, app.motor_data_left +224, 490]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +279, 740, app.motor_data_left +279, 490]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +324, 740, app.motor_data_left +324, 490]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +360, 740, app.motor_data_left +360, 490]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +445, 740, app.motor_data_left +445, 490]
+                width: dp(1)
+            Line:                
+                points: [app.motor_data_left +530, 740, app.motor_data_left +530, 490]
+                width: dp(1)
+            # Line:                
+            #     points: [570, 740, 570, 490]
+            #     width: dp(1)
+            # MAIN SEPARATORS
+            Line:
+                points: [0, 490, 800, 490]
+                width: dp(1)
+            Line:
+                points: [410,60, 410, 490]
+                width: dp(1)
+            Line:
+                points: [0,60, 800, 60]
+                width: dp(1)
+
+    #Arm parameters senction
+    MDLabel:
+        text: "Motor Data" 
+        halign: "center"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left - .1, "center_y":  app.arm_top + .05}
+        
+    MDLabel:
+        text: "Joint Data" 
+        halign: "center"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left +.25, "center_y":  app.arm_top + .05}
+    MDLabel:
+        text: "mode" 
+        halign: "left"
+        font_size: 12
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left - .12, "center_y":  app.arm_top }
+    MDLabel:
+        text: "iq" 
+        halign: "left"
+        font_size: 12
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left - .02, "center_y":  app.arm_top }
+    MDLabel:
+        text: "  motor \nposition" 
+        halign: "left"
+        font_size: 12
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .015, "center_y":  app.arm_top }
+    MDLabel:
+        text: " output \nencoder" 
+        halign: "left"
+        font_size: 12
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .087, "center_y":  app.arm_top }
+    MDLabel:
+        text: " error" 
+        halign: "left"
+        font_size: 12
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .155, "center_y":  app.arm_top }
+    MDLabel:
+        text: "Joints" 
+        halign: "left"
+        font_size: 12
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .28, "center_y":  app.arm_top }
+    MDLabel:
+        text: "Torque" 
+        halign: "left"
+        font_size: 12
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .38, "center_y":  app.arm_top }
+
+    MDLabel:
+        text: "M6" 
+        halign: "left"
+        font_size: 12
+        size_hint: .2, .15        
+        pos_hint:{"center_x": app.arm_left-.19 , "center_y": app.arm_top -.05}
+    MDLabel:
+        text: "M7" 
+        halign: "left"
+        font_size: 12
+        size_hint: .2, .15        
+        pos_hint:{"center_x": app.arm_left-.19  , "center_y": app.arm_top -.1}
+    MDLabel:
+        text: "M8" 
+        halign: "left"
+        font_size: 12
+        size_hint: .2, .15        
+        pos_hint:{"center_x": app.arm_left-.19  , "center_y": app.arm_top -.15}
+    MDLabel:
+        text: "M9" 
+        halign: "left"
+        font_size: 12
+        size_hint: .2, .15        
+        pos_hint:{"center_x": app.arm_left-.19  , "center_y": app.arm_top -.2}
+    MDLabel:
+        text: "M10" 
+        halign: "left"
+        font_size: 12
+        size_hint: .2, .15        
+        pos_hint:{"center_x": app.arm_left-.192  , "center_y": app.arm_top -.25}
+
+
+    #MOTOR DATA
+    MDLabel:
+        id: M6_mode
+        text: " stepper_velocity" 
+        halign: "center"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15        
+        pos_hint:{"center_x": app.arm_left -.2 , "center_y": app.arm_top -.05}
+    MDLabel:
+        id: M7_mode
+        text: "stepper_velocity" 
+        halign: "center"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left -.2, "center_y": app.arm_top -.1}
+    MDLabel:
+        id: M8_mode
+        text: "stepper_velocity" 
+        halign: "center"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left -.2, "center_y": app.arm_top -.15}
+    MDLabel:
+        id: M9_mode
+        text: "stepper_velocity" 
+        halign: "center"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left -.2, "center_y": app.arm_top -.2}
+    MDLabel:
+        id: M10_mode
+        text: "stepper_velocity" 
+        halign: "center"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left -.2, "center_y": app.arm_top -.25}
+
+    MDLabel:
+        id: M6_iq
+        text: "-i6-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15        
+        pos_hint:{"center_x": app.arm_left -.03 , "center_y": app.arm_top -.05}
+    MDLabel:
+        id: M7_iq
+        text: "-i7-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left -.03, "center_y": app.arm_top -.1}
+    MDLabel:
+        id: M8_iq
+        text: "-i8-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left -.03, "center_y": app.arm_top -.15}
+    MDLabel:
+        id: M9_iq
+        text: "-i9-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left -.03, "center_y": app.arm_top -.2}
+    MDLabel:
+        id: M10_iq
+        text: "-i10-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left -.03, "center_y": app.arm_top -.25}
+    MDLabel:
+        id: M6_position
+        text: "-m6-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15        
+        pos_hint:{"center_x": app.arm_left +.025 , "center_y": app.arm_top -.05}
+    MDLabel:
+        id: M7_position
+        text: "-m7-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .025, "center_y": app.arm_top -.1}
+    MDLabel:
+        id: M8_position
+        text: "-m8-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .025, "center_y": app.arm_top -.15}
+    MDLabel:
+        id: M9_position
+        text: "-m9-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left+ .025, "center_y": app.arm_top -.2}
+    MDLabel:
+        id: M10_position
+        text: "-m10-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .025, "center_y": app.arm_top -.25}
+    MDLabel:
+        id: M6_encoder
+        text: "-enc6-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15        
+        pos_hint:{"center_x": app.arm_left +.09 , "center_y": app.arm_top -.05}
+    MDLabel:
+        id: M7_encoder
+        text: "-enc7-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .09, "center_y": app.arm_top -.1}
+    MDLabel:
+        id: M8_encoder
+        text: "-enc8-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .09, "center_y": app.arm_top -.15}
+    MDLabel:
+        id: M9_encoder
+        text: "-enc9-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left+ .09, "center_y": app.arm_top -.2}
+    MDLabel:
+        id: M10_encoder
+        text: "-enc10-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .09, "center_y": app.arm_top -.25}
+    MDLabel:
+        id: M6_error
+        text: "-error-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15        
+        pos_hint:{"center_x": app.arm_left +.16 , "center_y": app.arm_top -.05}
+    MDLabel:
+        id: M7_error
+        text: "-error-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .16, "center_y": app.arm_top -.1}
+    MDLabel:
+        id: M8_error
+        text: "-error-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .16, "center_y": app.arm_top -.15}
+    MDLabel:
+        id: M9_error
+        text: "-error-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left+ .16, "center_y": app.arm_top -.2}
+    MDLabel:
+        id: M10_error
+        text: "-error-" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .16, "center_y": app.arm_top -.25}
+
+    # JOINT DATA
+    MDLabel:
+        text: "J6:" 
+        halign: "left"
+        font_size: 12
+        size_hint: .2, .15        
+        pos_hint:{"center_x": app.arm_left + .265, "center_y": app.arm_top -.05}
+    MDLabel:
+        id: J6_actual
+        text: "--°" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left +.29, "center_y": app.arm_top -.05}
+    MDLabel:        
+        text: "J7:" 
+        halign: "left"
+        font_size: 12
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .265, "center_y": app.arm_top -.1}
+    MDLabel:
+        id: J7_actual
+        text: "--°" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left +.29, "center_y": app.arm_top -.1}
+    MDLabel:
+        text: "J8:" 
+        halign: "left"
+        font_size: 12
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .265, "center_y": app.arm_top -.15}
+    MDLabel:
+        id: J8_actual
+        text: "J8 : --" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left +.29, "center_y": app.arm_top -.15}
+    MDLabel:
+        text: "J9:" 
+        halign: "left"
+        font_size: 12
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .265, "center_y": app.arm_top -.2}
+    MDLabel:
+        id: J9_actual
+        text: "--" 
+        halign: "left"
+        font_size: 12
+        size_hint: .2, .15
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        pos_hint:{"center_x": app.arm_left +.29, "center_y": app.arm_top -.2}
+    MDLabel:
+        text: "J10:" 
+        halign: "left"
+        font_size: 12
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .26, "center_y": app.arm_top -.25}
+    MDLabel:
+        id: J10_actual
+        text: "--" 
+        halign: "left"
+        font_size: 12
+        size_hint: .2, .15
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        pos_hint:{"center_x": app.arm_left +.29, "center_y": app.arm_top -.25}
+
+   
+    MDLabel:
+        text: "T6:" 
+        halign: "left"
+        font_size: 12
+        size_hint: .2, .15        
+        pos_hint:{"center_x": app.arm_left + .37, "center_y": app.arm_top -.05}
+    MDLabel:
+        id: T6_actual
+        text: "--" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .405, "center_y": app.arm_top -.05}
+    MDLabel:
+        text: "T7:" 
+        halign: "left"
+        font_size: 12
+        size_hint: .2, .15        
+        pos_hint:{"center_x": app.arm_left + .37, "center_y": app.arm_top -.1}
+    MDLabel:
+        id: T7_actual
+        text: "--" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .405, "center_y": app.arm_top -.1}
+    MDLabel:
+        text: "T8:" 
+        halign: "left"
+        font_size: 12
+        size_hint: .2, .15        
+        pos_hint:{"center_x": app.arm_left + .37, "center_y": app.arm_top -.15}
+    MDLabel:
+        id: T8_actual
+        text: "--" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .405, "center_y": app.arm_top -.15}
+    MDLabel:
+        text: "T9:" 
+        halign: "left"
+        font_size: 12
+        size_hint: .2, .15        
+        pos_hint:{"center_x": app.arm_left + .37, "center_y": app.arm_top -.2}
+    MDLabel:
+        id: T9_actual
+        text: "--" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .405, "center_y": app.arm_top -.2}
+    MDLabel:
+        text: "T10:" 
+        halign: "left"
+        font_size: 12
+        size_hint: .2, .15        
+        pos_hint:{"center_x": app.arm_left + .37, "center_y": app.arm_top -.25}
+    MDLabel:
+        id: T10_actual
+        text: "--" 
+        halign: "left"
+        font_size: 12
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.arm_left + .405, "center_y": app.arm_top -.25}
+
+
+
+
+    #Control  buttons
+    MDLabel:
+        text: "CONTROL" 
+        halign: "center"
+        font_size: 20
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.control_left , "center_y": app.control_top + .02}
+    MDRaisedButton:
+        id: Enable_fenix
+        text: "Enable Fenix"
+        font_size: 20
+        opacity: 1
+        # text_color: 0,0,0,.8
+        # md_bg_color: .6,.6,.6,.8
+        size_hint: .35, .08
+        pos_hint:{"center_x": app.control_left , "center_y": app.control_top -.05}
+        on_press: app.enable_fenix(*args)
+        disabled: False
+    #LED
+    Image:
+        id: led_03_off
+        source: "Images/red-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.control_left + .2, "center_y": app.control_top -.05}
+        opacity: 1
+    Image:
+        id: led_03_on
+        source: "Images/red-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.control_left + .2, "center_y": app.control_top -.05}
+        opacity: 0
+    MDRaisedButton:
+        id: Set_rcm
+        text: "Set RCM"
+        font_size: 20
+        opacity: 1
+        size_hint: .35, .08
+        pos_hint:{"center_x": app.control_left, "center_y": app.control_top -.14}
+        on_press: app.set_rcm(*args)
+        disabled: False
+    #LED
+    Image:
+        id: led_04_off
+        source: "Images/red-led-slim-off.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.control_left + .2, "center_y": app.control_top -.14}
+        opacity: 1
+    Image:
+        id: led_04_on
+        source: "Images/red-led-slim-on.png"
+        allow_stretch: False
+        size_hint: .03, .03
+        pos_hint:{"center_x": app.control_left + .2, "center_y": app.control_top -.14}
+        opacity: 0
+    MDRaisedButton:
+        id: BD_with_rcm
+        text: "BD with RCM"
+        font_size: 20
+        opacity: 1
+        size_hint: .35, .08
+        pos_hint:{"center_x": app.control_left, "center_y": app.control_top -.23}
+        on_press: app.bd_with_rcm(*args)
+        disabled: False
+    MDRaisedButton:
+        id: BD_wo_rcm
+        text: "BD without RCM"
+        font_size: 20
+        opacity: 1
+        size_hint: .35, .08
+        pos_hint:{"center_x": app.control_left, "center_y": app.control_top -.32}
+        on_press: app.bd_wo_rcm(*args)
+        disabled: False
+    MDRaisedButton:
+        id: reset_error
+        text: "Reset Error"
+        font_size: 20
+        opacity: 1
+        size_hint: .35, .08
+        pos_hint:{"center_x": app.control_left, "center_y": app.control_top -.41}
+        on_press: app.reset_error(*args)
+        disabled: False
+
+
+
+
+    #Message  section
+    MDLabel:
+        text: "Agg. State:" 
+        halign: "center"
+        font_size: 16
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.state_left , "center_y": app.state_top}
+    MDLabel:
+        id: system_state
+        text: "State:" 
+        halign: "left"
+        bold: True
+        font_size: 16
+        theme_text_color: "Custom"
+        text_color: 0, 0, 1, 1
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.state_left+.16 , "center_y": app.state_top}
+    MDLabel:
+        text: "Fenix Mode:" 
+        halign: "center"
+        font_size: 16
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.mode_left , "center_y": app.mode_top}
+    MDLabel:
+        id: system_mode
+        text: "-1:" 
+        halign: "left"
+        bold: True
+        font_size: 16
+        theme_text_color: "Custom"
+        text_color: 19./255.,87./255, 8./255, .8
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.mode_left+.16 , "center_y": app.mode_top}
+    MDLabel:
+        text: "MESSAGE:" 
+        halign: "left"
+        font_size: 16
+        bold: True
+        size_hint: .2, .15
+        pos_hint:{"center_x": app.message_left , "center_y": app.message_top}
+    MDLabel:
+        id: system_message
+        text: "------" 
+        halign: "left"
+        font_size: 16
+        bold: True
+        theme_text_color: "Custom"
+        text_color: 113./255.,118./255, 113./255, .71
+        size_hint: .55, .15
+        pos_hint:{"center_x": app.message_left + .28, "center_y": app.message_top }

@@ -1,0 +1,6 @@
+{
+    "MIXING_MOTOR_SPEED": "100", 
+    "GANTRY_Z_LOWERED_POSITION": "200",
+    "DOSE_VOLUME": "2",
+    "PUMP_SPEED":"18"
+}
