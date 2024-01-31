@@ -27,7 +27,7 @@ def name():
 
 
 state_name = {0:"S0: Initialization", 1:"S1: Gantry Z Homing", 2:"S2: Gantry X Homing", 3:"S3: Gantry X to Pos A",
-              4:"S4: Gantry Z to Pos A", 5:"S5: Startup Complete"}
+              4:"S4: Gantry Z to Pos A", 5:"S5: Startup Complete", 6:"Pause", 7:"Error"}
 #---------------  ACTIONS  --------------
 def action0_0():    
     # HW.pump1.pump_Zinit(HW.TIRRANT_PUMP_ADDRESS)

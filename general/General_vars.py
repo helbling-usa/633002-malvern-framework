@@ -9,7 +9,10 @@ dose_number = 0
 SM_TEXT_TO_DIAPLAY = "--"
 PAUSE = False
 ERROR = False
-    
+NEXT = False
+activate_NEXT_button = False
+
+
 def reset():
     next_E = 0 
     cur_S = 0

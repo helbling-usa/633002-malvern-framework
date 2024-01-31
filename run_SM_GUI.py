@@ -16,6 +16,7 @@ import  threading
 import  general.General_vars as GENERAL
 from    general.recipe import RECIPE
 import  SM.Startup
+import  SM.Pump_Init_Reload
 import  HW
 #--------------  GLOBAL VARIABLES -----------------------------------------
 
@@ -56,6 +57,8 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         self.InitLabjack()
         self.InitTecController()
         self.InitTimer()
+        self.b_nextbutton["state"] = DISABLED
+        self.b_start["state"] = DISABLED
         
 
 
@@ -74,7 +77,10 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         # logger.debug('timer is running')
         self.read_BubbleSensors()
         self.updateGUI_LEDs()
-
+        if (GENERAL.activate_NEXT_button == True):
+            self.b_nextbutton["state"] = NORMAL
+        else:
+            self.b_nextbutton["state"] = DISABLED
 
         # self.output.delete("1.0","end")
         # self.output.insert(END,SM_TEXT_TO_DIAPLAY)
@@ -357,7 +363,8 @@ class run_SM_GUI(SM_GUI.SM_GUI):
                 filetypes=filetypes)        
         self.decode_recipe(recipe_filepath)
         
-
+        self.b_nextbutton["state"] = DISABLED
+        self.b_start["state"] = NORMAL
 
     def PortAssignment(self):
 
@@ -381,7 +388,6 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         print("gantry v:",HW.GANTRY_VER_AXIS_ID)
         print("gantry H:",HW.GANTRY_HOR_AXIS_ID)
         print("mixer",HW.MIXER_AXIS_ID )
-
 
 
 
@@ -483,6 +489,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         self.t_status.delete("1.0", END)
         self.t_status.insert(END, info_str)
 
+
         # print("===============")
         # print(RECIPE)
         # print("===============")
@@ -495,13 +502,16 @@ class run_SM_GUI(SM_GUI.SM_GUI):
 
     def b_start_recipe(self):
         logger.debug("child: start button pressed")
-        print("Running:{} Statemachine".format( SM.Startup.name()))
-        # self.execute(SM.Startup)
-        self.t1 = threading.Thread(target=self.execute, args=(SM.Startup,))
+        # print("Running:{} Statemachine".format( SM.Startup.name()))
+        # self.t1 = threading.Thread(target=self.execute, args=(SM.Startup,))
+        print("Running:{} Statemachine".format( SM.Pump_Init_Reload.name()))
+        self.t1 = threading.Thread(target=self.execute, args=(SM.Pump_Init_Reload,))
         self.t1.start()
+
 
     def b_next(self):
         logger.debug("child: next button pressed")
+        GENERAL.NEXT = True
 
 
 
@@ -545,7 +555,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.t_cur_proc.insert(END, statemachine.name())
 
         print('SM Terminated')
-        
+        self.b_start["state"] =  DISABLED
         
     def checkExitButton(self):
         # global KILL_THREADS

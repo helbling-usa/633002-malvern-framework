@@ -93,12 +93,16 @@ class SM_GUI():
             self.text_fname.pack()
             self.text_fname.place(x=COL2, y=Y1+1*dY1+2)
             
-            self.b_set_dose = Button(self.root,text="▼", font=self.Font2,
+            self.b_openfile = Button(self.root,text="▼", font=self.Font2,
                                      command=self.b_select_recipe_file).place(x = COL3,y = Y1 + 1*dY1 - 2)
-            self.b_set_dose = Button(self.root,text="Start", font=self.Font2, bg="#558ff2", 
-                                     command=self.b_start_recipe).place(x = COL4, y = Y1 + 1*dY1 - 2)
-            self.b_set_dose = Button(self.root,text="Next", font=self.Font2, bg="#558ff2", 
-                                     command=self.b_next).place(x = COL5, y = Y1 + 1*dY1 - 2)
+            self.b_start = Button(self.root,text="Start", font=self.Font2, bg="#558ff2", 
+                                  command=self.b_start_recipe)
+            self.b_start.pack()
+            self.b_start.place(x = COL4, y = Y1 + 1*dY1 - 2)
+            self.b_nextbutton = Button(self.root,text="Next", font=self.Font2, bg="#558ff2", 
+                                       command=self.b_next)
+            self.b_nextbutton.pack()
+            self.b_nextbutton.place(x = COL5, y = Y1 + 1*dY1 - 2)
 
 
             Label(self.root, text = "Current Procedure:",font=self.Font1 , bg=self.Color1,
