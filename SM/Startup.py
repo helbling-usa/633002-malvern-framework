@@ -52,17 +52,8 @@ def action0_0():
     HW.motors.set_position() 
     HW.motors.set_POSOKLIM(1)    
     time.sleep(.5)
-    # print("---------get FM VER -------------------")
-    # HW.motors.get_firmware_version()
-    # HW.labjack.writeRegister(50590, 15)     
-    # # print("--->", HW.labjack.getAIN(0))   
-    # print('\t\tlabjack initialized')        
-    # # print(HW.tec.get_data())
-    # print("\t\tTEC controller initialized ")
-    
     HW.vertical_gantry_active_led = True
-    settings.SM_TEXT_TO_DIAPLAY = "S0,E0 -> action0_0\n" "  init. Pump 1\n" "  init. Pump 2\n" "  init. V. Gantry\n"
-    settings.SM_TEXT_TO_DIAPLAY += "  init. H. Gantry\n" "  init. TEC Controller\n" "  init. Labjack\n" "SM initialized ..."
+    settings.SM_TEXT_TO_DIAPLAY ="  Homing Gantry Vertical"
     settings.next_E = 0    
 
 
@@ -80,13 +71,17 @@ def action1_0():
         return 
     
 
-    print('Homing Gantry Vertical')
-    HW.motors.homing(HW.GANTRY_VER_AXIS_ID)    
+    # print('Homing Gantry Vertical')
+    ret_val = HW.motors.homing(HW.GANTRY_VER_AXIS_ID)    
 
+    if ret_val == False:
+        settings.next_E = 4
+        settings.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" "  Homing Error!!!\n" "  going to S1/E4"
+        return 
     HW.vertical_gantry_homed_led = True
     HW.vertical_gantry_active_led = False
     settings.next_E = 1
-    str1 = "  Gantry Z Homing procedure\n" "  going to S1/E1"
+    str1 = "  Gantry Z Homing done\n" "  going to S1/E1"
     # print(str1)
     settings.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" + str1
 
@@ -118,7 +113,7 @@ def action1_2():
     HW.horizontal_gantry_active_led = True
     settings.next_E = 0
     settings.prev_S = 1
-    settings.SM_TEXT_TO_DIAPLAY ="S1,E2 -> action1_2\n" "  going to S2/E0 state"
+    settings.SM_TEXT_TO_DIAPLAY ="  Gantry X Homing procedure\n"
 
 def action1_3():
     if (settings.ERROR == True):
@@ -145,14 +140,17 @@ def action2_0():
         settings.SM_TEXT_TO_DIAPLAY = "S2,E0 -> action2_1\n" "  going to S1/E4"
         return     
     
-    print('Homing Gantry Horizontal')
-    HW.motors.homing(HW.GANTRY_HOR_AXIS_ID)
-
+    # print('Homing Gantry Horizontal')
+    ret_val = HW.motors.homing(HW.GANTRY_HOR_AXIS_ID)
+    if ret_val == False:
+        settings.next_E = 4
+        settings.SM_TEXT_TO_DIAPLAY = "S2,E0 -> action2_0\n" "  Homing Error!!!\n" "  going to S2/E4"
+        return 
     HW.horizontal_gantry_homed_led = True
     HW.horizontal_gantry_active_led = False
 
     settings.next_E = 1
-    str1 = "  Gantry X Homing procedure\n" "  going to S2/E1"
+    str1 = "  Gantry X Homing is done\n" "  going to S2/E1"
     settings.SM_TEXT_TO_DIAPLAY ="S2,E0 -> action2_0\n" +str1
 
 def action2_1():
@@ -171,8 +169,8 @@ def action2_1():
     
 def action2_2():
     #preprate to  going to S3
-    settings.next_E = 0
-    settings.SM_TEXT_TO_DIAPLAY ="S2,E2 -> action2_2\n" "  going to S3/E0"
+    settings.next_E = 0    
+    settings.SM_TEXT_TO_DIAPLAY ="S2,E2 -> action2_2\n" "  Gantry X to position A..."
 
 def action2_3():
     if (settings.ERROR == True):
@@ -211,18 +209,19 @@ def action3_0():
     move_speed = RECIPE['Startup']['gantry_move_speed'] 
     # home_speed = RECIPE['Startup']['gantry_home_timeout'] 
     HW.motors.move_absolute_position(abs_pos_tml, move_speed, HW.GANTRY_HOR_ACCELERATION)
+    # if ret_val == False:
+    #     settings.next_E = 4
+    #     settings.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0\n" "  Homing Error!!!\n" "  going to S3/E4"
+    #     return 
 
     cur_motor_pos= HW.motors.read_actual_position()
     while (cur_motor_pos < abs_pos_tml-50):
         time.sleep(1)
         cur_motor_pos= HW.motors.read_actual_position()
 
-    
-
-
     HW.horizontal_gantry_active_led = False
     settings.next_E = 1
-    str1 = "  Gantry X to position A..."
+    str1 = "  Gantry X reached the position"
     settings.SM_TEXT_TO_DIAPLAY ="S3,E0 -> action3_0\n"+str1
 
 def action3_1():
@@ -236,7 +235,7 @@ def action3_1():
         return         
     #prepare to  going to S4
     settings.next_E = 2
-    settings.SM_TEXT_TO_DIAPLAY ="S3,E1 -> action3_1\n""  going to S3/E2"
+    settings.SM_TEXT_TO_DIAPLAY ="S3,E1 -> action3_1\n" "  Gantry X in position\n" "  going to S3/E2"
 
 def action3_2():
     if (settings.ERROR == True):
@@ -245,16 +244,16 @@ def action3_2():
         return 
     HW.vertical_gantry_active_led = True
     settings.next_E = 0
-    settings.SM_TEXT_TO_DIAPLAY ="S3,E2 -> action3_2\n" "  going to S6/E0"
+    settings.SM_TEXT_TO_DIAPLAY ="S3,E2 -> action3_2\n" "  Gantry Z to position \n" "  going to S6/E0"
 
 def action3_3():
     if (settings.ERROR == True):
         settings.next_E = 3
-        settings.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0\n" "  going to S1/E4"
+        settings.SM_TEXT_TO_DIAPLAY = "S3,E3 -> action3_3\n" "  going to S3/E4"
         return 
     
     settings.next_E = 0
-    settings.SM_TEXT_TO_DIAPLAY ="S3,E2 -> action3_2\n" "  going to S6/E0"
+    settings.SM_TEXT_TO_DIAPLAY ="S3,E3 -> action3_3\n" "  going to S6/E0"
 
 def action3_4():
     # print("S3,E3 -> action3_3")
@@ -280,14 +279,17 @@ def action4_0():
     # print("=============>",fill_pos, ' = ', abs_pos_tml)
     move_speed = RECIPE['Startup']['gantry_move_speed'] 
     HW.motors.move_absolute_position(abs_pos_tml, move_speed, HW.GANTRY_VER_ACCELERATION)
-
+    # if ret_val == False:
+    #     settings.next_E = 4
+    #     settings.SM_TEXT_TO_DIAPLAY = "S4,E0 -> action4_0\n" "  Homing Error!!!\n" "  going to S4/E4"
+    #     return 
     cur_motor_pos= HW.motors.read_actual_position()
     while (cur_motor_pos < abs_pos_tml-50):
         time.sleep(1)
-    cur_motor_pos= HW.motors.read_actual_position()
+        cur_motor_pos= HW.motors.read_actual_position()
     HW.vertical_gantry_active_led = False
     settings.next_E = 1
-    str1 = "  Gantry Z to position A..."
+    str1 = "  Gantry Z is in  position "
     settings.SM_TEXT_TO_DIAPLAY ="S4,E0 -> action4_0\n" + str1
 
 
@@ -302,7 +304,7 @@ def action4_1():
         return 
 
     settings.next_E = 2
-    str1 = "  wait for gantry Z to get to position...\n" "  going to S4/E2"
+    str1 = "  wait for gantry Z to get to position...\n""  Gantry Z is in  position \n" "  going to S4/E2"
     settings.SM_TEXT_TO_DIAPLAY ="S4,E1 -> action4_1\n"+ str1
 
 def action4_2():
@@ -317,7 +319,7 @@ def action4_2():
         return          
   
     settings.next_E = 0
-    str1 = "  actuator reached position\n" "  going to S5/E0"
+    str1 = "  Completing the Start up\n " "  going to S5/E0"
     settings.SM_TEXT_TO_DIAPLAY ="S4,E2 -> action4_2\n" + str1
 
 
@@ -329,7 +331,7 @@ def action4_3():
     # print("S4,E3 -> action4_3")
     settings.next_E = 0
     settings. prev_S = 4
-    settings.SM_TEXT_TO_DIAPLAY = "S4,E3 -> action4_3\n" "  going to S6/E0"
+    settings.SM_TEXT_TO_DIAPLAY = "S4,E3 -> action4_3\n" "  going to S5/E0"
 
 
 def action4_4():
