@@ -59,8 +59,8 @@ def action0_0():
     # print('\t\tlabjack initialized')        
     # # print(HW.tec.get_data())
     # print("\t\tTEC controller initialized ")
-
-
+    
+    HW.vertical_gantry_active_led = True
     settings.SM_TEXT_TO_DIAPLAY = "S0,E0 -> action0_0\n" "  init. Pump 1\n" "  init. Pump 2\n" "  init. V. Gantry\n"
     settings.SM_TEXT_TO_DIAPLAY += "  init. H. Gantry\n" "  init. TEC Controller\n" "  init. Labjack\n" "SM initialized ..."
     settings.next_E = 0    
@@ -79,9 +79,12 @@ def action1_0():
         settings.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" "  going to S1/E4"
         return 
     
-    print('Homing Gantry Vertical')
-    HW.motors.homing(HW.GANTRY_VER_AXIS_ID)
 
+    print('Homing Gantry Vertical')
+    HW.motors.homing(HW.GANTRY_VER_AXIS_ID)    
+
+    HW.vertical_gantry_homed_led = True
+    HW.vertical_gantry_active_led = False
     settings.next_E = 1
     str1 = "  Gantry Z Homing procedure\n" "  going to S1/E1"
     # print(str1)
@@ -112,6 +115,7 @@ def action1_2():
         settings.next_E = 4
         settings.SM_TEXT_TO_DIAPLAY = "S1,E2 -> action1_2\n" "  going to S1/E4"
         return     
+    HW.horizontal_gantry_active_led = True
     settings.next_E = 0
     settings.prev_S = 1
     settings.SM_TEXT_TO_DIAPLAY ="S1,E2 -> action1_2\n" "  going to S2/E0 state"
@@ -143,6 +147,10 @@ def action2_0():
     
     print('Homing Gantry Horizontal')
     HW.motors.homing(HW.GANTRY_HOR_AXIS_ID)
+
+    HW.horizontal_gantry_homed_led = True
+    HW.horizontal_gantry_active_led = False
+
     settings.next_E = 1
     str1 = "  Gantry X Homing procedure\n" "  going to S2/E1"
     settings.SM_TEXT_TO_DIAPLAY ="S2,E0 -> action2_0\n" +str1
@@ -172,6 +180,7 @@ def action2_3():
         settings.SM_TEXT_TO_DIAPLAY = "S2,E3 -> action2_3\n" "  going to S1/E4"
         return         
     # print("S2,E3 -> action2_3")
+    HW.horizontal_gantry_active_led = True
     settings.next_E = 0
     settings. prev_S = 2
     settings.SM_TEXT_TO_DIAPLAY ="S2,E3 -> action2_3\n"
@@ -198,7 +207,20 @@ def action3_0():
     HW.motors.set_POSOKLIM(1)
     abs_pos_tml = int(fill_pos / HW.TML_LENGTH_2_MM_HOR )
     # print("=============>",fill_pos, ' = ', abs_pos_tml)
-    HW.motors.move_absolute_position(abs_pos_tml, HW.GANTRY_HOR_SPEED, HW.GANTRY_HOR_ACCELERATION)
+    
+    move_speed = RECIPE['Startup']['gantry_move_speed'] 
+    # home_speed = RECIPE['Startup']['gantry_home_timeout'] 
+    HW.motors.move_absolute_position(abs_pos_tml, move_speed, HW.GANTRY_HOR_ACCELERATION)
+
+    cur_motor_pos= HW.motors.read_actual_position()
+    while (cur_motor_pos < abs_pos_tml-50):
+        time.sleep(1)
+        cur_motor_pos= HW.motors.read_actual_position()
+
+    
+
+
+    HW.horizontal_gantry_active_led = False
     settings.next_E = 1
     str1 = "  Gantry X to position A..."
     settings.SM_TEXT_TO_DIAPLAY ="S3,E0 -> action3_0\n"+str1
@@ -221,7 +243,7 @@ def action3_2():
         settings.next_E = 3
         settings.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0\n" "  going to S1/E4"
         return 
-    
+    HW.vertical_gantry_active_led = True
     settings.next_E = 0
     settings.SM_TEXT_TO_DIAPLAY ="S3,E2 -> action3_2\n" "  going to S6/E0"
 
@@ -256,8 +278,14 @@ def action4_0():
     HW.motors.set_POSOKLIM(1)
     abs_pos_tml = int(fill_pos / HW.TML_LENGTH_2_MM_VER )
     # print("=============>",fill_pos, ' = ', abs_pos_tml)
-    HW.motors.move_absolute_position(abs_pos_tml, HW.GANTRY_VER_SPEED, HW.GANTRY_VER_ACCELERATION)
+    move_speed = RECIPE['Startup']['gantry_move_speed'] 
+    HW.motors.move_absolute_position(abs_pos_tml, move_speed, HW.GANTRY_VER_ACCELERATION)
 
+    cur_motor_pos= HW.motors.read_actual_position()
+    while (cur_motor_pos < abs_pos_tml-50):
+        time.sleep(1)
+    cur_motor_pos= HW.motors.read_actual_position()
+    HW.vertical_gantry_active_led = False
     settings.next_E = 1
     str1 = "  Gantry Z to position A..."
     settings.SM_TEXT_TO_DIAPLAY ="S4,E0 -> action4_0\n" + str1

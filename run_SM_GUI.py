@@ -43,7 +43,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         super().__init__( root)
         self.root = root
         logger.info("Initializing hardware -------------------------------------")
-        # self.InitTimer()
+        
         logger.info("------------------------------------------------------------------")
         logger.info('System started successfully.')
         logger.info("Please use the GUI to enter a commamnd ...")
@@ -55,19 +55,296 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         self.Init__motors_all_axes() 
         self.InitLabjack()
         self.InitTecController()
+        self.InitTimer()
         
+
+
+
+
+    def InitTimer(self):
+        # #------ Starts timer
+        logger.info('starting internal timer')
+        self.timer = threading.Timer(1.0, self.timerCallback_1)
+        self.timer.start()
+        logger.info('\t\tInternal timer started')
+
 
     def timerCallback_1(self):  
         # global SM_TEXT_TO_DIAPLAY
-        logger.debug('timer is running')
+        # logger.debug('timer is running')
+        self.read_BubbleSensors()
+        self.updateGUI_LEDs()
+
+
         # self.output.delete("1.0","end")
-        
         # self.output.insert(END,SM_TEXT_TO_DIAPLAY)
         # self.cur_dose.config(text = str(dose_number))
-        # #-------- repeat the timer ----------------------------------------------
-        # self.timer = threading.Timer(1.0, self.timerCallback_1)
-        # self.timer.start()
+        #-------- repeat the timer ----------------------------------------------
+        self.timer = threading.Timer(.50, self.timerCallback_1)
+        self.timer.start()
         
+
+
+
+    def InitLabjack(self):
+        # # initialize labjack
+        logger.info("Initializing Labjack.....")
+        HW.labjack = u6.U6()
+        HW.labjack.writeRegister(50590, 15)     
+        # print("--->", HW.labjack.getAIN(0))   
+        # logger.info('\t\tlabjack initialized')
+
+
+    def read_BubbleSensors(self):
+        # read bubble sensor and update the LEDs
+        HW.BS1 = (HW.labjack.getAIN(0))
+        HW.BS2 = (HW.labjack.getAIN(1))
+        HW.BS3 = (HW.labjack.getAIN(2))
+        HW.BS4 = (HW.labjack.getAIN(3))
+        HW.BS5 = (HW.labjack.getAIN(4))
+        HW.BS6 = (HW.labjack.getAIN(5))
+        HW.BS7 = (HW.labjack.getAIN(6))
+        HW.BS8 = (HW.labjack.getAIN(7))
+        HW.BS9 = (HW.labjack.getAIN(8))
+        HW.BS10 = (HW.labjack.getAIN(9))
+        HW.BS11 = (HW.labjack.getAIN(10))
+        HW.BS12 = (HW.labjack.getAIN(11))
+        HW.BS13 = (HW.labjack.getAIN(12))
+        HW.BS14 = (HW.labjack.getAIN(13))
+
+
+    def updateGUI_LEDs(self):
+        COL7 = 740
+        Y1  = 50
+        dY1 = 50
+        dd=10
+        dist = 80
+        if (HW.pump1_titrant_active_led == False):
+            self.led_on_1.place_forget()
+            self.led_off_1.pack()
+            self.led_off_1.place(x = COL7+dd,y = Y1 + 1*dY1)
+        else:
+            self.led_off_1.place_forget()
+            self.led_on_1.pack()
+            self.led_on_1.place(x =COL7+dd,y = Y1 + 1*dY1)
+        
+        if (HW.pump1_titrant_homed_led == False):
+            self.led_on_2.place_forget()
+            self.led_off_2.pack()
+            self.led_off_2.place(x = COL7+dist+dd,y = Y1 + 1*dY1)
+        else:
+            self.led_off_2.place_forget()
+            self.led_on_2.pack()
+            self.led_on_2.place(x =COL7+dist+dd,y = Y1 + 1*dY1)
+
+        if (HW.pump2_sample_active_led == False):
+            self.led_on_3.place_forget()
+            self.led_off_3.pack()
+            self.led_off_3.place(x = COL7+dd,y = Y1 + 2*dY1)
+        else:
+            self.led_off_3.place_forget()
+            self.led_on_3.pack()
+            self.led_on_3.place(x =COL7+dd,y = Y1 + 2*dY1)
+        
+        if (HW.pump2_sample_homed_led == False):
+            self.led_on_4.place_forget()
+            self.led_off_4.pack()
+            self.led_off_4.place(x = COL7+dist+dd,y = Y1 + 2*dY1)
+        else:
+            self.led_off_4.place_forget()
+            self.led_on_4.pack()
+            self.led_on_4.place(x =COL7+dist+dd,y = Y1 + 2*dY1)
+
+        if (HW.horizontal_gantry_active_led == False):
+            self.led_on_5.place_forget()
+            self.led_off_5.pack()
+            self.led_off_5.place(x = COL7+dd,y = Y1 + 3*dY1)
+        else:
+            self.led_off_5.place_forget()
+            self.led_on_5.pack()
+            self.led_on_5.place(x =COL7+dd,y = Y1 + 3*dY1)
+        
+        if (HW.horizontal_gantry_homed_led == False):
+            self.led_on_6.place_forget()
+            self.led_off_6.pack()
+            self.led_off_6.place(x = COL7+dist+dd,y = Y1 + 3*dY1)
+        else:
+            self.led_off_6.place_forget()
+            self.led_on_6.pack()
+            self.led_on_6.place(x =COL7+dist+dd,y = Y1 + 3*dY1)
+
+
+        if (HW.vertical_gantry_active_led == False):
+            self.led_on_7.place_forget()
+            self.led_off_7.pack()
+            self.led_off_7.place(x = COL7+dd,y = Y1 + 4*dY1)
+        else:
+            self.led_off_7.place_forget()
+            self.led_on_7.pack()
+            self.led_on_7.place(x =COL7+dd,y = Y1 + 4*dY1)
+        
+        if (HW.vertical_gantry_homed_led == False):
+            self.led_on_8.place_forget()
+            self.led_off_8.pack()
+            self.led_off_8.place(x = COL7+dist+dd,y = Y1 + 4*dY1)
+        else:
+            self.led_off_8.place_forget()
+            self.led_on_8.pack()
+            self.led_on_8.place(x =COL7+dist+dd,y = Y1 + 4*dY1)
+
+        if (HW.mixing_motor_active_led == False):
+            self.led_on_9.place_forget()
+            self.led_off_9.pack()
+            self.led_off_9.place(x = COL7+dd,y = Y1 + 5*dY1)
+        else:
+            self.led_off_9.place_forget()
+            self.led_on_9.pack()
+            self.led_on_9.place(x =COL7+dd,y = Y1 + 5*dY1)
+        
+        if (HW.mixing_motor_homed_led == False):
+            self.led_on_10.place_forget()
+            self.led_off_10.pack()
+            self.led_off_10.place(x = COL7+dist+dd,y = Y1 + 5*dY1)
+        else:
+            self.led_off_10.place_forget()
+            self.led_on_10.pack()
+            self.led_on_10.place(x =COL7+dist+dd,y = Y1 + 5*dY1)
+
+
+        # Update The GUI with current value of bubble sensors
+        COL9 = 950
+        COL11 = 1030
+        Y1  = 50
+        dY1 = 40
+        dd=40
+        # print('---',HW.BS11)
+        if (HW.BS1 < HW.BS_THRESHOLD):
+            self.led_on_11.place_forget()
+            self.led_off_11.pack()
+            self.led_off_11.place(x = COL9+dd,y = Y1 + 1*dY1)
+        else:
+            self.led_off_11.place_forget()
+            self.led_on_11.pack()            
+            self.led_on_11.place(x =COL9+dd,y = Y1 + 1*dY1)
+
+        if (HW.BS2 < HW.BS_THRESHOLD):
+            self.led_on_12.place_forget()
+            self.led_off_12.pack()
+            self.led_off_12.place(x = COL9+dd,y = Y1 + 2*dY1)            
+        else:
+            self.led_off_12.place_forget()
+            self.led_on_12.pack()            
+            self.led_on_12.place(x =COL9+dd,y = Y1 + 2*dY1)
+
+        if (HW.BS3 < HW.BS_THRESHOLD):
+            self.led_on_13.place_forget()
+            self.led_off_13.pack()
+            self.led_off_13.place(x = COL9+dd,y = Y1 + 3*dY1)            
+        else:
+            self.led_off_13.place_forget()
+            self.led_on_13.pack()            
+            self.led_on_13.place(x =COL9+dd,y = Y1 + 3*dY1)
+
+        if (HW.BS4 < HW.BS_THRESHOLD):
+            self.led_on_14.place_forget()
+            self.led_off_14.pack()
+            self.led_off_14.place(x = COL9+dd,y = Y1 + 4*dY1)            
+        else:
+            self.led_off_14.place_forget()
+            self.led_on_14.pack()            
+            self.led_on_14.place(x =COL9+dd,y = Y1 + 4*dY1)
+
+        if (HW.BS5 < HW.BS_THRESHOLD):
+            self.led_on_15.place_forget()
+            self.led_off_15.pack()
+            self.led_off_15.place(x = COL9+dd,y = Y1 + 5*dY1)            
+        else:
+            self.led_off_15.place_forget()
+            self.led_on_15.pack()            
+            self.led_on_15.place(x =COL9+dd,y = Y1 + 5*dY1)
+
+        if (HW.BS6 < HW.BS_THRESHOLD):
+            self.led_on_16.place_forget()
+            self.led_off_16.pack()
+            self.led_off_16.place(x = COL9+dd,y = Y1 + 6*dY1)            
+        else:
+            self.led_off_16.place_forget()
+            self.led_on_16.pack()            
+            self.led_on_16.place(x =COL9+dd,y = Y1 + 6*dY1)
+
+        if (HW.BS7 < HW.BS_THRESHOLD):
+            self.led_on_17.place_forget()
+            self.led_off_17.pack()
+            self.led_off_17.place(x = COL9+dd,y = Y1 + 7*dY1)            
+        else:
+            self.led_off_17.place_forget()
+            self.led_on_17.pack()            
+            self.led_on_17.place(x =COL9+dd,y = Y1 + 7*dY1)                                                
+
+        if (HW.BS8 < HW.BS_THRESHOLD):
+            self.led_on_18.place_forget()
+            self.led_off_18.pack()
+            self.led_off_18.place(x = COL11+dd,y = Y1 + 1*dY1)
+        else:
+            self.led_off_18.place_forget()
+            self.led_on_18.pack()            
+            self.led_on_18.place(x =COL11+dd,y = Y1 + 1*dY1)
+
+        if (HW.BS9 < HW.BS_THRESHOLD):
+            self.led_on_19.place_forget()
+            self.led_off_19.pack()
+            self.led_off_19.place(x = COL11+dd,y = Y1 + 2*dY1)            
+        else:
+            self.led_off_19.place_forget()
+            self.led_on_19.pack()            
+            self.led_on_19.place(x =COL11+dd,y = Y1 + 2*dY1)
+
+        if (HW.BS10 < HW.BS_THRESHOLD):
+            self.led_on_20.place_forget()
+            self.led_off_20.pack()
+            self.led_off_20.place(x = COL11+dd,y = Y1 + 3*dY1)            
+        else:
+            self.led_off_20.place_forget()
+            self.led_on_20.pack()            
+            self.led_on_20.place(x =COL11+dd,y = Y1 + 3*dY1)
+
+        if (HW.BS11 < HW.BS_THRESHOLD):
+            self.led_on_21.place_forget()
+            self.led_off_21.pack()
+            self.led_off_21.place(x = COL11+dd,y = Y1 + 4*dY1)            
+        else:
+            self.led_off_21.place_forget()
+            self.led_on_21.pack()            
+            self.led_on_21.place(x =COL11+dd,y = Y1 + 4*dY1)
+
+        if (HW.BS12 < HW.BS_THRESHOLD):
+            self.led_on_22.place_forget()
+            self.led_off_22.pack()
+            self.led_off_22.place(x = COL11+dd,y = Y1 + 5*dY1)            
+        else:
+            self.led_off_22.place_forget()
+            self.led_on_22.pack()            
+            self.led_on_22.place(x =COL11+dd,y = Y1 + 5*dY1)
+
+        if (HW.BS13 < HW.BS_THRESHOLD):
+            self.led_on_23.place_forget()
+            self.led_off_23.pack()
+            self.led_off_23.place(x = COL11+dd,y = Y1 + 6*dY1)            
+        else:
+            self.led_off_23.place_forget()
+            self.led_on_23.pack()            
+            self.led_on_23.place(x =COL11+dd,y = Y1 + 6*dY1)
+
+        if (HW.BS14 < HW.BS_THRESHOLD):
+            self.led_on_24.place_forget()
+            self.led_off_24.pack()
+            self.led_off_24.place(x = COL11+dd,y = Y1 + 7*dY1)            
+        else:
+            self.led_off_24.place_forget()
+            self.led_on_24.pack()            
+            self.led_on_24.place(x =COL11+dd,y = Y1 + 7*dY1)     
+
+
 
     def b_select_recipe_file(self):            
         filetypes = (
@@ -152,13 +429,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
  
 
 
-    def InitLabjack(self):
-        # # initialize labjack
-        # logger.info("Initializing Labjack.....")
-        HW.labjack = u6.U6()
-        # HW.labjack.writeRegister(50590, 15)     
-        # print("--->", HW.labjack.getAIN(0))   
-        # logger.info('\t\tlabjack initialized')
+
         
     def InitTecController(self):
         # ------create object of TEC5 
@@ -254,7 +525,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         Event = 0
         # i=0
         while (GENERAL.terminate_SM == False):
-            time.sleep(1)   
+            time.sleep(.5)   
             print("------------------")
             print("---cur_s:",GENERAL.cur_S, " E:",Event)
             S_next = statemachine.TT[GENERAL.cur_S][Event]
@@ -280,16 +551,10 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         # global KILL_THREADS
         logger.debug("exit button pressed ...")
         # KILL_THREADS = True
-        # self.timer.cancel()
-        self.root.destroy()
+        self.timer.cancel()
+        # self.root.destroy()
         sys.exit(0)
 
-    def InitTimer(self):
-        # #------ Starts timer
-        logger.info('starting internal timer')
-        self.timer = threading.Timer(1.0, self.timerCallback_1)
-        self.timer.start()
-        logger.info('\t\tInternal timer started')
 
 
 

@@ -1,12 +1,12 @@
 {"Startup": 
     {
         "enable": true,
-        "gantry_move_speed": 10,
+        "gantry_move_speed": 1,
         "gantry_home_timeout": 500,   
         "gantry_homing_speed": 1,
-        "horizontal_cell_fill_position": 50,
+        "horizontal_cell_fill_position": 20,
         "gantry_move_timeout": 60,
-        "vertical_cell_fill_position": 50
+        "vertical_cell_fill_position": 70
     },
  "PumpInit_Reload": 
     {

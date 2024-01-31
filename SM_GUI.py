@@ -137,90 +137,90 @@ class SM_GUI():
             Y1  = 50
             dY1 = 50
             Label(self.root, text = "Avtive   Homed",font=self.Font5 , bg=self.Color1,
-                  fg='black').place(x = COL7,y = Y1 + 0*dY1)  
-            Label(self.root, text = "   Pump 1 Titrant:",font=self.Font5 , bg=self.Color1,
+                  fg='black').place(x = COL7-5,y = Y1 + 0*dY1)  
+            Label(self.root, text = "    Pump 1 Titrant:",font=self.Font5 , bg=self.Color1,
                   fg='black').place(x = COL6,y = Y1 + 1*dY1)  
-            Label(self.root, text = "    Pump 2 Sample:",font=self.Font5 , bg=self.Color1,
+            Label(self.root, text = "   Pump 2 Sample:",font=self.Font5 , bg=self.Color1,
                   fg='black').place(x = COL6,y = Y1 + 2*dY1)
             Label(self.root, text = "Horizontal Gantry:",font=self.Font5 , bg=self.Color1,
                   fg='black').place(x = COL6,y = Y1 + 3*dY1)
-            Label(self.root, text = "  Vertical Gantry:",font=self.Font5 , bg=self.Color1,
+            Label(self.root, text = "    Vertical Gantry:",font=self.Font5 , bg=self.Color1,
                   fg='black').place(x = COL6,y = Y1 + 4*dY1)
-            Label(self.root, text = "     Mixing Motor:",font=self.Font5 , bg=self.Color1,
+            Label(self.root, text = "       Mixing Motor:",font=self.Font5 , bg=self.Color1,
                   fg='black').place(x = COL6,y = Y1 + 5*dY1)
             
             dd=10
             dist = 80
-            self.led_off_1 = Label(self.root, image=icon_off)
+            self.led_off_1 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_1.image = icon_off
             self.led_off_1.place(x = COL7+dd,y = Y1 + 1*dY1)
 
-            self.led_on_1  = Label(self.root, image=icon_on)
+            self.led_on_1  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_1.image = icon_on
             self.led_on_1.place(x =COL7+dd,y = Y1 + 1*dY1)
 
-            self.led_off_2 = Label(self.root, image=icon_off)
+            self.led_off_2 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_2.image = icon_off
             self.led_off_2.place(x = COL7+dist+dd,y = Y1 + 1*dY1)
-            self.led_on_2  = Label(self.root, image=icon_on)
+            self.led_on_2  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_2 .image = icon_on
             self.led_on_2.place(x =COL7+dist+dd,y = Y1 + 1*dY1)
 
-            self.led_off_3 = Label(self.root, image=icon_off)
+            self.led_off_3 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_3.image = icon_off
             self.led_off_3.place(x = COL7+dd,y = Y1 + 2*dY1)
-            self.led_on_3  = Label(self.root, image=icon_on)
+            self.led_on_3  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_3.image = icon_on
             self.led_on_3.place(x =COL7+dd,y = Y1 + 2*dY1)
 
-            self.led_off_4 = Label(self.root, image=icon_off)
+            self.led_off_4 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_4.image = icon_off
             self.led_off_4.place(x = COL7+dd+dist,y = Y1 + 2*dY1)
 
-            self.led_on_4  = Label(self.root, image=icon_on)
+            self.led_on_4  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_4.image = icon_on
             self.led_on_4.place(x =COL7+dist+dd,y = Y1 + 2*dY1)
 
-            self.led_off_5 = Label(self.root, image=icon_off)
+            self.led_off_5 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_5.image = icon_off
             self.led_off_5.place(x = COL7+dd,y = Y1 + 3*dY1)
-            self.led_on_5  = Label(self.root, image=icon_on)
+            self.led_on_5  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_5.image = icon_on
             self.led_on_5.place(x =COL7+dd,y = Y1 + 3*dY1)
 
-            self.led_off_6 = Label(self.root, image=icon_off)
+            self.led_off_6 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_6.image = icon_off
             self.led_off_6.place(x = COL7+dd+dist,y = Y1 + 3*dY1)
-            self.led_on_6  = Label(self.root, image=icon_on)
+            self.led_on_6  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_6.image = icon_on
             self.led_on_6.place(x =COL7+dist+dd,y = Y1 + 3*dY1)
 
-            self.led_off_7 = Label(self.root, image=icon_off)
+            self.led_off_7 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_7.image = icon_off
             self.led_off_7.place(x = COL7+dd,y = Y1 + 4*dY1)
-            self.led_on_7  = Label(self.root, image=icon_on)
+            self.led_on_7  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_7.image = icon_on
             self.led_on_7.place(x =COL7+dd,y = Y1 + 4*dY1)
 
             # dd = 50
-            self.led_off_8 = Label(self.root, image=icon_off)
+            self.led_off_8 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_8.image = icon_off
             self.led_off_8.place(x = COL7+dd+dist,y = Y1 + 4*dY1)
-            self.led_on_8  = Label(self.root, image=icon_on)
+            self.led_on_8  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_8.image = icon_on
             self.led_on_8.place(x =COL7+dist+dd,y = Y1 + 4*dY1)
 
-            self.led_off_9 = Label(self.root, image=icon_off)
+            self.led_off_9 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_9.image = icon_off
             self.led_off_9.place(x = COL7+dd,y = Y1 + 5*dY1)
-            self.led_on_9  = Label(self.root, image=icon_on)
+            self.led_on_9  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_9.image = icon_on
             self.led_on_9.place(x =COL7+dd,y = Y1 + 5*dY1)
 
-            self.led_off_10 = Label(self.root, image=icon_off)
+            self.led_off_10 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_10.image = icon_off
             self.led_off_10.place(x = COL7+dd+dist,y = Y1 + 5*dY1)
-            self.led_on_10  = Label(self.root, image=icon_on)
+            self.led_on_10  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_10.image = icon_on
             self.led_on_10.place(x =COL7+dist+dd,y = Y1 + 5*dY1)
 
@@ -250,114 +250,114 @@ class SM_GUI():
             
             Label(self.root, text = "BS8:",font=self.Font1 , bg=self.Color1,
                   fg='black').place(x = COL10,y = Y1 + 1*dY1)
-            Label(self.root, text = "BS8:",font=self.Font1 , bg=self.Color1,
-                  fg='black').place(x = COL10,y = Y1 + 2*dY1)
             Label(self.root, text = "BS9:",font=self.Font1 , bg=self.Color1,
-                  fg='black').place(x = COL10,y = Y1 + 3*dY1)
+                  fg='black').place(x = COL10,y = Y1 + 2*dY1)
             Label(self.root, text = "BS10:",font=self.Font1 , bg=self.Color1,
-                  fg='black').place(x = COL10,y = Y1 + 4*dY1)
+                  fg='black').place(x = COL10,y = Y1 + 3*dY1)
             Label(self.root, text = "BS11:",font=self.Font1 , bg=self.Color1,
-                  fg='black').place(x = COL10,y = Y1 + 5*dY1)
+                  fg='black').place(x = COL10,y = Y1 + 4*dY1)
             Label(self.root, text = "BS12:",font=self.Font1 , bg=self.Color1,
-                  fg='black').place(x = COL10,y = Y1 + 6*dY1)
+                  fg='black').place(x = COL10,y = Y1 + 5*dY1)
             Label(self.root, text = "BS13:",font=self.Font1 , bg=self.Color1,
+                  fg='black').place(x = COL10,y = Y1 + 6*dY1)
+            Label(self.root, text = "BS14:",font=self.Font1 , bg=self.Color1,
                   fg='black').place(x = COL10,y = Y1 + 7*dY1)
 
-            self.led_off_11 = Label(self.root, image=icon_off)
+            self.led_off_11 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_11.image = icon_off
             self.led_off_11.place(x = COL9+dd,y = Y1 + 1*dY1)            
-            self.led_on_11  = Label(self.root, image=icon_on)
+            self.led_on_11  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_11.image = icon_on
             self.led_on_11.place(x =COL9+dd,y = Y1 + 1*dY1)
 
-            self.led_off_12 = Label(self.root, image=icon_off)
+            self.led_off_12 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_12.image = icon_off
             self.led_off_12.place(x = COL9+dd,y = Y1 + 2*dY1)            
-            self.led_on_12  = Label(self.root, image=icon_on)
+            self.led_on_12  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_12.image = icon_on
             self.led_on_12.place(x =COL9+dd,y = Y1 + 2*dY1)
 
-            self.led_off_13= Label(self.root, image=icon_off)
+            self.led_off_13= Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_13.image = icon_off
             self.led_off_13.place(x = COL9+dd,y = Y1 + 3*dY1)            
-            self.led_on_13  = Label(self.root, image=icon_on)
+            self.led_on_13  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_13.image = icon_on
             self.led_on_13.place(x =COL9+dd,y = Y1 + 3*dY1)
 
-            self.led_off_14 = Label(self.root, image=icon_off)
+            self.led_off_14 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_14.image = icon_off
             self.led_off_14.place(x = COL9+dd,y = Y1 + 4*dY1)            
-            self.led_on_14  = Label(self.root, image=icon_on)
+            self.led_on_14  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_14.image = icon_on
             self.led_on_14.place(x =COL9+dd,y = Y1 + 4*dY1)
 
-            self.led_off_15 = Label(self.root, image=icon_off)
+            self.led_off_15 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_15.image = icon_off
             self.led_off_15.place(x = COL9+dd,y = Y1 + 5*dY1)            
-            self.led_on_15  = Label(self.root, image=icon_on)
+            self.led_on_15  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_15.image = icon_on
             self.led_on_15.place(x =COL9+dd,y = Y1 + 5*dY1)
 
-            self.led_off_16 = Label(self.root, image=icon_off)
+            self.led_off_16 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_16.image = icon_off
             self.led_off_16.place(x = COL9+dd,y = Y1 + 6*dY1)            
-            self.led_on_16  = Label(self.root, image=icon_on)
+            self.led_on_16  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_16.image = icon_on
             self.led_on_16.place(x =COL9+dd,y = Y1 + 6*dY1)
 
-            self.led_off_17 = Label(self.root, image=icon_off)
+            self.led_off_17 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_17.image = icon_off
             self.led_off_17.place(x = COL9+dd,y = Y1 + 7*dY1)            
-            self.led_on_17  = Label(self.root, image=icon_on)
+            self.led_on_17  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_17.image = icon_on
             self.led_on_17.place(x =COL9+dd,y = Y1 + 7*dY1)
 
-            self.led_off_18 = Label(self.root, image=icon_off)
+            self.led_off_18 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_18.image = icon_off
             self.led_off_18.place(x = COL11+dd,y = Y1 + 1*dY1)            
-            self.led_on_18  = Label(self.root, image=icon_on)
+            self.led_on_18  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_18.image = icon_on
             self.led_on_18.place(x =COL11+dd,y = Y1 + 1*dY1)
 
-            self.led_off_19 = Label(self.root, image=icon_off)
+            self.led_off_19 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_19.image = icon_off
             self.led_off_19.place(x = COL11+dd,y = Y1 + 2*dY1)            
-            self.led_on_19  = Label(self.root, image=icon_on)
+            self.led_on_19  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_19.image = icon_on
             self.led_on_19.place(x =COL11+dd,y = Y1 + 2*dY1)
 
-            self.led_off_20 = Label(self.root, image=icon_off)
+            self.led_off_20 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_20.image = icon_off
             self.led_off_20.place(x = COL11+dd,y = Y1 + 3*dY1)            
-            self.led_on_20  = Label(self.root, image=icon_on)
+            self.led_on_20  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_20.image = icon_on
             self.led_on_20.place(x =COL11+dd,y = Y1 + 3*dY1)
 
-            self.led_off_21 = Label(self.root, image=icon_off)
+            self.led_off_21 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_21.image = icon_off
             self.led_off_21.place(x = COL11+dd,y = Y1 + 4*dY1)            
-            self.led_on_21  = Label(self.root, image=icon_on)
+            self.led_on_21  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_21.image = icon_on
             self.led_on_21.place(x =COL11+dd,y = Y1 + 4*dY1)
 
-            self.led_off_22 = Label(self.root, image=icon_off)
+            self.led_off_22 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_22.image = icon_off
             self.led_off_22.place(x = COL11+dd,y = Y1 + 5*dY1)            
-            self.led_on_22  = Label(self.root, image=icon_on)
+            self.led_on_22  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_22.image = icon_on
             self.led_on_22.place(x =COL11+dd,y = Y1 + 5*dY1)
 
-            self.led_off_23 = Label(self.root, image=icon_off)
+            self.led_off_23 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_23.image = icon_off
             self.led_off_23.place(x = COL11+dd,y = Y1 + 6*dY1)            
-            self.led_on_23  = Label(self.root, image=icon_on)
+            self.led_on_23  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_23.image = icon_on
             self.led_on_23.place(x =COL11+dd,y = Y1 + 6*dY1)
 
-            self.led_off_24 = Label(self.root, image=icon_off)
+            self.led_off_24 = Label(self.root, image=icon_off,bg=self.Color1)
             self.led_off_24.image = icon_off
             self.led_off_24.place(x = COL11+dd,y = Y1 + 7*dY1)            
-            self.led_on_24  = Label(self.root, image=icon_on)
+            self.led_on_24  = Label(self.root, image=icon_on,bg=self.Color1)
             self.led_on_24.image = icon_on
             self.led_on_24.place(x =COL11+dd,y = Y1 + 7*dY1)
 
@@ -371,7 +371,7 @@ class SM_GUI():
             self.Font6 = "Verdana 10 " # combo box text font
             self.Font7 = "Arial 14" # larger text for terminate/start/stop buttons
             #----- Colors ---------------------------------------
-            self.Color1 = '#D9D9D9'  #label background color (gray)
+            self.Color1 = '#D9D9D9' #'#F0F0F0'  #'D9D9D9'  #label background color (gray)
             self.Color2 = "#c5ccd1"  #Button bg color (gray)
             self.Color3 = "red"   # buttons text color
 
