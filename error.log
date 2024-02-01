@@ -376,3 +376,60 @@ ERROR:	Commumication error! -409471088
 2024-01-31 15:55:27,711:config.Pump:exception happened in pump!!
 2024-01-31 15:55:30,714:config.Pump:Error reading pump!!!
 2024-01-31 15:55:30,715:config.Pump:exception happened in pump!!
+2024-02-01 08:09:03,999:config.Pump:Error reading pump!!!
+2024-02-01 08:09:04,000:config.Pump:exception happened in pump!!
+2024-02-01 08:09:07,502:config.Pump:Error reading pump!!!
+2024-02-01 08:09:07,502:config.Pump:exception happened in pump!!
+2024-02-01 08:09:11,004:config.Pump:Error reading pump!!!
+2024-02-01 08:09:11,005:config.Pump:exception happened in pump!!
+2024-02-01 08:09:16,089:config.Pump:Error reading pump!!!
+2024-02-01 08:09:16,090:config.Pump:exception happened in pump!!
+2024-02-01 08:09:31,855:config.Pump:Error reading pump!!!
+2024-02-01 08:09:31,856:config.Pump:exception happened in pump!!
+2024-02-01 08:09:35,359:config.Pump:Error reading pump!!!
+2024-02-01 08:09:35,359:config.Pump:exception happened in pump!!
+2024-02-01 08:09:38,861:config.Pump:Error reading pump!!!
+2024-02-01 08:09:38,861:config.Pump:exception happened in pump!!
+2024-02-01 08:09:43,944:config.Pump:Error reading pump!!!
+2024-02-01 08:09:43,945:config.Pump:exception happened in pump!!
+2024-02-01 08:10:08,650:config.Pump:Error reading pump!!!
+2024-02-01 08:10:08,651:config.Pump:exception happened in pump!!
+2024-02-01 08:10:12,153:config.Pump:Error reading pump!!!
+2024-02-01 08:10:12,153:config.Pump:exception happened in pump!!
+2024-02-01 08:10:15,656:config.Pump:Error reading pump!!!
+2024-02-01 08:10:15,656:config.Pump:exception happened in pump!!
+2024-02-01 08:10:20,737:config.Pump:Error reading pump!!!
+2024-02-01 08:10:20,737:config.Pump:exception happened in pump!!
+2024-02-01 08:10:53,406:config.Pump:Error reading pump!!!
+2024-02-01 08:10:53,407:config.Pump:exception happened in pump!!
+2024-02-01 08:11:04,079:config.Pump:Error reading pump!!!
+2024-02-01 08:11:04,080:config.Pump:exception happened in pump!!
+2024-02-01 08:27:11,412:Lib.Pump:Error reading pump!!!
+2024-02-01 08:27:11,413:Lib.Pump:exception happened in pump!!
+2024-02-01 08:27:14,916:Lib.Pump:Error reading pump!!!
+2024-02-01 08:27:14,917:Lib.Pump:exception happened in pump!!
+2024-02-01 08:27:18,419:Lib.Pump:Error reading pump!!!
+2024-02-01 08:27:18,420:Lib.Pump:exception happened in pump!!
+2024-02-01 08:27:23,515:Lib.Pump:Error reading pump!!!
+2024-02-01 08:27:23,516:Lib.Pump:exception happened in pump!!
+2024-02-01 08:27:39,283:Lib.Pump:Error reading pump!!!
+2024-02-01 08:27:39,284:Lib.Pump:exception happened in pump!!
+2024-02-01 08:27:42,786:Lib.Pump:Error reading pump!!!
+2024-02-01 08:27:42,786:Lib.Pump:exception happened in pump!!
+2024-02-01 08:27:46,290:Lib.Pump:Error reading pump!!!
+2024-02-01 08:27:46,290:Lib.Pump:exception happened in pump!!
+2024-02-01 08:27:51,370:Lib.Pump:Error reading pump!!!
+2024-02-01 08:27:51,370:Lib.Pump:exception happened in pump!!
+2024-02-01 08:28:19,066:Lib.Pump:Error reading pump!!!
+2024-02-01 08:28:19,066:Lib.Pump:exception happened in pump!!
+2024-02-01 08:28:22,567:Lib.Pump:Error reading pump!!!
+2024-02-01 08:28:22,567:Lib.Pump:exception happened in pump!!
+2024-02-01 08:28:26,068:Lib.Pump:Error reading pump!!!
+2024-02-01 08:28:26,069:Lib.Pump:exception happened in pump!!
+2024-02-01 08:28:31,154:Lib.Pump:Error reading pump!!!
+2024-02-01 08:28:31,155:Lib.Pump:exception happened in pump!!
+2024-02-01 08:28:55,202:Lib.Pump:Error reading pump!!!
+2024-02-01 08:28:55,202:Lib.Pump:exception happened in pump!!
+2024-02-01 08:29:05,885:Lib.Pump:Error reading pump!!!
+2024-02-01 08:29:05,886:Lib.Pump:exception happened in pump!!
+ERROR:		cannot load setup

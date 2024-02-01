@@ -12,8 +12,8 @@ import socket
 from serial import Serial
 
 # from this package
-from config.mecom.exceptions import ResponseException, WrongResponseSequence, WrongChecksum, ResponseTimeout, UnknownParameter, UnknownMeComType
-from config.mecom.commands import TEC_PARAMETERS, LDD_PARAMETERS, ERRORS
+from Lib.mecom.exceptions import ResponseException, WrongResponseSequence, WrongChecksum, ResponseTimeout, UnknownParameter, UnknownMeComType
+from Lib.mecom.commands import TEC_PARAMETERS, LDD_PARAMETERS, ERRORS
 
 
 class Parameter(object):
