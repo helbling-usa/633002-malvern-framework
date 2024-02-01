@@ -12,6 +12,50 @@ ERROR = False
 NEXT = False
 activate_NEXT_button = False
 
+pump1 = None
+motors = None
+labjack = None
+tec = None
+
+pump1_titrant_active_led = False
+pump1_titrant_homed_led = False
+pump2_sample_active_led = False
+pump2_sample_homed_led = False
+horizontal_gantry_active_led = False
+horizontal_gantry_homed_led = False
+vertical_gantry_active_led = False
+vertical_gantry_homed_led = False
+mixing_motor_active_led = False
+mixing_motor_homed_led = False
+BS1 = 0
+BS2 = 0
+BS3 = 0
+BS4 = 0
+BS5 = 0
+BS6 = 0
+BS7 = 0
+BS8 = 0
+BS9 = 0
+BS10 = 0
+BS11 = 0
+BS12 = 0
+BS13 = 0
+BS14 = 0
+BS1_LED = False
+BS2_LED = False
+BS3_LED = False
+BS4_LED = False
+BS5_LED = False
+BS6_LED = False
+BS7_LED = False
+BS8_LED = False
+BS9_LED = False
+BS10_LED = False
+BS11_LED = False
+BS12_LED = False
+BS13_LED = False
+BS14_LED = False
+
 
 def reset():
     next_E = 0 
@@ -23,29 +67,6 @@ def reset():
     SM_TEXT_TO_DIAPLAY = "--"
     PAUSE = False
     ERROR = False
-
-# class General_vars():
-#     def __init__(self) -> None:
-#         self.next_E = 0 
-#         self.cur_S = 0
-#         self.prev_S = 0
-#         self.terminate_SM = False
-#         self.doescount = 5
-#         self.dose_number = 0
-#         self.SM_TEXT_TO_DIAPLAY = "--"
-#         self.PAUSE = False
-#         self.ERROR = False
-    
-#     def reset(self):
-#         self.next_E = 0 
-#         self.cur_S = 0
-#         self.prev_S = 0
-#         self.terminate_SM = False
-#         self.doescount = 5
-#         self.dose_number = 0
-#         self.SM_TEXT_TO_DIAPLAY = "--"
-#         self.PAUSE = False
-#         self.ERROR = False
 
 
 def init():

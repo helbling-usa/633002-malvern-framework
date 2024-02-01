@@ -32,6 +32,13 @@ state_name = {0:"S0: Initialization", 1:"S1: Initialize Pumps", 2:"S2: Manual Pu
               4:"S4: Load H2O1", 5:"S5: Load H2O2", 6:"S6: Expel Air1", 7:"S7: Expel Air2", 8:"S8: Get New Air Slugs1",
               9:"S8: retract Column 1", 10:"S10: retract Column 2", 11:"S11: PumpInit&Reload Complete", 12:"Pause", 13:"Error"}
 
+
+def air_or_liquid( voltage):
+    if voltage > HW.BS_THRESHOLD:
+        return 'liquid'
+    else:
+        return 'air'
+    
 #---------------  ACTIONS  --------------
 def action0_0():
     if (GENERAL.PAUSE == True):
@@ -60,29 +67,31 @@ def action0_1():
         GENERAL.SM_TEXT_TO_DIAPLAY = "S0,E1 -> action0_1\n" "Prepare to go to error State"
         return 
     
-    HW.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, 'E')
+    GENERAL.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, 'E')
     time.sleep(.5)
-    HW.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, 'E')
+    GENERAL.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, 'E')
     time.sleep(.5)
-    HW.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,3)
+    GENERAL.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,3)
     time.sleep(.5)
-    HW.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,1)        
+    GENERAL.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,1)        
     time.sleep(.5)
-    HW.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS, 'E')
+    GENERAL.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS, 'E')
     time.sleep(.5)
-    HW.pump1.set_valve(HW.SAMPLE_LOOP_ADDRESS, 'E')
+    GENERAL.pump1.set_valve(HW.SAMPLE_LOOP_ADDRESS, 'E')
     time.sleep(.5)
-    HW.pump1.set_multiwayvalve(HW.TITRANT_PORT_ADDRESS,3)
+    GENERAL.pump1.set_multiwayvalve(HW.TITRANT_PORT_ADDRESS,3)
     time.sleep(.5)
-    HW.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS,1)        
+    GENERAL.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS,1)        
     time.sleep(.5)
-    HW.pump1.set_multiwayvalve(HW.SAMPLE_CLEANING_ADDRESS,1)    
+    GENERAL.pump1.set_multiwayvalve(HW.SAMPLE_CLEANING_ADDRESS,1)    
     time.sleep(.5)
-    HW.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["PumpInit_Reload"]["pump_speed"])
+    GENERAL.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["PumpInit_Reload"]["pump_speed"])
     time.sleep(1)
-    HW.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["PumpInit_Reload"]["pump_speed"])
+    GENERAL.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["PumpInit_Reload"]["pump_speed"])
     time.sleep(1)
     
+
+
     str1 = "  prepare for initialization\n" "  -V1 to LinetoPump\n" "  -V3 to TitrantLine\n"
     str1 = str1 +"  -V5 to Reservoirs\n" "  -V2 to LinetoPump\n" " - V4 to SampleLine\n" " - V7 to Reservoirs\n"
     str1 = str1 +" - V8 to Waste\n" " - V9 to Waste\n" "  going to S0/E1"
@@ -152,17 +161,13 @@ def action1_0():
         GENERAL.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" "going to S1/E4"
         return 
 
-    HW.pump1.pump_Zinit(HW.TIRRANT_PUMP_ADDRESS)
+    GENERAL.pump1.pump_Zinit(HW.TIRRANT_PUMP_ADDRESS)
     # # print("\t\tPump1 initialized")
     time.sleep(3)
-    HW.pump1.pump_Zinit(HW.SAMPLE_PUMP_ADDRESS)    
+    GENERAL.pump1.pump_Zinit(HW.SAMPLE_PUMP_ADDRESS)    
     # # print("\t\tPump2 initialized")
     time.sleep(3)
 
-    # HW.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, 'E')
-    # time.sleep(.5)
-    # HW.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS, 'E')
-    # time.sleep(.5)
 
     str1 = "  Init. Titran Pump\n" "  Init. Sample Pump\n" "  going to S1/E1"
     GENERAL.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" + str1
@@ -231,27 +236,27 @@ def action2_0():
         return 
     
     
-    HW.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, 'E')
+    GENERAL.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, 'E')
     time.sleep(.5)
-    HW.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, 'E')
+    GENERAL.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, 'E')
     time.sleep(.5)
-    HW.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,3)
+    GENERAL.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,3)
     time.sleep(.5)
-    HW.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,1)        
+    GENERAL.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,1)        
     time.sleep(.5)
-    HW.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS, 'E')
+    GENERAL.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS, 'E')
     time.sleep(.5)
-    HW.pump1.set_valve(HW.SAMPLE_LOOP_ADDRESS, 'E')
+    GENERAL.pump1.set_valve(HW.SAMPLE_LOOP_ADDRESS, 'E')
     time.sleep(.5)
-    HW.pump1.set_multiwayvalve(HW.TITRANT_PORT_ADDRESS,3)
+    GENERAL.pump1.set_multiwayvalve(HW.TITRANT_PORT_ADDRESS,3)
     time.sleep(.5)
-    HW.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS,1)        
+    GENERAL.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS,1)        
     time.sleep(.5)
-    HW.pump1.set_multiwayvalve(HW.SAMPLE_CLEANING_ADDRESS,1)    
+    GENERAL.pump1.set_multiwayvalve(HW.SAMPLE_CLEANING_ADDRESS,1)    
     time.sleep(.5)
-    HW.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["PumpInit_Reload"]["pump_speed"])
+    GENERAL.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["PumpInit_Reload"]["pump_speed"])
     time.sleep(1)
-    HW.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["PumpInit_Reload"]["pump_speed"])
+    GENERAL.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["PumpInit_Reload"]["pump_speed"])
     time.sleep(1)
 
 
@@ -360,7 +365,9 @@ def action3_2():
         GENERAL.SM_TEXT_TO_DIAPLAY = "S3,E2 -> action3_2\n" "  goint to S2/E4"
         return 
     
-    GENERAL.SM_TEXT_TO_DIAPLAY ="S3,E2 -> action3_2\n" " go to S4/E0"
+    str1 = "  -V1 to PumptoLine\n" "  -V3 to PumptoLine\n""  -V5 to Reservoirs\n" "  -V9 to Water\n"
+    str1 = str1 +"  -V6 to V7\n" "  -V2 to PumptoLine\n" "  -V4 to PumptoLine\n" "  -V7 to Reservoirs\n" "  -V8 to Water"
+    GENERAL.SM_TEXT_TO_DIAPLAY = str1
     GENERAL.next_E = 0
 
 
@@ -392,17 +399,26 @@ def action4_0():
         GENERAL.SM_TEXT_TO_DIAPLAY = "S4,E0 -> action4_0\n" "goint to S4/E4"
         return 
 
-    str1 = "  -V1 to PumptoLine"
-    "  -V3 to PumptoLine"
-    "  -V5 to Reservoirs"
-    "  -V9 to Water"
-    "  -V6 to V7"
-    "  -V2 to PumptoLine"
-    "  -V4 to PumptoLine"
-    "  -V7 to Reservoirs"
-    "  -V8 to Water"
-    GENERAL.SM_TEXT_TO_DIAPLAY ="S4,E0 -> action4_0\n" + str1
+    GENERAL.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, 'I')
+    time.sleep(.5)
+    GENERAL.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, 'I')
+    time.sleep(.5)
+    GENERAL.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,1)
+    time.sleep(.5)
+    GENERAL.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,2)        
+    time.sleep(.5)
+    GENERAL.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS, 'I')
+    time.sleep(.5)
+    GENERAL.pump1.set_valve(HW.SAMPLE_LOOP_ADDRESS, 'I')
+    time.sleep(.5)
+    GENERAL.pump1.set_multiwayvalve(HW.TITRANT_PORT_ADDRESS,2)
+    time.sleep(.5)
+    GENERAL.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS,2)        
+    time.sleep(.5)
+    GENERAL.pump1.set_multiwayvalve(HW.SAMPLE_CLEANING_ADDRESS,2)    
+    time.sleep(.5)
     GENERAL.next_E = 1
+    GENERAL.SM_TEXT_TO_DIAPLAY ="S4,E0 -> action4_0\n"  
 
 
 def action4_1():
@@ -436,7 +452,7 @@ def action4_2():
         GENERAL.SM_TEXT_TO_DIAPLAY = "S4,E2 -> action4_1\n" "goint to S4/E4"
         return          
   
-    str1 = "  prepare to go to S5" "  going to S5/E0"
+    str1 = "pump1: dispense until bubble sensor\n" "pump2: dispense until bubble sensor"
     GENERAL.SM_TEXT_TO_DIAPLAY ="S4,E2 -> action4_2\n" + str1
     GENERAL.next_E = 0
 
@@ -485,11 +501,47 @@ def action5_1():
         GENERAL.SM_TEXT_TO_DIAPLAY = "S5,E1 -> action5_1\n" "  goint to S5/E6"
         return    
     
+    print('Dispense until bubble')
+    GENERAL.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
+    time.sleep(1)        
+    GENERAL.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
+    time.sleep(1)        
+    GENERAL.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, 20000)
+    time.sleep(1)
+    GENERAL.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, 20000)
+    time.sleep(1)
+    input1 = GENERAL.labjack.getAIN(0)
+    input2 = GENERAL.labjack.getAIN(1)
+    #check if the bubble semsor detect air or liquid
+    cur_state_1 = air_or_liquid(input1)
+    cur_state_2 = air_or_liquid(input2)
+    prev_state_1 = cur_state_1
+    prev_state_2 = cur_state_2
+    while (cur_state_1 == prev_state_1) or (cur_state_2 == prev_state_2) :        
+        input1 = GENERAL.labjack.getAIN(0)
+        cur_state_1 = air_or_liquid(input1)
+        pos1 =GENERAL.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
+        time.sleep(.025)
+        input2 = GENERAL.labjack.getAIN(1)
+        cur_state_2 = air_or_liquid(input2)
+        pos2 =GENERAL.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
+        print('        BS1:{} position:{},   BS2:{} position:{}'.format(input1,pos1,input2, pos2))
+        time.sleep(.025)
+        
+    GENERAL.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
+    time.sleep(.5)
+    GENERAL.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
+    print('\t\tBubble detection terminated')
+    GENERAL.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,HW.DEFAULT_PUMP_SPEEED)
+    time.sleep(.5)
+    GENERAL.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,HW.DEFAULT_PUMP_SPEEED)
+
+
     if (Done == False):        
         GENERAL.SM_TEXT_TO_DIAPLAY = "S5,E1 -> action5_1\n" "  Waiting for pumps to finish dispensing..."
         GENERAL.next_E = 1
     else:        
-        GENERAL.SM_TEXT_TO_DIAPLAY ="S5,E1 -> action5_1\n"  "  dispensing complete" "  going to S5/E2"
+        GENERAL.SM_TEXT_TO_DIAPLAY ="pump 1 to position XX\n""pump 2 to position XX"
         GENERAL.next_E = 2
     
 
@@ -504,6 +556,15 @@ def action5_2():
         GENERAL.SM_TEXT_TO_DIAPLAY = "S5,E2 -> action5_2\n" "  goint to S5/E6"
         return    
     
+    fill_pos_titrant = RECIPE['PumpInit_Reload']['TitrantPumpt_syringe_fill_volume']
+    fill_pos_sample = RECIPE['PumpInit_Reload']['SamplePumpt_syringe_fill_volume']
+
+    
+    
+    GENERAL.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, fill_pos_titrant)
+    time.sleep(1)
+    GENERAL.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, fill_pos_sample)
+    time.sleep(1)
     GENERAL.SM_TEXT_TO_DIAPLAY ="S5,E2 -> action5_2\n" "  Pump 1 position xxx" "  Pump 2 to position xxx"
     GENERAL.next_E = 3
 
@@ -538,7 +599,7 @@ def action5_4():
         GENERAL.SM_TEXT_TO_DIAPLAY = "S5,E4 -> action5_4\n" "  goint to S5/E6"
         return    
     
-    GENERAL.SM_TEXT_TO_DIAPLAY ="S5,E4 -> action5_4\n" "  going to S6/E0"
+    GENERAL.SM_TEXT_TO_DIAPLAY ="S5,E4 -> action5_4\n" "  -V1 to PumptoAir\n" "  -V2 to PumptoAir"
     GENERAL.next_E = 0
 
 
@@ -570,8 +631,12 @@ def action6_0():
         GENERAL.SM_TEXT_TO_DIAPLAY = "S6,E0 -> action6_0\n" "goint to S6/E4"
         return 
 
-    str1 = "  -V1 to PumptoAir"
-    "  -V2 to PumptoAir"
+    GENERAL.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, 'I')
+    time.sleep(.5)
+    GENERAL.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, 'I')
+    time.sleep(.5)
+
+    str1 = "  -V1 to PumptoAir\n""  -V2 to PumptoAir"
     GENERAL.SM_TEXT_TO_DIAPLAY ="S6,E0 -> action6_0\n" + str1
     GENERAL.next_E = 1
 
@@ -606,7 +671,8 @@ def action6_2():
         GENERAL.SM_TEXT_TO_DIAPLAY = "S6,E2 -> action6_1\n" "goint to S6/E4"
         return          
   
-    str1 = "  prepare to go to S7" "  going to S7/E0"
+    
+    str1 = "  pump 1 to position xxx\n""  pump 2 to position xxx"
     GENERAL.SM_TEXT_TO_DIAPLAY ="S6,E2 -> action6_2\n" + str1
     GENERAL.next_E = 0
 
@@ -638,8 +704,16 @@ def action7_0():
         GENERAL.SM_TEXT_TO_DIAPLAY = "S7,E0 -> action7_0\n" "goint to S7/E4"
         return 
 
-    str1 = "  pump 1 to position xxx"
-    "  pump 2 to position xxx"
+    fill_pos_titrant = RECIPE['PumpInit_Reload']['titrantpump_expelair_volume']
+    fill_pos_sample = RECIPE['PumpInit_Reload']['samplepump_expelair_volume']
+    
+    GENERAL.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, fill_pos_titrant)
+    time.sleep(1)
+    GENERAL.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, fill_pos_sample)
+    time.sleep(1)
+
+
+    str1 = "  pump 1 to position xxx\n""  pump 2 to position xxx"
     GENERAL.SM_TEXT_TO_DIAPLAY ="S7,E0 -> action7_0\n" + str1
     GENERAL.next_E = 1
 
@@ -675,7 +749,7 @@ def action7_2():
         GENERAL.SM_TEXT_TO_DIAPLAY = "S7,E2 -> action7_1\n" "goint to S7/E4"
         return          
   
-    str1 = "  prepare to go to S8" "  going to S8/E0"
+    str1 = "  sample pump: Run function NewAirSlugs\n""  titrant pump: run function NewAirSlugs"
     GENERAL.SM_TEXT_TO_DIAPLAY ="S7,E2 -> action7_2\n" + str1
     GENERAL.next_E = 0
 
@@ -707,8 +781,7 @@ def action8_0():
         GENERAL.SM_TEXT_TO_DIAPLAY = "S8,E0 -> action8_0\n" "goint to S8/E4"
         return 
 
-    str1 = "  sample pump: Run function NewAirSlugs"
-    "  titrant pump: run function NewAirSlugs"
+    str1 = "  sample pump: Run function NewAirSlugs\n""  titrant pump: run function NewAirSlugs"
     GENERAL.SM_TEXT_TO_DIAPLAY ="S8,E0 -> action8_0\n" + str1
     GENERAL.next_E = 1
 
@@ -744,7 +817,7 @@ def action8_2():
         GENERAL.SM_TEXT_TO_DIAPLAY = "S8,E2 -> action8_1\n" "goint to S8/E4"
         return          
   
-    str1 = "  prepare to go to S9" "  going to S9/E0"
+    str1 = "  V8 to Air\n" "  V9 to Air"
     GENERAL.SM_TEXT_TO_DIAPLAY ="S9,E2 -> action9_2\n" + str1
     GENERAL.next_E = 0
 
@@ -777,8 +850,15 @@ def action9_0():
         GENERAL.SM_TEXT_TO_DIAPLAY = "S9,E0 -> action9_0\n" "goint to S9/E4"
         return 
 
-    str1 = "  V8 to Air"
-    "  V9 to Air"
+
+    time.sleep(.5)
+    GENERAL.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS,2)        
+    time.sleep(.5)
+    GENERAL.pump1.set_multiwayvalve(HW.SAMPLE_CLEANING_ADDRESS,2)    
+    time.sleep(.5)
+
+
+    str1 = "  V8 to Air\n" "  V9 to Air"
     GENERAL.SM_TEXT_TO_DIAPLAY ="S9,E0 -> action9_0\n" + str1
     GENERAL.next_E = 1
 
@@ -847,8 +927,7 @@ def action10_0():
         GENERAL.SM_TEXT_TO_DIAPLAY = "S10,E0 -> action10_0\n" "goint to S10/E4"
         return 
 
-    str1 = "  pump 1 pickup"
-    "  pump 2 pickup"
+    str1 = "  pump 1 pickup\n" "  pump 2 pickup"
     GENERAL.SM_TEXT_TO_DIAPLAY ="S10,E0 -> action10_0\n" + str1
     GENERAL.next_E = 1
 
@@ -864,6 +943,49 @@ def action10_1():
         GENERAL.next_E = 4
         GENERAL.SM_TEXT_TO_DIAPLAY = "S10,E1 -> action10_1\n" "goint to S10/E4"
         return 
+
+
+
+    print('Pickup until bubble')
+    GENERAL.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
+    time.sleep(1)        
+    GENERAL.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
+    time.sleep(1)        
+    GENERAL.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, 0)
+    time.sleep(1)
+    GENERAL.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, 0)
+    time.sleep(1)
+    input1 = GENERAL.labjack.getAIN(0)
+    input2 = GENERAL.labjack.getAIN(1)
+    #check if the bubble semsor detect air or liquid
+    cur_state_1 = air_or_liquid(input1)
+    cur_state_2 = air_or_liquid(input2)
+    prev_state_1 = cur_state_1
+    prev_state_2 = cur_state_2
+    while (cur_state_1 == prev_state_1) or (cur_state_2 == prev_state_2) :        
+        input1 = GENERAL.labjack.getAIN(0)
+        cur_state_1 = air_or_liquid(input1)
+        pos1 =GENERAL.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
+        time.sleep(.025)
+        input2 = GENERAL.labjack.getAIN(1)
+        cur_state_2 = air_or_liquid(input2)
+        pos2 =GENERAL.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
+        print('        BS1:{} position:{},   BS2:{} position:{}'.format(input1,pos1,input2, pos2))
+        time.sleep(.025)
+        
+    GENERAL.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
+    time.sleep(.5)
+    GENERAL.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
+    print('\t\tBubble detection terminated')
+    GENERAL.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,HW.DEFAULT_PUMP_SPEEED)
+    time.sleep(.5)
+    GENERAL.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,HW.DEFAULT_PUMP_SPEEED)
+
+
+
+
+
+
 
     if (Done == False):        
         GENERAL.SM_TEXT_TO_DIAPLAY = "S10,E1 -> action6_1\n" "  Waiting for bubble sensor to be triggered"

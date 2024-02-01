@@ -18,8 +18,8 @@
         "loadH2O2_timeout": 600,
         "TitrantPumpt_syringe_fill_volume": 100,
         "SamplePumpt_syringe_fill_volume": 100,
-        "titrantpump_expelair_volume": 100,
-        "samplepump_expelair_volume": 100,
+        "titrantpump_expelair_volume": 200,
+        "samplepump_expelair_volume": 200,
         "AirSlug_total_Count": 5,
 		"AirSlug_Volume": 100,
 		"WaterSlug_Volume": 100

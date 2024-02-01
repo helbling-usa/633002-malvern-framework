@@ -64,9 +64,12 @@ class run_SM_GUI(SM_GUI.SM_GUI):
 
 
 
+        
+
+
     def InitTimer(self):
         # #------ Starts timer
-        logger.info('starting internal timer')
+        logger.info('\t\tstarting internal timer')
         self.timer = threading.Timer(1.0, self.timerCallback_1)
         self.timer.start()
         logger.info('\t\tInternal timer started')
@@ -94,29 +97,29 @@ class run_SM_GUI(SM_GUI.SM_GUI):
 
     def InitLabjack(self):
         # # initialize labjack
-        logger.info("Initializing Labjack.....")
-        HW.labjack = u6.U6()
-        HW.labjack.writeRegister(50590, 15)     
-        # print("--->", HW.labjack.getAIN(0))   
+        logger.info("\t\tInitializing Labjack.....")
+        GENERAL.labjack = u6.U6()
+        GENERAL.labjack.writeRegister(50590, 15)     
+        # print("--->", GENERAL.labjack.getAIN(0))   
         # logger.info('\t\tlabjack initialized')
 
 
     def read_BubbleSensors(self):
         # read bubble sensor and update the LEDs
-        HW.BS1 = (HW.labjack.getAIN(0))
-        HW.BS2 = (HW.labjack.getAIN(1))
-        HW.BS3 = (HW.labjack.getAIN(2))
-        HW.BS4 = (HW.labjack.getAIN(3))
-        HW.BS5 = (HW.labjack.getAIN(4))
-        HW.BS6 = (HW.labjack.getAIN(5))
-        HW.BS7 = (HW.labjack.getAIN(6))
-        HW.BS8 = (HW.labjack.getAIN(7))
-        HW.BS9 = (HW.labjack.getAIN(8))
-        HW.BS10 = (HW.labjack.getAIN(9))
-        HW.BS11 = (HW.labjack.getAIN(10))
-        HW.BS12 = (HW.labjack.getAIN(11))
-        HW.BS13 = (HW.labjack.getAIN(12))
-        HW.BS14 = (HW.labjack.getAIN(13))
+        GENERAL.BS1 = (GENERAL.labjack.getAIN(0))
+        GENERAL.BS2 = (GENERAL.labjack.getAIN(1))
+        GENERAL.BS3 = (GENERAL.labjack.getAIN(2))
+        GENERAL.BS4 = (GENERAL.labjack.getAIN(3))
+        GENERAL.BS5 = (GENERAL.labjack.getAIN(4))
+        GENERAL.BS6 = (GENERAL.labjack.getAIN(5))
+        GENERAL.BS7 = (GENERAL.labjack.getAIN(6))
+        GENERAL.BS8 = (GENERAL.labjack.getAIN(7))
+        GENERAL.BS9 = (GENERAL.labjack.getAIN(8))
+        GENERAL.BS10 = (GENERAL.labjack.getAIN(9))
+        GENERAL.BS11 = (GENERAL.labjack.getAIN(10))
+        GENERAL.BS12 = (GENERAL.labjack.getAIN(11))
+        GENERAL.BS13 = (GENERAL.labjack.getAIN(12))
+        GENERAL.BS14 = (GENERAL.labjack.getAIN(13))
 
 
     def updateGUI_LEDs(self):
@@ -125,7 +128,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         dY1 = 50
         dd=10
         dist = 80
-        if (HW.pump1_titrant_active_led == False):
+        if (GENERAL.pump1_titrant_active_led == False):
             self.led_on_1.place_forget()
             self.led_off_1.pack()
             self.led_off_1.place(x = COL7+dd,y = Y1 + 1*dY1)
@@ -134,7 +137,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_1.pack()
             self.led_on_1.place(x =COL7+dd,y = Y1 + 1*dY1)
         
-        if (HW.pump1_titrant_homed_led == False):
+        if (GENERAL.pump1_titrant_homed_led == False):
             self.led_on_2.place_forget()
             self.led_off_2.pack()
             self.led_off_2.place(x = COL7+dist+dd,y = Y1 + 1*dY1)
@@ -143,7 +146,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_2.pack()
             self.led_on_2.place(x =COL7+dist+dd,y = Y1 + 1*dY1)
 
-        if (HW.pump2_sample_active_led == False):
+        if (GENERAL.pump2_sample_active_led == False):
             self.led_on_3.place_forget()
             self.led_off_3.pack()
             self.led_off_3.place(x = COL7+dd,y = Y1 + 2*dY1)
@@ -152,7 +155,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_3.pack()
             self.led_on_3.place(x =COL7+dd,y = Y1 + 2*dY1)
         
-        if (HW.pump2_sample_homed_led == False):
+        if (GENERAL.pump2_sample_homed_led == False):
             self.led_on_4.place_forget()
             self.led_off_4.pack()
             self.led_off_4.place(x = COL7+dist+dd,y = Y1 + 2*dY1)
@@ -161,7 +164,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_4.pack()
             self.led_on_4.place(x =COL7+dist+dd,y = Y1 + 2*dY1)
 
-        if (HW.horizontal_gantry_active_led == False):
+        if (GENERAL.horizontal_gantry_active_led == False):
             self.led_on_5.place_forget()
             self.led_off_5.pack()
             self.led_off_5.place(x = COL7+dd,y = Y1 + 3*dY1)
@@ -170,7 +173,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_5.pack()
             self.led_on_5.place(x =COL7+dd,y = Y1 + 3*dY1)
         
-        if (HW.horizontal_gantry_homed_led == False):
+        if (GENERAL.horizontal_gantry_homed_led == False):
             self.led_on_6.place_forget()
             self.led_off_6.pack()
             self.led_off_6.place(x = COL7+dist+dd,y = Y1 + 3*dY1)
@@ -180,7 +183,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_6.place(x =COL7+dist+dd,y = Y1 + 3*dY1)
 
 
-        if (HW.vertical_gantry_active_led == False):
+        if (GENERAL.vertical_gantry_active_led == False):
             self.led_on_7.place_forget()
             self.led_off_7.pack()
             self.led_off_7.place(x = COL7+dd,y = Y1 + 4*dY1)
@@ -189,7 +192,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_7.pack()
             self.led_on_7.place(x =COL7+dd,y = Y1 + 4*dY1)
         
-        if (HW.vertical_gantry_homed_led == False):
+        if (GENERAL.vertical_gantry_homed_led == False):
             self.led_on_8.place_forget()
             self.led_off_8.pack()
             self.led_off_8.place(x = COL7+dist+dd,y = Y1 + 4*dY1)
@@ -198,7 +201,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_8.pack()
             self.led_on_8.place(x =COL7+dist+dd,y = Y1 + 4*dY1)
 
-        if (HW.mixing_motor_active_led == False):
+        if (GENERAL.mixing_motor_active_led == False):
             self.led_on_9.place_forget()
             self.led_off_9.pack()
             self.led_off_9.place(x = COL7+dd,y = Y1 + 5*dY1)
@@ -207,7 +210,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_9.pack()
             self.led_on_9.place(x =COL7+dd,y = Y1 + 5*dY1)
         
-        if (HW.mixing_motor_homed_led == False):
+        if (GENERAL.mixing_motor_homed_led == False):
             self.led_on_10.place_forget()
             self.led_off_10.pack()
             self.led_off_10.place(x = COL7+dist+dd,y = Y1 + 5*dY1)
@@ -223,8 +226,8 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         Y1  = 50
         dY1 = 40
         dd=40
-        # print('---',HW.BS11)
-        if (HW.BS1 < HW.BS_THRESHOLD):
+        # print('---',GENERAL.BS11)
+        if (GENERAL.BS1 < HW.BS_THRESHOLD):
             self.led_on_11.place_forget()
             self.led_off_11.pack()
             self.led_off_11.place(x = COL9+dd,y = Y1 + 1*dY1)
@@ -233,7 +236,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_11.pack()            
             self.led_on_11.place(x =COL9+dd,y = Y1 + 1*dY1)
 
-        if (HW.BS2 < HW.BS_THRESHOLD):
+        if (GENERAL.BS2 < HW.BS_THRESHOLD):
             self.led_on_12.place_forget()
             self.led_off_12.pack()
             self.led_off_12.place(x = COL9+dd,y = Y1 + 2*dY1)            
@@ -242,7 +245,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_12.pack()            
             self.led_on_12.place(x =COL9+dd,y = Y1 + 2*dY1)
 
-        if (HW.BS3 < HW.BS_THRESHOLD):
+        if (GENERAL.BS3 < HW.BS_THRESHOLD):
             self.led_on_13.place_forget()
             self.led_off_13.pack()
             self.led_off_13.place(x = COL9+dd,y = Y1 + 3*dY1)            
@@ -251,7 +254,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_13.pack()            
             self.led_on_13.place(x =COL9+dd,y = Y1 + 3*dY1)
 
-        if (HW.BS4 < HW.BS_THRESHOLD):
+        if (GENERAL.BS4 < HW.BS_THRESHOLD):
             self.led_on_14.place_forget()
             self.led_off_14.pack()
             self.led_off_14.place(x = COL9+dd,y = Y1 + 4*dY1)            
@@ -260,7 +263,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_14.pack()            
             self.led_on_14.place(x =COL9+dd,y = Y1 + 4*dY1)
 
-        if (HW.BS5 < HW.BS_THRESHOLD):
+        if (GENERAL.BS5 < HW.BS_THRESHOLD):
             self.led_on_15.place_forget()
             self.led_off_15.pack()
             self.led_off_15.place(x = COL9+dd,y = Y1 + 5*dY1)            
@@ -269,7 +272,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_15.pack()            
             self.led_on_15.place(x =COL9+dd,y = Y1 + 5*dY1)
 
-        if (HW.BS6 < HW.BS_THRESHOLD):
+        if (GENERAL.BS6 < HW.BS_THRESHOLD):
             self.led_on_16.place_forget()
             self.led_off_16.pack()
             self.led_off_16.place(x = COL9+dd,y = Y1 + 6*dY1)            
@@ -278,7 +281,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_16.pack()            
             self.led_on_16.place(x =COL9+dd,y = Y1 + 6*dY1)
 
-        if (HW.BS7 < HW.BS_THRESHOLD):
+        if (GENERAL.BS7 < HW.BS_THRESHOLD):
             self.led_on_17.place_forget()
             self.led_off_17.pack()
             self.led_off_17.place(x = COL9+dd,y = Y1 + 7*dY1)            
@@ -287,7 +290,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_17.pack()            
             self.led_on_17.place(x =COL9+dd,y = Y1 + 7*dY1)                                                
 
-        if (HW.BS8 < HW.BS_THRESHOLD):
+        if (GENERAL.BS8 < HW.BS_THRESHOLD):
             self.led_on_18.place_forget()
             self.led_off_18.pack()
             self.led_off_18.place(x = COL11+dd,y = Y1 + 1*dY1)
@@ -296,7 +299,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_18.pack()            
             self.led_on_18.place(x =COL11+dd,y = Y1 + 1*dY1)
 
-        if (HW.BS9 < HW.BS_THRESHOLD):
+        if (GENERAL.BS9 < HW.BS_THRESHOLD):
             self.led_on_19.place_forget()
             self.led_off_19.pack()
             self.led_off_19.place(x = COL11+dd,y = Y1 + 2*dY1)            
@@ -305,7 +308,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_19.pack()            
             self.led_on_19.place(x =COL11+dd,y = Y1 + 2*dY1)
 
-        if (HW.BS10 < HW.BS_THRESHOLD):
+        if (GENERAL.BS10 < HW.BS_THRESHOLD):
             self.led_on_20.place_forget()
             self.led_off_20.pack()
             self.led_off_20.place(x = COL11+dd,y = Y1 + 3*dY1)            
@@ -314,7 +317,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_20.pack()            
             self.led_on_20.place(x =COL11+dd,y = Y1 + 3*dY1)
 
-        if (HW.BS11 < HW.BS_THRESHOLD):
+        if (GENERAL.BS11 < HW.BS_THRESHOLD):
             self.led_on_21.place_forget()
             self.led_off_21.pack()
             self.led_off_21.place(x = COL11+dd,y = Y1 + 4*dY1)            
@@ -323,7 +326,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_21.pack()            
             self.led_on_21.place(x =COL11+dd,y = Y1 + 4*dY1)
 
-        if (HW.BS12 < HW.BS_THRESHOLD):
+        if (GENERAL.BS12 < HW.BS_THRESHOLD):
             self.led_on_22.place_forget()
             self.led_off_22.pack()
             self.led_off_22.place(x = COL11+dd,y = Y1 + 5*dY1)            
@@ -332,7 +335,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_22.pack()            
             self.led_on_22.place(x =COL11+dd,y = Y1 + 5*dY1)
 
-        if (HW.BS13 < HW.BS_THRESHOLD):
+        if (GENERAL.BS13 < HW.BS_THRESHOLD):
             self.led_on_23.place_forget()
             self.led_off_23.pack()
             self.led_off_23.place(x = COL11+dd,y = Y1 + 6*dY1)            
@@ -341,7 +344,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_23.pack()            
             self.led_on_23.place(x =COL11+dd,y = Y1 + 6*dY1)
 
-        if (HW.BS14 < HW.BS_THRESHOLD):
+        if (GENERAL.BS14 < HW.BS_THRESHOLD):
             self.led_on_24.place_forget()
             self.led_off_24.pack()
             self.led_off_24.place(x = COL11+dd,y = Y1 + 7*dY1)            
@@ -369,19 +372,6 @@ class run_SM_GUI(SM_GUI.SM_GUI):
     def PortAssignment(self):
 
         logger.info("Assigning Ports .....")
-        # #---- extract port numbers for config.json
-        with open('./config/config.json') as json_file:
-            ports = json.load(json_file)
-        #assign port numbers to the hardware
-        # logger.info('ports:', ports)
-        HW.TEC_PORT = ports['TEC']
-        HW.PUMP1_PORT = ports['PUMP']
-        HW.TECHNOSOFT_PORT = ports['TECHNOSOFT']
-        HW.GANTRY_VER_AXIS_ID = int(ports['GANTRY_VER_AXIS_ID'])
-        HW.GANTRY_HOR_AXIS_ID = int(ports['GANTRY_HOR_AXIS_ID'])
-        HW.MIXER_AXIS_ID = int(ports['MIXER_AXIS_ID'])        
-        print('==================================')
-
         print("tec:",HW.TEC_PORT )
         print("pump1:",HW.PUMP1_PORT )
         print("technosoft:",HW.TECHNOSOFT_PORT)
@@ -395,43 +385,45 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         # # #------ init. Pump 1
         # logger.info("Initializing Pumps/Valves.....")
         com_port = HW.PUMP1_PORT
-        HW.pump1 = P.Pump(com_port)
+        GENERAL.pump1 = P.Pump(com_port)
         
-        # HW.pump1.pump_Zinit(HW.TIRRANT_PUMP_ADDRESS)
+        # GENERAL.pump1.pump_Zinit(HW.TIRRANT_PUMP_ADDRESS)
         # logger.info("\t\tPump1 initialized")
         # time.sleep(3)
         
-        # HW.pump1.pump_Zinit(HW.SAMPLE_PUMP_ADDRESS)
+        # GENERAL.pump1.pump_Zinit(HW.SAMPLE_PUMP_ADDRESS)
         # logger.info("\t\tPump2 initialized")
         # time.sleep(3)
 
-        # HW.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,HW.DEFAULT_PUMP_SPEEED)
+        # GENERAL.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,HW.DEFAULT_PUMP_SPEEED)
         # logger.info("\t\tPump1 speed is set to {}".format(HW.DEFAULT_PUMP_SPEEED))
         
-        # HW.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,HW.DEFAULT_PUMP_SPEEED)
+        # GENERAL.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,HW.DEFAULT_PUMP_SPEEED)
         # logger.info("\t\tPump2 speed is set to {}".format(HW.DEFAULT_PUMP_SPEEED))
 
 
         # logger.info("\t\tSetting valves to default positions")
-        # HW.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, 'E')
-        # HW.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, 'E')
-        # HW.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,3)
-        # HW.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,1)        
-        # HW.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS, 'E')
-        # HW.pump1.set_valve(HW.SAMPLE_LOOP_ADDRESS, 'E')
-        # HW.pump1.set_multiwayvalve(HW.TITRANT_PORT_ADDRESS,3)
-        # HW.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS,1)        
-        # HW.pump1.set_multiwayvalve(HW.SAMPLE_CLEANING_ADDRESS,1)        
+        # GENERAL.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, 'E')
+        # GENERAL.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, 'E')
+        # GENERAL.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,3)
+        # GENERAL.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,1)        
+        # GENERAL.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS, 'E')
+        # GENERAL.pump1.set_valve(HW.SAMPLE_LOOP_ADDRESS, 'E')
+        # GENERAL.pump1.set_multiwayvalve(HW.TITRANT_PORT_ADDRESS,3)
+        # GENERAL.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS,1)        
+        # GENERAL.pump1.set_multiwayvalve(HW.SAMPLE_CLEANING_ADDRESS,1)        
 
 
     def Init__motors_all_axes(self):
-        # logger.info("Initializing motors .....")        
+        logger.info("Initializing motors .....")        
         com_port = HW.TECHNOSOFT_PORT.encode()        
+        print('com port = ', HW.TECHNOSOFT_PORT)
+        print("--------------------")
         primary_axis =  b"Mixer"
         AXIS_ID_01 = HW.MIXER_AXIS_ID
         AXIS_ID_02 = HW.GANTRY_HOR_AXIS_ID
         AXIS_ID_03 = HW.GANTRY_VER_AXIS_ID
-        HW.motors = Motors(com_port, AXIS_ID_01, AXIS_ID_02, AXIS_ID_03 ,primary_axis)   
+        GENERAL.motors = Motors(com_port, AXIS_ID_01, AXIS_ID_02, AXIS_ID_03 ,primary_axis)   
  
 
 
@@ -440,7 +432,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
     def InitTecController(self):
         # ------create object of TEC5 
         # logger.info("Initialzing TEC Temperature Controller---------------------")
-        HW.tec = TEC.MeerstetterTEC(HW.TEC_PORT)
+        GENERAL.tec = TEC.MeerstetterTEC(HW.TEC_PORT)
         # logger.info(self.mc.get_data())
         # logger.info("\t\tTEC controller initialized ")
 
@@ -529,7 +521,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
 
 
     def execute(self, statemachine):
-        global GENERAL
+        self.b_start["state"] =  DISABLED
         self.reset_SM_vars()
         # print('cur state:', GENERAL.cur_S, 'next event:', GENERAL.next_E)    
         Event = 0
@@ -555,7 +547,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.t_cur_proc.insert(END, statemachine.name())
 
         print('SM Terminated')
-        self.b_start["state"] =  DISABLED
+        
         
     def checkExitButton(self):
         # global KILL_THREADS
