@@ -85,7 +85,7 @@ class SM_GUI():
             COL2 = 140
             COL3 = 290
             COL4 = 325
-            COL5 = 375
+            COL5 = 430#375
             Label(self.root, text = "Recipe File",font=self.Font1 , bg=self.Color1,
                   fg='black').place(x = COL1,y = Y1 + 1*dY1)  
 
@@ -95,12 +95,12 @@ class SM_GUI():
             
             self.b_openfile = Button(self.root,text="▼", font=self.Font2,
                                      command=self.b_select_recipe_file).place(x = COL3,y = Y1 + 1*dY1 - 2)
-            self.b_start = Button(self.root,text="Start", font=self.Font2, bg="#558ff2", 
-                                  command=self.b_start_recipe)
+            self.b_start = Button(self.root,text="    Start    ", font=self.Font7,fg = "red", bg="#558ff2", 
+                                  disabledforeground="#80aaf2" , command=self.b_start_recipe)
             self.b_start.pack()
             self.b_start.place(x = COL4, y = Y1 + 1*dY1 - 2)
-            self.b_nextbutton = Button(self.root,text="Next", font=self.Font2, bg="#558ff2", 
-                                       command=self.b_next)
+            self.b_nextbutton = Button(self.root,text="   Next   ", font=self.Font7, fg = "red",bg="#558ff2",
+                                        disabledforeground="#80aaf2", command=self.b_next)
             self.b_nextbutton.pack()
             self.b_nextbutton.place(x = COL5, y = Y1 + 1*dY1 - 2)
 

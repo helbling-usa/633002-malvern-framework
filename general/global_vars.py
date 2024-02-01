@@ -27,6 +27,9 @@ vertical_gantry_active_led = False
 vertical_gantry_homed_led = False
 mixing_motor_active_led = False
 mixing_motor_homed_led = False
+
+current_Aspiration_count = 0
+
 BS1 = 0
 BS2 = 0
 BS3 = 0
@@ -57,6 +60,9 @@ BS13_LED = False
 BS14_LED = False
 
 
+SM_list = None
+SM_list_str = ["Startup", "PumpInit_Reload", "Degas", "Load_Prime", "Func_NewAirSlugs"]
+SM_enabled_dic = None
 def reset():
     next_E = 0 
     cur_S = 0

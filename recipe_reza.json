@@ -1,6 +1,6 @@
 {"Startup": 
     {
-        "enable": true,
+        "enable": false,
         "gantry_move_speed": 1,
         "gantry_home_timeout": 500,   
         "gantry_homing_speed": 1,
@@ -10,7 +10,7 @@
     },
  "PumpInit_Reload": 
     {
-        "enable": true,
+        "enable": false,
         "pump_speed": 1000,
         "valve_move_timeout": 60,
         "pump_init_timeout": 60,
@@ -27,19 +27,19 @@
  "Degas": 
     {
         "enable": true,
-        "pump_speed": 1000,
+        "pump_speed": 100,
         "valve_move_timeout": 30,        
         "pump_move_timeout": 360,
         "degas_temp": 25,
         "experiment_temp": 30,
         "temperature_settledown_timeout": 1000,
-        "heat_time": 100,
-        "AspirationVolume_Overshoot": 100,
+        "heat_time": 10,
+        "AspirationVolume_Overshoot": 300,
         "total_asipiration_number":4
     },
  "Load_Prime": 
     {
-        "enable": true,
+        "enable": false,
         "pump_speed": 1000,
         "valve_move_timeout": 60,        
         "pump_move_timeout": 600, 
@@ -48,13 +48,14 @@
     },
  "Func_NewAirSlugs": 
     {
-        "enable": true,
-        "pump_speed": 1000,
+        "enable": false,
+        "pump_speed": 300,
         "valve_move_timeout": 60,        
         "pump_move_timeout": 600, 
-        "AirSlug_Total_count": 7,
+        "AirSlug_Total_count": 2,
         "AirSlug_Volume": 100,        
-        "LastAirSlug_Volume": 100,
-        "SC2_Volume": 100
+        "LastAirSlug_Volume": 500,
+        "SC2_Volume": 100,
+        "WaterSlug_Volume": 500
     }    
  }

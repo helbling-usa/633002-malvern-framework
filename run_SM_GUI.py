@@ -12,15 +12,19 @@ import  json
 import  logging
 import  sys
 import  numpy as np
-import  threading
 import  general.global_vars as GV
 from    general.recipe import RECIPE
 import  SM.Startup
-import  SM.Pump_Init_Reload
+import  SM.PumpInit_Reload
+import  SM.Degas
+import  SM.Load_Prime
+import  SM.Func_NewAirSlugs
 import  HW
 #--------------  GLOBAL VARIABLES -----------------------------------------
 
 # GV = General_vars()
+
+
 
 #------------------ initialize logger -------------------------------------
 logger = logging.getLogger(__name__)
@@ -59,12 +63,8 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         self.InitTimer()
         self.b_nextbutton["state"] = DISABLED
         self.b_start["state"] = DISABLED
-        
-
-
-
-
-        
+        GV.SM_list = [SM.Startup, SM.PumpInit_Reload, SM.Degas, SM.Load_Prime, SM.Func_NewAirSlugs]
+        GV.SM_list_str = ["Startup", "PumpInit_Reload", "Degas", "Load_Prime", "Func_NewAirSlugs"]
 
 
     def InitTimer(self):
@@ -466,15 +466,15 @@ class run_SM_GUI(SM_GUI.SM_GUI):
 
         #copy recipe.json into recipe dictionary global variable
         info_str = ""
-        # SM_enabled_dic = {}
+        GV.SM_enabled_dic = {}
         for key in recipe_json.keys():
             # print("==", key)
             RECIPE[key] = recipe_json[key]
             if (recipe_json[key]['enable'] == True):
-                # SM_enabled_dic[key] = True
+                GV.SM_enabled_dic[key] = True
                 info_str = info_str +key+": Enabled"+ "\n"
             else:
-                # SM_enabled_dic[key] = False
+                GV.SM_enabled_dic[key] = False
                 info_str = info_str +key+": Disabled"+ "\n"
 
         #Display SMs enable status in the status box
@@ -482,23 +482,24 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         self.t_status.insert(END, info_str)
 
 
-        # print("===============")
-        # print(RECIPE)
-        # print("===============")
-        # print("global vars:", GV.SM_TEXT_TO_DIAPLAY)
-
-
-
-
 
 
     def b_start_recipe(self):
         logger.debug("child: start button pressed")
-        # print("Running:{} Statemachine".format( SM.Startup.name()))
-        # self.t1 = threading.Thread(target=self.execute, args=(SM.Startup,))
-        print("Running:{} Statemachine".format( SM.Pump_Init_Reload.name()))
-        self.t1 = threading.Thread(target=self.execute, args=(SM.Pump_Init_Reload,))
-        self.t1.start()
+
+        for item,item_str in zip(GV.SM_list, GV.SM_list_str):                        
+            print("item:", item_str, "  value:", GV.SM_enabled_dic[item_str] )
+            if (GV.SM_enabled_dic[item_str] == True):
+                print(item_str, '  is about to run')
+                str = "SM."+item_str 
+                # print("module:", str, '  ==== ', sys.modules[str]
+                print("Running:{} Statemachine".format( sys.modules[str].name()))
+                self.t1 = threading.Thread(target=self.execute, args=(sys.modules[str],))
+                self.t1.start()
+                GV.SM_enabled_dic[item_str] = False
+                break
+
+
 
 
     def b_next(self):
@@ -508,7 +509,6 @@ class run_SM_GUI(SM_GUI.SM_GUI):
 
 
     def reset_SM_vars(self):
-        global GV
         GV.next_E = 0 
         GV.cur_S = 0
         GV.prev_S = 0
@@ -521,9 +521,8 @@ class run_SM_GUI(SM_GUI.SM_GUI):
 
 
     def execute(self, statemachine):
-        self.b_start["state"] =  DISABLED
+        self.b_start["state"] =  DISABLED  #disable START button on the GUI
         self.reset_SM_vars()
-        # print('cur state:', GV.cur_S, 'next event:', GV.next_E)    
         Event = 0
         # i=0
         while (GV.terminate_SM == False):
@@ -547,6 +546,8 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.t_cur_proc.insert(END, statemachine.name())
 
         print('SM Terminated')
+        self.b_start["state"] =  NORMAL  #enable START button on the GUI
+        self.b_start.config(text=' Continue ')
         
         
     def checkExitButton(self):

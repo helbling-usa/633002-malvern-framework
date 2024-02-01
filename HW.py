@@ -28,4 +28,5 @@ MIXER_AXIS_ID = 24                      # axis id of mixer motor
 GANTRY_VER_AXIS_ID =  1                 # axis id of vertical gantry
 GANTRY_HOR_AXIS_ID =  1                 # axis id of horizontal gantry
 
+SM_EXECUTION_ORDER = ['Startup', 'PumpInit_Reload', 'Degas', 'Load_Prime','Func_NewAirSlugs']
 

@@ -56,7 +56,8 @@ RECIPE= {
         "AirSlug_Total_count": 0,
         "AirSlug_Volume": 0,
         "LastAirSlug_Volume": 0,
-        "SC2_Volume": 0
+        "SC2_Volume": 0,
+        "WaterSlug_Volume": 0
     }    
  }
 

@@ -1,4 +1,4 @@
-import numpy as np
+import  numpy as np
 import  general.global_vars as GV
 import  HW
 import  time
@@ -26,7 +26,7 @@ TT = np.array([[( 0, 'action0_0')  ,(0, 'action0_1') ,(0, 'action0_2') ,(1, 'act
 
 
 def name():
-    return "Pump_Init_Reload"
+    return "PumpInit_Reload"
 
 state_name = {0:"S0: Initialization", 1:"S1: Initialize Pumps", 2:"S2: Manual Purge1", 3:"S3: Manual Purge2",
               4:"S4: Load H2O1", 5:"S5: Load H2O2", 6:"S6: Expel Air1", 7:"S7: Expel Air2", 8:"S8: Get New Air Slugs1",
@@ -39,6 +39,57 @@ def air_or_liquid( voltage):
     else:
         return 'air'
     
+def NewAirSlugs(pump_address, valve_address):
+    pump_speed = RECIPE["Func_NewAirSlugs"]["pump_speed"]
+    air_slug_total_count = RECIPE["Func_NewAirSlugs"]["AirSlug_Total_count"]
+    air_slug_volume = RECIPE["Func_NewAirSlugs"]["AirSlug_Volume"]
+    LastAirSlug_Volume = RECIPE["Func_NewAirSlugs"]["LastAirSlug_Volume"]
+    SC2_Volume = RECIPE["Func_NewAirSlugs"]["SC2_Volume"]
+    WaterSlug_Volume = RECIPE["Func_NewAirSlugs"]["WaterSlug_Volume"]
+
+    
+    tot =0
+
+    starting_pos = GV.pump1.get_plunger_position(pump_address)
+    
+    GV.pump1.set_speed(pump_address, pump_speed)
+    time.sleep(1)
+
+    airslug_count = 0
+    next_pos =  starting_pos
+    while (airslug_count < air_slug_total_count):        
+        GV.pump1.set_multiwayvalve(valve_address,1)        #Valve to Air
+        time.sleep(1)    
+        next_pos +=  air_slug_volume
+        GV.pump1.set_pos_absolute(pump_address, next_pos)
+        pump_pos = 0
+        while(pump_pos < next_pos):
+            pump_pos = GV.pump1.get_plunger_position(pump_address)
+            print("count:",airslug_count+1,"/",air_slug_total_count,"pump pos:",
+                  pump_pos, '  target:', next_pos)
+            time.sleep(1)
+            
+        GV.pump1.set_multiwayvalve(valve_address,2)        #Valve to water
+        time.sleep(1)
+        next_pos += air_slug_volume
+        GV.pump1.set_pos_absolute(pump_address, next_pos)  #pump to position
+        pump_pos = 0
+        while(pump_pos < next_pos):
+            pump_pos = GV.pump1.get_plunger_position(pump_address)
+            print("\t\tpump pos:", pump_pos, '  target:', next_pos)
+            time.sleep(1)
+        airslug_count += 1
+
+
+    GV.pump1.set_multiwayvalve(valve_address,1)        #Valve to Air
+    time.sleep(1) 
+    next_pos += LastAirSlug_Volume
+    GV.pump1.set_pos_absolute(pump_address, next_pos)  #pump to position
+    while(pump_pos < next_pos):
+        pump_pos = GV.pump1.get_plunger_position(pump_address)
+        print("pump pos:", pump_pos, '  target:', next_pos)
+        time.sleep(1)     
+
 #---------------  ACTIONS  --------------
 def action0_0():
     if (GV.PAUSE == True):
@@ -55,6 +106,8 @@ def action0_0():
     str1 = str1 +" - V8 to Waste\n" " - V9 to Waste\n" "  going to S0/E1" 
     GV.SM_TEXT_TO_DIAPLAY = "S0,E0 -> action0_0\n" + str1
     GV.next_E = 1
+
+    
 
 
 def action0_1():
@@ -749,7 +802,7 @@ def action7_2():
         GV.SM_TEXT_TO_DIAPLAY = "S7,E2 -> action7_1\n" "goint to S7/E4"
         return          
   
-    str1 = "  sample pump: Run function NewAirSlugs\n""  titrant pump: run function NewAirSlugs"
+    str1 = "  sample pump:\n Run function NewAirSlugs\n"
     GV.SM_TEXT_TO_DIAPLAY ="S7,E2 -> action7_2\n" + str1
     GV.next_E = 0
 
@@ -781,7 +834,13 @@ def action8_0():
         GV.SM_TEXT_TO_DIAPLAY = "S8,E0 -> action8_0\n" "goint to S8/E4"
         return 
 
-    str1 = "  sample pump: Run function NewAirSlugs\n""  titrant pump: run function NewAirSlugs"
+
+    pump_address = HW.SAMPLE_PUMP_ADDRESS
+    valve_address = HW.DEGASSER_ADDRESS
+    NewAirSlugs(pump_address, valve_address)
+
+
+    str1 = "  titrant pump: run function NewAirSlugs"
     GV.SM_TEXT_TO_DIAPLAY ="S8,E0 -> action8_0\n" + str1
     GV.next_E = 1
 
@@ -797,6 +856,12 @@ def action8_1():
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S8,E1 -> action8_1\n" "goint to S8/E4"
         return 
+
+
+    pump_address = HW.TIRRANT_PUMP_ADDRESS
+    valve_address = HW.SAMPLE_CLEANING_ADDRESS
+    NewAirSlugs(pump_address, valve_address)
+
 
     if (Done == False):        
         GV.SM_TEXT_TO_DIAPLAY = "S8,E1 -> action8_1\n" "  Waiting for pumps to finish functions"

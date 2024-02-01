@@ -7,7 +7,6 @@ from    general.recipe import RECIPE
 
 
 
-
 ##-----------------   ("next STATE","FUCNCTION") --------------------------------------------------
 #-------------   -------E0-------    ------E1-------  -------E2-------  -------E3-------  -------E4-------  -------E5-------  
 TT = np.array([[( 1, 'action0_0'),  (0, 'None')     , (0, 'None')     , (0, 'None')     , (0, 'None')     ],  #<---STATE0
@@ -367,7 +366,6 @@ def action5_1():
         return 
     
     GV.terminate_SM = True
-    # print("S5,E1 -> action5_1")
     GV.next_E = 1
     GV.SM_TEXT_TO_DIAPLAY ="S5,E1 -> action5_1\n"  "  start up completed\n" "  returning to the main GUI"
     
@@ -428,44 +426,3 @@ def action7_0():
     GV.SM_TEXT_TO_DIAPLAY ="S7,E0 -> action7_0\n"
 
 #--------------
-
-# def execute():
-#     global S_cur 
-#     global Event 
-#     global GV.next_E 
-#     global KILL_THREADS
-#     global TAKE_STEP
-#     global GV.SM_TEXT_TO_DIAPLAY
-#     global RESET
-#     S_cur = Event = 0
-#     print('init S:{}  init E:{}'.format(S_cur, Event))
-
-#     while (terminate_SM == False):
-#         # time.sleep(DELAY_TIME) 
-#         time.sleep(.5)
-#         if (TAKE_STEP == True and KILL_THREADS == False and RESET==False):
-#             TAKE_STEP = False
-#             S_next = TT[S_cur][Event]
-#             Next_State = int(S_next[0])    
-#             Next_action= S_next[1]
-#             S_cur = Next_State            
-#             eval(Next_action+'()')
-#             Event = GV.next_E 
-            
-#         if (KILL_THREADS == True):
-#                 break
-#         if (RESET == True):
-#             S_cur = Event = 0
-#             GV.SM_TEXT_TO_DIAPLAY = "reset the SM"
-#             RESET = False
-#             break
-
-#     print('SM Terminated')
-#     .b_run['state']=NORMAL
-#     .b_step['state']=DISABLED
-
-#-------------------------------------------------------------
-#-------------- END OF ACTIONS -------------------------------
-#-------------------------------------------------------------
-
-
