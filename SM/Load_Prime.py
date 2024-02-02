@@ -1,6 +1,6 @@
 import numpy as np
 import  general.global_vars as GV
-import  config as HW
+import  hardware.config as HW
 import  time
 from    general.recipe import RECIPE
 

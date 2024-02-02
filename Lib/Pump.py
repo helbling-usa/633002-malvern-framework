@@ -6,7 +6,7 @@ logger.setLevel(logging.DEBUG)
 
 formatter = logging.Formatter('%(asctime)s:%(name)s:%(message)s')
 
-file_handler = logging.FileHandler('error.log')
+file_handler = logging.FileHandler('./logs/error.log')
 file_handler.setLevel(logging.ERROR)
 file_handler.setFormatter(formatter)
 

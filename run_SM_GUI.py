@@ -1,4 +1,4 @@
-import  SM_GUI
+import  general.SM_GUI as SM_GUI
 from    tkinter import * 
 from    tkinter import filedialog as fd
 import  tkinter.messagebox 
@@ -19,7 +19,7 @@ import  SM.PumpInit_Reload
 import  SM.Degas
 import  SM.Load_Prime
 import  SM.Func_NewAirSlugs
-import  config as HW
+import  hardware.config as HW
 #--------------  GLOBAL VARIABLES -----------------------------------------
 
 # GV = General_vars()
@@ -30,7 +30,7 @@ import  config as HW
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(levelname)s:%(message)s')
-file_handler = logging.FileHandler('error.log')
+file_handler = logging.FileHandler('./logs/error.log')
 file_handler.setLevel(logging.ERROR)
 file_handler.setFormatter(formatter)
 stream_handler = logging.StreamHandler()
@@ -362,7 +362,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         )
         recipe_filepath = fd.askopenfilename(
                 title='Open a file',
-                initialdir='.',
+                initialdir='./recipes',
                 filetypes=filetypes)        
         self.decode_recipe(recipe_filepath)
         
