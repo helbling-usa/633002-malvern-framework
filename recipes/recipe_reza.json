@@ -48,7 +48,7 @@
     },
     "GantrytoB": 
     {
-        "enable": true,
+        "enable": false,
         "gantry_move_speed": 10,
         "horizontal_titration_position": 50,
         "vertical_titration_position": 50,

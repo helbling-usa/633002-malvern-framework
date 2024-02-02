@@ -35,8 +35,10 @@ class SM_GUI():
             self.root = root
             self.set_fonts()
             self.set_main_window()
-            self.set_buttons()
+            self.set_recipe_section()
+            self.set_experiment_section()
             self.set_lights()
+            self.set_valve_psoitions_section()
             # self.setup_tabs(self.root)
             # self.define_tab1()
 
@@ -72,13 +74,185 @@ class SM_GUI():
             self.canvas1.create_line(40,80,40,330, fill='gray', width=2)      #vertical
             self.canvas1.create_line(630,80,630,330, fill='gray', width=2)    #vertical
 
+            self.canvas1.create_line(40,350,830,350, fill='gray', width=2)      #horizontal 
+            self.canvas1.create_line(40,450,830,450, fill='gray', width=2)    #horizontal 
+            self.canvas1.create_line(40,350,40,450, fill='gray', width=2)      #vertical
+            self.canvas1.create_line(830,350,830,450, fill='gray', width=2)    #vertical
+
+            self.canvas1.create_line(40,470,830,470, fill='gray', width=2)      #horizontal 
+            self.canvas1.create_line(40,760,830,760, fill='gray', width=2)    #horizontal 
+            self.canvas1.create_line(40,470,40,760, fill='gray', width=2)      #vertical
+            self.canvas1.create_line(830,470,830,760, fill='gray', width=2)    #vertical            
+
+      def set_valve_psoitions_section(self):
+            Y1  = 480
+            dY = 40
+            dY2 = 5
+            Y2  = 480 + 1 *dY
+            Y3  = 480 + 2 *dY
+            Y4  = 480 + 3 *dY
+            Y5  = 480 + 4 *dY
+            Y6  = 480 + 5 *dY
+            Y7  = 480 + 6 *dY
+            COL1 = 50
+            COL2 =190
+            COL3 = 210
+            COL4 = 320
+            COL5 = 400
+            COL6 = 530
+            COL7 = 580
+
+            Label(self.root, text = "Valve Positions",font=self.Font5 , bg=self.Color1,
+                  fg='black').place(x = COL4,y = Y1 )  
+
+            Label(self.root, text = "Titrant Line",font=self.Font5 , bg=self.Color1,
+                  fg='black').place(x = COL2,y = Y2 ) 
+            
+            Label(self.root, text = "Sample Line",font=self.Font5 , bg=self.Color1,
+                  fg='black').place(x = COL6,y = Y2 )              
+            
+            Label(self.root, text = "    1 Pump Valve:",font=self.Font7 , bg=self.Color1,
+                  fg='black').place(x = COL1,y = Y3 ) 
+
+            Label(self.root, text = "     3 Loop Valve:",font=self.Font7 , bg=self.Color1,
+                  fg='black').place(x = COL1,y = Y4 ) 
+
+            Label(self.root, text = "  5 Pipette Valve:",font=self.Font7 , bg=self.Color1,
+                  fg='black').place(x = COL1,y = Y5 ) 
+
+            Label(self.root, text = "9 Cleaning Valve:",font=self.Font7 , bg=self.Color1,
+                  fg='black').place(x = COL1,y = Y6 ) 
+            
+            self.text_1pump_valve = Text(self.root, height=1, width=20,font=self.Font2 )
+            self.text_1pump_valve.pack()
+            self.text_1pump_valve.place(x=COL3, y=Y3+dY2)
+
+            self.text_1loop_valve = Text(self.root, height=1, width=20,font=self.Font2 )
+            self.text_1loop_valve.pack()
+            self.text_1loop_valve.place(x=COL3, y=Y4+dY2)            
+
+            self.text_pipette_valve = Text(self.root, height=1, width=20,font=self.Font2 )
+            self.text_pipette_valve.pack()
+            self.text_pipette_valve.place(x=COL3, y=Y5+dY2)
+
+            self.text_9cleaning_valve = Text(self.root, height=1, width=20,font=self.Font2 )
+            self.text_9cleaning_valve.pack()
+            self.text_9cleaning_valve.place(x=COL3, y=Y6+dY2)            
+            
+            Label(self.root, text = "         2 Pump Valve:",font=self.Font7 , bg=self.Color1,
+                  fg='black').place(x = COL5,y = Y3 ) 
+
+            Label(self.root, text = "          4 Loop Valve:",font=self.Font7 , bg=self.Color1,
+                  fg='black').place(x = COL5,y = Y4 ) 
+
+            Label(self.root, text = " 6 Titrant Port Valve:",font=self.Font7 , bg=self.Color1,
+                  fg='black').place(x = COL5,y = Y5 ) 
+
+            Label(self.root, text = "   7 Degasser Valve:",font=self.Font7 , bg=self.Color1,
+                  fg='black').place(x = COL5,y = Y6 ) 
+            
+            Label(self.root, text = "     8 Cleaning Valve:",font=self.Font7 , bg=self.Color1,
+                  fg='black').place(x = COL5,y = Y7 )
+
+            self.text_2pump_valve = Text(self.root, height=1, width=20,font=self.Font2 )
+            self.text_2pump_valve.pack()
+            self.text_2pump_valve.place(x=COL7, y=Y3+dY2)
+
+            self.text_4loop_valve = Text(self.root, height=1, width=20,font=self.Font2 )
+            self.text_4loop_valve.pack()
+            self.text_4loop_valve.place(x=COL7, y=Y4+dY2)            
+
+            self.text_titrant_valve = Text(self.root, height=1, width=20,font=self.Font2 )
+            self.text_titrant_valve.pack()
+            self.text_titrant_valve.place(x=COL7, y=Y5+dY2)
+
+            self.text_degasser_valve = Text(self.root, height=1, width=20,font=self.Font2 )
+            self.text_degasser_valve.pack()
+            self.text_degasser_valve.place(x=COL7, y=Y6+dY2)  
+
+            self.text_8cleaning_valve = Text(self.root, height=1, width=20,font=self.Font2 )
+            self.text_8cleaning_valve.pack()
+            self.text_8cleaning_valve.place(x=COL7, y=Y7+dY2) 
 
 
-      def set_buttons(self):
-            self.b_exit = Button(self.root,text="Exit\n Application", bg="#fc9d9d", 
-                                 fg='black',font=self.Font4, height=2, width=14, 
-                                 command=self.checkExitButton).place(x =900,y = 650)
+      def set_experiment_section(self):
+            COL1 = 50
+            Y0 = 355
+            Y1  = 380+10
+            Y2  = 390+10
+            Y3  = 410+10
+            COL2 = 100
+            COL3 = 220
+            COL4 = 280
+            COL5 = 350
+            COL6 = 440
+            COL7 = 530
+            COL8 = 590
+            COL9 = 670
+            COL10 = 730
+            image1 = Image.open('./Images/led-green-off.png')
+            image1 = image1.resize((24, 24))
+            icon_off = ImageTk.PhotoImage(image1)
+            image1 = Image.open('./Images/led-green-on.png')
+            image1 = image1.resize((24, 24))
+            icon_on = ImageTk.PhotoImage(image1)
 
+            Label(self.root, text = "Experiment:",font=self.Font5 , bg=self.Color1,
+                  fg='black').place(x = COL5,y = Y0 ) 
+            Label(self.root, text = "TEC:",font=self.Font1 , bg=self.Color1,
+                  fg='black').place(x = COL1,y = Y1 )  
+            self.text_tec_target = Text(self.root, height=1, width=12,font=self.Font2 )
+            self.text_tec_target.pack()
+            self.text_tec_target.place(x=COL2, y=Y1)
+
+            self.led_off_30 = Label(self.root, image=icon_off,bg=self.Color1)
+            self.led_off_30.image = icon_off
+            self.led_off_30.place(x = COL1,y = Y3 )
+
+            self.led_on_30  = Label(self.root, image=icon_on,bg=self.Color1)
+            self.led_on_30.image = icon_on
+            self.led_on_30.place(x =COL1,y = Y3)
+
+            self.text_tec_actual = Text(self.root, height=1, width=12,font=self.Font2 )
+            self.text_tec_actual.pack()
+            self.text_tec_actual.place(x=COL2, y=Y3)
+
+            Label(self.root, text = "Dose\nVolume",font=self.Font1 , bg=self.Color1,
+                  fg='black').place(x = COL3,y = Y1 ) 
+            self.text_dose_vol = Text(self.root, height=1, width=5,font=self.Font2 )
+            self.text_dose_vol.pack()
+            self.text_dose_vol.place(x=COL4, y=Y2)
+
+            Label(self.root, text = "Dose\nCompleted",font=self.Font1 , bg=self.Color1,
+                  fg='black').place(x = COL5,y = Y1 ) 
+            self.text_dose_completed = Text(self.root, height=1, width=8,font=self.Font2 )
+            self.text_dose_completed.pack()
+            self.text_dose_completed.place(x=COL6, y=Y2)
+
+            Label(self.root, text = "Total #\nDoses",font=self.Font1 , bg=self.Color1,
+                  fg='black').place(x = COL7,y = Y1 ) 
+            self.text_total_doses = Text(self.root, height=1, width=5,font=self.Font2 )
+            self.text_total_doses.pack()
+            self.text_total_doses.place(x=COL8, y=Y2)
+
+            Label(self.root, text = "Mixing\nSpeed",font=self.Font1 , bg=self.Color1,
+                  fg='black').place(x = COL9,y = Y1 ) 
+            self.text_mixing_speed = Text(self.root, height=1, width=10,font=self.Font2 )
+            self.text_mixing_speed.pack()
+            self.text_mixing_speed.place(x=COL10, y=Y2)
+
+
+      def set_recipe_section(self):
+            self.b_exit = Button(self.root,text="Exit", bg="#fc9d9d", 
+                                 fg='black',font=self.Font4, height=1, width=14, 
+                                 command=self.checkExitButton).place(x =900,y = 700)
+
+            self.b_pause = Button(self.root,text=" Pause All ", bg="#558ff2", 
+                                 fg='black',font=self.Font4, height=1, width=14, 
+                                 command=self.checkPauseButton)
+            self.b_pause.pack()
+            self.b_pause.place(x =900,y = 630)
+            
             COL1 = 50
             Y1  = 50
             dY1 = 50
@@ -221,12 +395,12 @@ class SM_GUI():
             self.led_on_9.image = icon_on
             self.led_on_9.place(x =COL7+dd,y = Y1 + 5*dY1)
 
-            self.led_off_10 = Label(self.root, image=icon_off,bg=self.Color1)
-            self.led_off_10.image = icon_off
-            self.led_off_10.place(x = COL7+dd+dist,y = Y1 + 5*dY1)
-            self.led_on_10  = Label(self.root, image=icon_on,bg=self.Color1)
-            self.led_on_10.image = icon_on
-            self.led_on_10.place(x =COL7+dist+dd,y = Y1 + 5*dY1)
+            # self.led_off_10 = Label(self.root, image=icon_off,bg=self.Color1)
+            # self.led_off_10.image = icon_off
+            # self.led_off_10.place(x = COL7+dd+dist,y = Y1 + 5*dY1)
+            # self.led_on_10  = Label(self.root, image=icon_on,bg=self.Color1)
+            # self.led_on_10.image = icon_on
+            # self.led_on_10.place(x =COL7+dist+dd,y = Y1 + 5*dY1)
 
             COL8 = 1015
             COL9 = 1020
@@ -394,4 +568,7 @@ class SM_GUI():
       def checkExitButton(self):
             logger.debug("parent: exit button pressed ...")
             # sys.exit(0)
+
+      def checkPauseButton(self):
+            logger.debug("parent: Pause button pressed ...")
 

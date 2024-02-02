@@ -211,14 +211,14 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_9.pack()
             self.led_on_9.place(x =COL7+dd,y = Y1 + 5*dY1)
         
-        if (GV.mixing_motor_homed_led == False):
-            self.led_on_10.place_forget()
-            self.led_off_10.pack()
-            self.led_off_10.place(x = COL7+dist+dd,y = Y1 + 5*dY1)
-        else:
-            self.led_off_10.place_forget()
-            self.led_on_10.pack()
-            self.led_on_10.place(x =COL7+dist+dd,y = Y1 + 5*dY1)
+        # if (GV.mixing_motor_homed_led == False):
+        #     self.led_on_10.place_forget()
+        #     self.led_off_10.pack()
+        #     self.led_off_10.place(x = COL7+dist+dd,y = Y1 + 5*dY1)
+        # else:
+        #     self.led_off_10.place_forget()
+        #     self.led_on_10.pack()
+        #     self.led_on_10.place(x =COL7+dist+dd,y = Y1 + 5*dY1)
 
 
         # Update The GUI with current value of bubble sensors
@@ -559,6 +559,16 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         self.timer.cancel()
         # self.root.destroy()
         sys.exit(0)
+
+
+    def checkPauseButton(self):
+        # logger.debug("child: Pause button pressed ...")
+        if (GV.PAUSE == False):
+            GV.PAUSE = True
+            self.b_pause.config(text=' UnPause All ')
+        else:
+            GV.PAUSE = False
+            self.b_pause.config(text='   Pause All  ')
 
 
 
