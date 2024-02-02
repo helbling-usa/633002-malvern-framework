@@ -1,5 +1,7 @@
 #------------------- CONSTANTS  -----------------------------------------
 BS_THRESHOLD                = 2.5       # Threshold value for bubble sensor 1
+PICKUP_UNTIL_BUBBLE_TARGET  = 20000     # Target position when pickup until bubble
+DISPENSE_UNTIL_BUBBLE_TARGET  = 0       # Target position when pickup until bubble
 BUBBLE_DETECTION_PUMP_SPEED = 50        # speed of pump during bubble detection
 DEFAULT_PUMP_SPEEED         = 1000      # speed of pump at start up
 GANTRY_VER_SPEED            = 15.0      # vertical gantry speed

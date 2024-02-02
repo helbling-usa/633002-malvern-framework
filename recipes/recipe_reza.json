@@ -1,6 +1,6 @@
 {"Startup": 
     {
-        "enable": false,
+        "enable": true,
         "gantry_move_speed": 1,
         "gantry_home_timeout": 500,   
         "gantry_homing_speed": 1,
@@ -26,7 +26,7 @@
     },   
  "Degas": 
     {
-        "enable": true,
+        "enable": false,
         "pump_speed": 100,
         "valve_move_timeout": 30,        
         "pump_move_timeout": 360,
@@ -45,6 +45,14 @@
         "pump_move_timeout": 600, 
         "TC2_Volume": 120,
         "SC2_Volume": 150
+    },
+    "GantrytoB": 
+    {
+        "enable": true,
+        "gantry_move_speed": 10,
+        "horizontal_titration_position": 50,
+        "vertical_titration_position": 50,
+        "gantry_move_timeout": 60
     },
  "Func_NewAirSlugs": 
     {

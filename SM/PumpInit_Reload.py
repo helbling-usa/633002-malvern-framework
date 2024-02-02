@@ -559,9 +559,9 @@ def action5_1():
     time.sleep(1)        
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
     time.sleep(1)        
-    GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, 20000)
+    GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, HW.DISPENSE_UNTIL_BUBBLE_TARGET)
     time.sleep(1)
-    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, 20000)
+    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, HW.DISPENSE_UNTIL_BUBBLE_TARGET)
     time.sleep(1)
     input1 = GV.labjack.getAIN(0)
     input2 = GV.labjack.getAIN(1)
@@ -570,15 +570,23 @@ def action5_1():
     cur_state_2 = air_or_liquid(input2)
     prev_state_1 = cur_state_1
     prev_state_2 = cur_state_2
-    while (cur_state_1 == prev_state_1) or (cur_state_2 == prev_state_2) :        
+    bubble_1_search = True
+    bubble_2_search = True
+    
+    while (bubble_1_search  or bubble_2_search) :
         input1 = GV.labjack.getAIN(0)
         cur_state_1 = air_or_liquid(input1)
         pos1 =GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
+        if (cur_state_1 != prev_state_1):
+            bubble_1_search = False
+
         time.sleep(.025)
         input2 = GV.labjack.getAIN(1)
         cur_state_2 = air_or_liquid(input2)
         pos2 =GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
         print('        BS1:{:.2f} position:{},   BS2:{:.2f} position:{}'.format(input1,pos1,input2, pos2))
+        if (cur_state_2 != prev_state_2):
+            bubble_2_search = False
         time.sleep(.025)
         
     GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
@@ -1016,9 +1024,9 @@ def action10_1():
     time.sleep(1)        
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
     time.sleep(1)        
-    GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, 0)
+    GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, HW.PICKUP_UNTIL_BUBBLE_TARGET)
     time.sleep(1)
-    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, 0)
+    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, HW.PICKUP_UNTIL_BUBBLE_TARGET)
     time.sleep(1)
     input1 = GV.labjack.getAIN(0)
     input2 = GV.labjack.getAIN(1)
@@ -1027,15 +1035,23 @@ def action10_1():
     cur_state_2 = air_or_liquid(input2)
     prev_state_1 = cur_state_1
     prev_state_2 = cur_state_2
-    while (cur_state_1 == prev_state_1) or (cur_state_2 == prev_state_2) :        
+    bubble_1_search = True
+    bubble_2_search = True
+    
+    while (bubble_1_search  or bubble_2_search) :
         input1 = GV.labjack.getAIN(0)
         cur_state_1 = air_or_liquid(input1)
         pos1 =GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
+        if (cur_state_1 != prev_state_1):
+            bubble_1_search = False
+
         time.sleep(.025)
         input2 = GV.labjack.getAIN(1)
         cur_state_2 = air_or_liquid(input2)
         pos2 =GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
         print('        BS1:{:.2f} position:{},   BS2:{:.2f} position:{}'.format(input1,pos1,input2, pos2))
+        if (cur_state_2 != prev_state_2):
+            bubble_2_search = False
         time.sleep(.025)
         
     GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)

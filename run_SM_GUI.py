@@ -19,6 +19,7 @@ import  SM.PumpInit_Reload
 import  SM.Degas
 import  SM.Load_Prime
 import  SM.Func_NewAirSlugs
+import  SM.GantrytoB
 import  hardware.config as HW
 #--------------  GLOBAL VARIABLES -----------------------------------------
 
@@ -63,8 +64,8 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         self.InitTimer()
         self.b_nextbutton["state"] = DISABLED
         self.b_start["state"] = DISABLED
-        GV.SM_list = [SM.Startup, SM.PumpInit_Reload, SM.Degas, SM.Load_Prime, SM.Func_NewAirSlugs]
-        GV.SM_list_str = ["Startup", "PumpInit_Reload", "Degas", "Load_Prime", "Func_NewAirSlugs"]
+        GV.SM_list = [SM.Startup, SM.PumpInit_Reload, SM.Degas, SM.Load_Prime, SM.GantrytoB, SM.Func_NewAirSlugs]
+        GV.SM_list_str = ["Startup", "PumpInit_Reload", "Degas", "Load_Prime", "GantrytoB", "Func_NewAirSlugs"]
 
 
     def InitTimer(self):
@@ -447,8 +448,9 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         #Sanity check: to see if all statemachines are listed in the json file, if not exit
         input_SMs = list(recipe_json.keys())
         input_SMs.sort()        
-        all_SMs = ['Startup', 'PumpInit_Reload', 'Degas', 'Load_Prime','Func_NewAirSlugs']
-        all_SMs.sort()        
+        all_SMs = ['Startup', 'PumpInit_Reload', 'Degas', 'Load_Prime', 'GantrytoB', 'Func_NewAirSlugs']
+        all_SMs.sort()   
+
         if (all_SMs == input_SMs):
             logger.info('json file validated')
         else:

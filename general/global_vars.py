@@ -61,7 +61,7 @@ BS14_LED = False
 
 
 SM_list = None
-SM_list_str = ["Startup", "PumpInit_Reload", "Degas", "Load_Prime", "Func_NewAirSlugs"]
+SM_list_str = ["Startup", "PumpInit_Reload", "Degas", "Load_Prime", "GantrytoB","Func_NewAirSlugs"]
 SM_enabled_dic = None
 def reset():
     next_E = 0 
