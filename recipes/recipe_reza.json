@@ -10,7 +10,7 @@
     },
  "PumpInit_Reload": 
     {
-        "enable": true,
+        "enable": false,
         "pump_speed": 1000,
         "valve_move_timeout": 60,
         "pump_init_timeout": 60,
@@ -18,43 +18,52 @@
         "loadH2O2_timeout": 600,
         "TitrantPumpt_syringe_fill_volume": 100,
         "SamplePumpt_syringe_fill_volume": 100,
-        "titrantpump_expelair_volume": 100,
-        "samplepump_expelair_volume": 100,
+        "titrantpump_expelair_volume": 200,
+        "samplepump_expelair_volume": 200,
         "AirSlug_total_Count": 5,
 		"AirSlug_Volume": 100,
 		"WaterSlug_Volume": 100
     },   
  "Degas": 
     {
-        "enable": true,
-        "pump_speed": 1000,
+        "enable": false,
+        "pump_speed": 100,
         "valve_move_timeout": 30,        
         "pump_move_timeout": 360,
         "degas_temp": 25,
         "experiment_temp": 30,
         "temperature_settledown_timeout": 1000,
-        "heat_time": 100,
-        "AspirationVolume_Overshoot": 100,
+        "heat_time": 10,
+        "AspirationVolume_Overshoot": 300,
         "total_asipiration_number":4
     },
  "Load_Prime": 
     {
-        "enable": true,
+        "enable": false,
         "pump_speed": 1000,
         "valve_move_timeout": 60,        
         "pump_move_timeout": 600, 
         "TC2_Volume": 120,
         "SC2_Volume": 150
     },
- "Func_NewAirSlugs": 
+    "GantrytoB": 
     {
         "enable": true,
-        "pump_speed": 1000,
+        "gantry_move_speed": 10,
+        "horizontal_titration_position": 50,
+        "vertical_titration_position": 50,
+        "gantry_move_timeout": 60
+    },
+ "Func_NewAirSlugs": 
+    {
+        "enable": false,
+        "pump_speed": 300,
         "valve_move_timeout": 60,        
         "pump_move_timeout": 600, 
-        "AirSlug_Total_count": 7,
+        "AirSlug_Total_count": 2,
         "AirSlug_Volume": 100,        
-        "LastAirSlug_Volume": 100,
-        "SC2_Volume": 100
+        "LastAirSlug_Volume": 500,
+        "SC2_Volume": 100,
+        "WaterSlug_Volume": 500
     }    
  }

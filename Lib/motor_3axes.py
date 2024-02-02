@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 # formatter = logging.Formatter('%(levelname)s:%(name)s:%(message)s')
 formatter = logging.Formatter('%(levelname)s:%(message)s')
-file_handler = logging.FileHandler('error.log')
+file_handler = logging.FileHandler('./logs/error.log')
 file_handler.setLevel(logging.ERROR)
 file_handler.setFormatter(formatter)
 stream_handler = logging.StreamHandler()
@@ -33,9 +33,9 @@ REG_SRL =3
 CHANNEL_TYPE = 0 #for rs232
 BAUDRATE = 115200
 POWER_ON = 1
-TIM_LIB_PATH = "./config/TML_LIB.dll"
+# TIM_LIB_PATH = "./Lib/TML_LIB.dll"
 
-
+LIB_PATH = "./Lib"
 
 
 
@@ -60,9 +60,11 @@ class motor_3axes():
         self.AXIS_ID_01 = AXIS_ID_01 
         self.AXIS_ID_02 = AXIS_ID_02
         self.AXIS_ID_03 = AXIS_ID_03
-        self.mydll1 =CDLL(TIM_LIB_PATH)
+        # self.mydll1 =CDLL(TIM_LIB_PATH)
+        self.mydll1 =CDLL(LIB_PATH + "/TML_LIB.dll")
         #/*	Load the *.t.zip with setup data generated with EasyMotion Studio or EasySetUp */
-        config_file = b"./config/"+motor_type + b".t.zip"
+        # config_file = b"./Lib/"+motor_type + b".t.zip"
+        config_file = LIB_PATH.encode() + b"/"+motor_type + b".t.zip"
         logger.info('\t\tconfig file = {}'.format( config_file))
         # self.idxSetup = self.mydll1.TS_LoadSetup(b"./config/LEFS25.t.zip")
         self.idxSetup = self.mydll1.TS_LoadSetup(config_file)
@@ -97,7 +99,8 @@ class motor_3axes():
 
     def InitAxis(self):
         #----------------------axis 1 -------------------------------------------       
-        config_file1 = b".\config\Mixer.t.zip"
+        # config_file1 = b".\Lib\Mixer.t.zip"
+        config_file1 = LIB_PATH.encode()+b"\Mixer.t.zip"
         # logger.info('config file path:', config_file1)
         idxSetup1 = self.mydll1.TS_LoadSetup(config_file1)
 
@@ -130,7 +133,8 @@ class motor_3axes():
 
         #----------------------axis 2 -------------------------------------------
         #/*	Load the *.t.zip with setup data generated with EasyMotion Studio or EasySetUp */
-        config_file2 = b".\config\LEFS25.t.zip"
+        # config_file2 = b".\Lib\LEFS25.t.zip"
+        config_file2 = LIB_PATH.encode()+b"\LEFS25.t.zip"
         # logger.info('config file path:', config_file2)
         idxSetup2 = self.mydll1.TS_LoadSetup(config_file2)
 
@@ -163,7 +167,8 @@ class motor_3axes():
 
         #----------------------axis 3 -------------------------------------------
         #/*	Load the *.t.zip with setup data generated with EasyMotion Studio or EasySetUp */
-        config_file3 = b".\config\LEFS32.t.zip"
+        # config_file3 = b".\config\LEFS32.t.zip"
+        config_file3 = LIB_PATH.encode()+b"\LEFS32.t.zip"
         # logger.info('config file path:', config_file3)
         idxSetup3 = self.mydll1.TS_LoadSetup(config_file3)
 

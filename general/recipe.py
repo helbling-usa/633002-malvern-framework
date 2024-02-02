@@ -9,7 +9,7 @@ RECIPE= {
         "gantry_move_timeout": 0,
         "vertical_cell_fill_position": 0
     },
- "PumpInit_Reload": 
+    "PumpInit_Reload": 
     {
         "enable": False,
         "pump_speed": 0,
@@ -24,8 +24,8 @@ RECIPE= {
         "AirSlug_total_Count": 0,
 		"AirSlug_Volume": 0,
 		"WaterSlug_Volume": 0
-    },   
- "Degas": 
+    },
+    "Degas": 
     {
         "enable": False,
         "pump_speed": 0,
@@ -38,7 +38,7 @@ RECIPE= {
         "AspirationVolume_Overshoot": 0,
         "total_asipiration_number": 0
     },
- "Load_Prime": 
+    "Load_Prime": 
     {
         "enable": False,
         "pump_speed": 0,
@@ -47,7 +47,15 @@ RECIPE= {
         "TC2_Volume": 0,
         "SC2_Volume": 0
     },
- "Func_NewAirSlugs": 
+    "GantrytoB": 
+    {
+        "enable": False,
+        "gantry_move_speed": 0,
+        "horizontal_titration_position": 0,
+        "vertical_titration_position": 0,
+        "gantry_move_timeout": 0
+    },
+    "Func_NewAirSlugs": 
     {
         "enable": False,
         "pump_speed": 0,
@@ -56,7 +64,8 @@ RECIPE= {
         "AirSlug_Total_count": 0,
         "AirSlug_Volume": 0,
         "LastAirSlug_Volume": 0,
-        "SC2_Volume": 0
+        "SC2_Volume": 0,
+        "WaterSlug_Volume": 0
     }    
  }
 

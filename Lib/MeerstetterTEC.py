@@ -4,7 +4,7 @@
 import logging
 import platform
 from time import time, sleep
-from config.mecom.mecom import MeComSerial, ResponseException, WrongChecksum
+from Lib.mecom.mecom import MeComSerial, ResponseException, WrongChecksum
 from serial import SerialException
 from serial.serialutil import PortNotOpenError
 
