@@ -67,10 +67,10 @@ class SM_GUI():
                                                       "font" : ('URW Gothic L', '11', 'bold')},}})
             s.theme_use("MyStyle")
             #draw the lines on the convas
-            self.canvas1.create_line(40,80,530,80, fill='gray', width=2)      #horizontal 
-            self.canvas1.create_line(40,270,530,270, fill='gray', width=2)    #horizontal 
-            self.canvas1.create_line(40,80,40,270, fill='gray', width=2)      #vertical
-            self.canvas1.create_line(530,80,530,270, fill='gray', width=2)    #vertical
+            self.canvas1.create_line(40,80,630,80, fill='gray', width=2)      #horizontal 
+            self.canvas1.create_line(40,330,630,330, fill='gray', width=2)    #horizontal 
+            self.canvas1.create_line(40,80,40,330, fill='gray', width=2)      #vertical
+            self.canvas1.create_line(630,80,630,330, fill='gray', width=2)    #vertical
 
 
 
@@ -120,11 +120,11 @@ class SM_GUI():
             self.t_cur_state.place(x=COL1+5, y=Y1+3*dY1+40)
 
             Label(self.root, text = "Status:",font=self.Font2 , bg=self.Color1,
-                  fg='black').place(x = COL4,y = Y1 + 2*dY1-10)  
+                  fg='black').place(x = COL4+90,y = Y1 + 2*dY1+0)  
 
-            self.t_status = Text(self.root, height=6, width=30,font=self.Font2 ,bg="#f5f7bc",)
+            self.t_status = Text(self.root, height=8, width=40,font=self.Font2 ,bg="#f5f7bc",)
             self.t_status.pack()
-            self.t_status.place(x=COL3-10, y=Y1+2*dY1+10)
+            self.t_status.place(x=COL3-10, y=Y1+2*dY1+30)
 
 
 
@@ -136,21 +136,21 @@ class SM_GUI():
             image1 = image1.resize((24, 24))
             icon_on = ImageTk.PhotoImage(image1)
 
-            COL6 = 550
-            COL7 = 740
+            COL6 = 670
+            COL7 = 830
             Y1  = 50
             dY1 = 50
-            Label(self.root, text = "Avtive   Homed",font=self.Font5 , bg=self.Color1,
+            Label(self.root, text = "Avtive   Homed",font=self.Font7 , bg=self.Color1,
                   fg='black').place(x = COL7-5,y = Y1 + 0*dY1)  
-            Label(self.root, text = "    Pump 1 Titrant:",font=self.Font5 , bg=self.Color1,
+            Label(self.root, text = "    Pump 1 Titrant:",font=self.Font7 , bg=self.Color1,
                   fg='black').place(x = COL6,y = Y1 + 1*dY1)  
-            Label(self.root, text = "   Pump 2 Sample:",font=self.Font5 , bg=self.Color1,
+            Label(self.root, text = "   Pump 2 Sample:",font=self.Font7 , bg=self.Color1,
                   fg='black').place(x = COL6,y = Y1 + 2*dY1)
-            Label(self.root, text = "Horizontal Gantry:",font=self.Font5 , bg=self.Color1,
+            Label(self.root, text = "Horizontal Gantry:",font=self.Font7 , bg=self.Color1,
                   fg='black').place(x = COL6,y = Y1 + 3*dY1)
-            Label(self.root, text = "    Vertical Gantry:",font=self.Font5 , bg=self.Color1,
+            Label(self.root, text = "    Vertical Gantry:",font=self.Font7 , bg=self.Color1,
                   fg='black').place(x = COL6,y = Y1 + 4*dY1)
-            Label(self.root, text = "       Mixing Motor:",font=self.Font5 , bg=self.Color1,
+            Label(self.root, text = "       Mixing Motor:",font=self.Font7 , bg=self.Color1,
                   fg='black').place(x = COL6,y = Y1 + 5*dY1)
             
             dd=10
@@ -228,14 +228,14 @@ class SM_GUI():
             self.led_on_10.image = icon_on
             self.led_on_10.place(x =COL7+dist+dd,y = Y1 + 5*dY1)
 
-            COL8 = 946
-            COL9 = 950
-            COL10 = 1025
-            COL11 = 1030
+            COL8 = 1015
+            COL9 = 1020
+            COL10 = 1095
+            COL11 = 1100
             Y1  = 50
             dY1 = 40
             dd=40
-            Label(self.root, text = "Bubble Sensors",font=self.Font5 , bg=self.Color1,
+            Label(self.root, text = "Bubble Sensors",font=self.Font7 , bg=self.Color1,
                   fg='black').place(x = COL9,y = Y1 + 0*dY1)                  
             Label(self.root, text = "BS1:",font=self.Font1 , bg=self.Color1,
                   fg='black').place(x = COL8,y = Y1 + 1*dY1)

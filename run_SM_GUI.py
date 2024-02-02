@@ -19,7 +19,7 @@ import  SM.PumpInit_Reload
 import  SM.Degas
 import  SM.Load_Prime
 import  SM.Func_NewAirSlugs
-import  HW
+import  config as HW
 #--------------  GLOBAL VARIABLES -----------------------------------------
 
 # GV = General_vars()
@@ -123,7 +123,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
 
 
     def updateGUI_LEDs(self):
-        COL7 = 740
+        COL7 = 830
         Y1  = 50
         dY1 = 50
         dd=10
@@ -221,8 +221,8 @@ class run_SM_GUI(SM_GUI.SM_GUI):
 
 
         # Update The GUI with current value of bubble sensors
-        COL9 = 950
-        COL11 = 1030
+        COL9 = 1020
+        COL11 = 1100
         Y1  = 50
         dY1 = 40
         dd=40
