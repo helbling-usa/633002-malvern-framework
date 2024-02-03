@@ -20,6 +20,7 @@ import  SM.Degas
 import  SM.Load_Prime
 import  SM.Func_NewAirSlugs
 import  SM.GantrytoB
+import  SM.Experiment
 import  hardware.config as HW
 #--------------  GLOBAL VARIABLES -----------------------------------------
 
@@ -48,8 +49,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
     def __init__(self,root):
         super().__init__( root)
         self.root = root
-        logger.info("Initializing hardware -------------------------------------")
-        
+        logger.info("Initializing hardware -------------------------------------")        
         logger.info("------------------------------------------------------------------")
         logger.info('System started successfully.')
         logger.info("Please use the GUI to enter a commamnd ...")
@@ -64,8 +64,8 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         self.InitTimer()
         self.b_nextbutton["state"] = DISABLED
         self.b_start["state"] = DISABLED
-        GV.SM_list = [SM.Startup, SM.PumpInit_Reload, SM.Degas, SM.Load_Prime, SM.GantrytoB, SM.Func_NewAirSlugs]
-        GV.SM_list_str = ["Startup", "PumpInit_Reload", "Degas", "Load_Prime", "GantrytoB", "Func_NewAirSlugs"]
+        GV.SM_list = [SM.Startup, SM.PumpInit_Reload, SM.Degas, SM.Load_Prime, SM.GantrytoB, SM.Experiment,  SM.Func_NewAirSlugs]
+        GV.SM_list_str = ["Startup", "PumpInit_Reload", "Degas", "Load_Prime", "GantrytoB", "Experiment", "Func_NewAirSlugs"]
 
 
     def InitTimer(self):
@@ -81,6 +81,8 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         # logger.debug('timer is running')
         self.read_BubbleSensors()
         self.updateGUI_LEDs()
+        self.updateVALVES()
+        self.updateEXPERIMENT()
         if (GV.activate_NEXT_button == True):
             self.b_nextbutton["state"] = NORMAL
         else:
@@ -96,13 +98,57 @@ class run_SM_GUI(SM_GUI.SM_GUI):
 
 
 
-    def InitLabjack(self):
-        # # initialize labjack
-        logger.info("\t\tInitializing Labjack.....")
-        GV.labjack = u6.U6()
-        GV.labjack.writeRegister(50590, 15)     
-        # print("--->", GV.labjack.getAIN(0))   
-        # logger.info('\t\tlabjack initialized')
+
+    def updateEXPERIMENT(self):
+        self.text_tec_target.delete("1.0", END)
+        self.text_tec_target.insert(END, GV.TEC_TARGET)
+        self.text_tec_actual.delete("1.0", END)
+        self.text_tec_actual.insert(END, GV.TEC_ACTUAL)
+        self.text_dose_vol.delete("1.0", END)
+        self.text_dose_vol.insert(END, GV.DOSE_VOLUME)
+        self.text_dose_completed.delete("1.0", END)
+        self.text_dose_completed.insert(END, GV.DOSE_COMPLETED)
+        self.text_total_doses.delete("1.0", END)
+        self.text_total_doses.insert(END, GV.TOTAL_DOSES)
+        self.text_mixing_speed.delete("1.0", END)
+        self.text_mixing_speed.insert(END, GV.MIXING_SPEED)
+            
+        COL1 = 50
+        Y3  = 410+8
+        if (GV.TEC_IS_ON == False):
+            self.led_on_30.place_forget()
+            self.led_off_30.pack()
+            self.led_off_30.place(x = COL1,y = Y3)
+        else:
+            self.led_off_30.place_forget()
+            self.led_on_30.pack()
+            self.led_on_30.place(x =COL1,y = Y3)
+
+
+        
+
+    def updateVALVES(self):
+        self.text_pump_valve1.delete("1.0", END)
+        self.text_pump_valve1.insert(END, GV.VALVE_1)
+        self.text_loop_valve3.delete("1.0", END)
+        self.text_loop_valve3.insert(END, GV.VALVE_3)
+        self.text_pipette_valve5.delete("1.0", END)
+        self.text_pipette_valve5.insert(END, GV.VALVE_5)
+        self.text_cleaning_valve9.delete("1.0", END)
+        self.text_cleaning_valve9.insert(END, GV.VALVE_9)
+        self.text_pump_valve2.delete("1.0", END)
+        self.text_pump_valve2.insert(END, GV.VALVE_2)
+        self.text_loop_valve4.delete("1.0", END)
+        self.text_loop_valve4.insert(END, GV.VALVE_4)
+        self.text_titrant_valve6.delete("1.0", END)
+        self.text_titrant_valve6.insert(END, GV.VALVE_6)
+        self.text_degasser_valve7.delete("1.0", END)
+        self.text_degasser_valve7.insert(END, GV.VALVE_7)
+        self.text_cleaning_valve8.delete("1.0", END)
+        self.text_cleaning_valve8.insert(END, GV.VALVE_8)
+
+
+
 
 
     def read_BubbleSensors(self):
@@ -356,19 +402,17 @@ class run_SM_GUI(SM_GUI.SM_GUI):
 
 
 
-    def b_select_recipe_file(self):            
-        filetypes = (
-                ('json', '*.json'),
-                ('All files', '*.*')
-        )
-        recipe_filepath = fd.askopenfilename(
-                title='Open a file',
-                initialdir='./recipes',
-                filetypes=filetypes)        
-        self.decode_recipe(recipe_filepath)
-        
-        self.b_nextbutton["state"] = DISABLED
-        self.b_start["state"] = NORMAL
+
+    def InitLabjack(self):
+        # # initialize labjack
+        logger.info("\t\tInitializing Labjack.....")
+        GV.labjack = u6.U6()
+        GV.labjack.writeRegister(50590, 15)     
+        # print("--->", GV.labjack.getAIN(0))   
+        # logger.info('\t\tlabjack initialized')
+
+
+
 
     def PortAssignment(self):
 
@@ -439,6 +483,22 @@ class run_SM_GUI(SM_GUI.SM_GUI):
 
 
 
+
+    def b_select_recipe_file(self):            
+        filetypes = (
+                ('json', '*.json'),
+                ('All files', '*.*')
+        )
+        recipe_filepath = fd.askopenfilename(
+                title='Open a file',
+                initialdir='./recipes',
+                filetypes=filetypes)        
+        self.decode_recipe(recipe_filepath)
+        
+        self.b_nextbutton["state"] = DISABLED
+        self.b_start["state"] = NORMAL
+
+        
     def decode_recipe(self, recipe_filepath):
         global GV
 
@@ -448,7 +508,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         #Sanity check: to see if all statemachines are listed in the json file, if not exit
         input_SMs = list(recipe_json.keys())
         input_SMs.sort()        
-        all_SMs = ['Startup', 'PumpInit_Reload', 'Degas', 'Load_Prime', 'GantrytoB', 'Func_NewAirSlugs']
+        all_SMs = GV.SM_list_str
         all_SMs.sort()   
 
         if (all_SMs == input_SMs):
@@ -570,9 +630,42 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             GV.PAUSE = False
             self.b_pause.config(text='   Pause All  ')
 
+    def checkEquilibReachedButton(self):        
+        if (GV.EquilibriumReached == False):
+            GV.EquilibriumReached = True
+            self.b_equilib_reached.config(text=" Equlibrium\nReached")
+            self.b_equilib_reached.configure(bg="#51e81a")
+        else:
+            GV.EquilibriumReached = False
+            self.b_equilib_reached.config(text=" Equlibrium\nNot Reached")
+            self.b_equilib_reached.configure(bg="#dade12")
+        logger.debug("Equilibraium reached:{}".format(GV.EquilibriumReached))
 
 
+    def checkDoseSignalRecievedButton(self):
 
+        if (GV.DoseSignalRecived == False):
+            GV.DoseSignalRecived = True
+            self.b_dose_sig_recieved.config(text=' Dose Signal\nRecieved')
+            self.b_dose_sig_recieved.configure(bg="#51e81a")
+        else:
+            GV.DoseSignalRecived = False
+            self.b_dose_sig_recieved.config(text=' Dose Signal\nNot Recieved')
+            self.b_dose_sig_recieved.configure(bg="#dade12")
+        logger.debug("Dose Signal Recived:{}".format(GV.DoseSignalRecived))
+
+    def checkMixingReadyButton(self):
+        if (GV.MixingSignalReady == False):
+            GV.MixingSignalReady = True
+            self.b_mixing_ready.config(text=" Mixing Signal\nReady")
+            self.b_mixing_ready.configure(bg="#51e81a")
+        else:
+            GV.MixingSignalReady = False
+            self.b_mixing_ready.config(text=" Mixing Signal\nNot Ready")
+            self.b_mixing_ready.configure(bg="#dade12")
+        logger.debug("Mixing Signal Reachy:{}".format(GV.MixingSignalReady))
+
+text=" Mixing Signal\nNot Ready"
 
 
 def is_float(element: any) -> bool:

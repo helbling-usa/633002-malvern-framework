@@ -55,6 +55,18 @@ RECIPE= {
         "vertical_titration_position": 0,
         "gantry_move_timeout": 0
     },
+    "Experiment": 
+    {
+        "enable": True,
+        "titrationpump_speed": 100,
+        "valve_move_timeout": 60,        
+        "titrationpump_move_timeout": 600, 
+        "dose_volume": 5,
+        "totaldose_count": 5,
+        "mixing_speed": 200,
+        "equilmix_time": 600,
+        "dosestandby_time": 600
+    },
     "Func_NewAirSlugs": 
     {
         "enable": False,

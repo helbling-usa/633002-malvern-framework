@@ -1,5 +1,5 @@
-#------------ SM GLOBAL VARIABLES -------------------------------------------
 
+#------------ SM GLOBAL VARIABLES -------------------------------------------
 next_E = 0 
 cur_S = 0
 prev_S = 0
@@ -59,10 +59,39 @@ BS12_LED = False
 BS13_LED = False
 BS14_LED = False
 
+VALVE_1 = "--v1--"
+VALVE_2 = "--v2--"
+VALVE_3 = "--v3--"
+VALVE_4 = "--v4--"
+VALVE_5 = "--v5--"
+VALVE_6 = "--v6--"
+VALVE_7 = "--v7--"
+VALVE_8 = "--v8--"
+VALVE_9 = "--v9--"
 
-SM_list = None
-SM_list_str = ["Startup", "PumpInit_Reload", "Degas", "Load_Prime", "GantrytoB","Func_NewAirSlugs"]
+TEC_TARGET = "target"
+TEC_ACTUAL = "actual"
+TEC_IS_ON = False
+DOSE_VOLUME = "0 ul"
+DOSE_COMPLETED = "0 ul"
+TOTAL_DOSES = "0 ul"
+MIXING_SPEED = "0 RPM"
+
+
+
+
+SM_list = None      # Note: this varialbe must be filled as soon as run_GUI is executed (it's in run_SM_GUI.init)
+SM_list_str = None  # Note: this varialbe must be filled as soon as run_GUI is executed (it's in run_SM_GUI.init)
+
+
 SM_enabled_dic = None
+
+
+DoseSignalRecived = False
+EquilibriumReached = False
+MixingSignalReady = False
+current_dose_volume = 0
+
 def reset():
     next_E = 0 
     cur_S = 0

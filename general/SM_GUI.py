@@ -37,6 +37,7 @@ class SM_GUI():
             self.set_main_window()
             self.set_recipe_section()
             self.set_experiment_section()
+            self.set_buttons_section()
             self.set_lights()
             self.set_valve_psoitions_section()
             # self.setup_tabs(self.root)
@@ -103,76 +104,65 @@ class SM_GUI():
             COL7 = 580
 
             Label(self.root, text = "Valve Positions",font=self.Font5 , bg=self.Color1,
-                  fg='black').place(x = COL4,y = Y1 )  
-
+                  fg='black').place(x = COL4,y = Y1 )
             Label(self.root, text = "Titrant Line",font=self.Font5 , bg=self.Color1,
-                  fg='black').place(x = COL2,y = Y2 ) 
-            
+                  fg='black').place(x = COL2,y = Y2 )            
             Label(self.root, text = "Sample Line",font=self.Font5 , bg=self.Color1,
-                  fg='black').place(x = COL6,y = Y2 )              
-            
+                  fg='black').place(x = COL6,y = Y2 )            
             Label(self.root, text = "    1 Pump Valve:",font=self.Font7 , bg=self.Color1,
-                  fg='black').place(x = COL1,y = Y3 ) 
-
+                  fg='black').place(x = COL1,y = Y3 )
             Label(self.root, text = "     3 Loop Valve:",font=self.Font7 , bg=self.Color1,
-                  fg='black').place(x = COL1,y = Y4 ) 
-
+                  fg='black').place(x = COL1,y = Y4 )
             Label(self.root, text = "  5 Pipette Valve:",font=self.Font7 , bg=self.Color1,
-                  fg='black').place(x = COL1,y = Y5 ) 
-
+                  fg='black').place(x = COL1,y = Y5 )
             Label(self.root, text = "9 Cleaning Valve:",font=self.Font7 , bg=self.Color1,
-                  fg='black').place(x = COL1,y = Y6 ) 
-            
-            self.text_1pump_valve = Text(self.root, height=1, width=20,font=self.Font2 )
-            self.text_1pump_valve.pack()
-            self.text_1pump_valve.place(x=COL3, y=Y3+dY2)
+                  fg='black').place(x = COL1,y = Y6 )            
+            self.text_pump_valve1 = Text(self.root, height=1, width=20,font=self.Font2 )
+            self.text_pump_valve1.pack()
+            self.text_pump_valve1.place(x=COL3, y=Y3+dY2)
 
-            self.text_1loop_valve = Text(self.root, height=1, width=20,font=self.Font2 )
-            self.text_1loop_valve.pack()
-            self.text_1loop_valve.place(x=COL3, y=Y4+dY2)            
+            self.text_loop_valve3 = Text(self.root, height=1, width=20,font=self.Font2 )
+            self.text_loop_valve3.pack()
+            self.text_loop_valve3.place(x=COL3, y=Y4+dY2)            
 
-            self.text_pipette_valve = Text(self.root, height=1, width=20,font=self.Font2 )
-            self.text_pipette_valve.pack()
-            self.text_pipette_valve.place(x=COL3, y=Y5+dY2)
+            self.text_pipette_valve5 = Text(self.root, height=1, width=20,font=self.Font2 )
+            self.text_pipette_valve5.pack()
+            self.text_pipette_valve5.place(x=COL3, y=Y5+dY2)
 
-            self.text_9cleaning_valve = Text(self.root, height=1, width=20,font=self.Font2 )
-            self.text_9cleaning_valve.pack()
-            self.text_9cleaning_valve.place(x=COL3, y=Y6+dY2)            
+            self.text_cleaning_valve9 = Text(self.root, height=1, width=20,font=self.Font2 )
+            self.text_cleaning_valve9.pack()
+            self.text_cleaning_valve9.place(x=COL3, y=Y6+dY2)            
             
             Label(self.root, text = "         2 Pump Valve:",font=self.Font7 , bg=self.Color1,
-                  fg='black').place(x = COL5,y = Y3 ) 
-
+                  fg='black').place(x = COL5,y = Y3 )
             Label(self.root, text = "          4 Loop Valve:",font=self.Font7 , bg=self.Color1,
-                  fg='black').place(x = COL5,y = Y4 ) 
-
+                  fg='black').place(x = COL5,y = Y4 )
             Label(self.root, text = " 6 Titrant Port Valve:",font=self.Font7 , bg=self.Color1,
-                  fg='black').place(x = COL5,y = Y5 ) 
-
+                  fg='black').place(x = COL5,y = Y5 )
             Label(self.root, text = "   7 Degasser Valve:",font=self.Font7 , bg=self.Color1,
-                  fg='black').place(x = COL5,y = Y6 ) 
-            
+                  fg='black').place(x = COL5,y = Y6 )            
             Label(self.root, text = "     8 Cleaning Valve:",font=self.Font7 , bg=self.Color1,
                   fg='black').place(x = COL5,y = Y7 )
 
-            self.text_2pump_valve = Text(self.root, height=1, width=20,font=self.Font2 )
-            self.text_2pump_valve.pack()
-            self.text_2pump_valve.place(x=COL7, y=Y3+dY2)
+            self.text_pump_valve2 = Text(self.root, height=1, width=20,font=self.Font2 )
+            self.text_pump_valve2.pack()
+            self.text_pump_valve2.place(x=COL7, y=Y3+dY2)
 
-            self.text_4loop_valve = Text(self.root, height=1, width=20,font=self.Font2 )
-            self.text_4loop_valve.pack()
-            self.text_4loop_valve.place(x=COL7, y=Y4+dY2)            
+            self.text_loop_valve4 = Text(self.root, height=1, width=20,font=self.Font2 )
+            self.text_loop_valve4.pack()
+            self.text_loop_valve4.place(x=COL7, y=Y4+dY2)            
 
-            self.text_titrant_valve = Text(self.root, height=1, width=20,font=self.Font2 )
-            self.text_titrant_valve.pack()
-            self.text_titrant_valve.place(x=COL7, y=Y5+dY2)
+            self.text_titrant_valve6 = Text(self.root, height=1, width=20,font=self.Font2 )
+            self.text_titrant_valve6.pack()
+            self.text_titrant_valve6.place(x=COL7, y=Y5+dY2)
 
-            self.text_degasser_valve = Text(self.root, height=1, width=20,font=self.Font2 )
-            self.text_degasser_valve.pack()
-            self.text_degasser_valve.place(x=COL7, y=Y6+dY2)  
+            self.text_degasser_valve7 = Text(self.root, height=1, width=20,font=self.Font2 )
+            self.text_degasser_valve7.pack()
+            self.text_degasser_valve7.place(x=COL7, y=Y6+dY2)  
 
-            self.text_8cleaning_valve = Text(self.root, height=1, width=20,font=self.Font2 )
-            self.text_8cleaning_valve.pack()
-            self.text_8cleaning_valve.place(x=COL7, y=Y7+dY2) 
+            self.text_cleaning_valve8 = Text(self.root, height=1, width=20,font=self.Font2 )
+            self.text_cleaning_valve8.pack()
+            self.text_cleaning_valve8.place(x=COL7, y=Y7+dY2) 
 
 
       def set_experiment_section(self):
@@ -242,17 +232,43 @@ class SM_GUI():
             self.text_mixing_speed.place(x=COL10, y=Y2)
 
 
-      def set_recipe_section(self):
+      def set_buttons_section(self):
+            COL1 = 900
+            COL2 = 920
+            Y1 = 700
+            dY = 70
             self.b_exit = Button(self.root,text="Exit", bg="#fc9d9d", 
                                  fg='black',font=self.Font4, height=1, width=14, 
-                                 command=self.checkExitButton).place(x =900,y = 700)
+                                 command=self.checkExitButton).place(x =COL1,y = Y1)
 
             self.b_pause = Button(self.root,text=" Pause All ", bg="#558ff2", 
                                  fg='black',font=self.Font4, height=1, width=14, 
                                  command=self.checkPauseButton)
             self.b_pause.pack()
-            self.b_pause.place(x =900,y = 630)
-            
+            self.b_pause.place(x =COL1,y = Y1- dY)
+
+            self.b_mixing_ready = Button(self.root,text=" Mixing Signal\nNot Ready", bg="#dade12", 
+                                 fg='black',font=self.Font5, height=2, width=14, 
+                                 command=self.checkMixingReadyButton)
+            self.b_mixing_ready.pack()
+            self.b_mixing_ready.place(x =COL2,y = Y1- 2*dY-20)
+
+
+            self.b_equilib_reached = Button(self.root,text=" Equlibrium\nNot Reached", bg="#dade12", 
+                                 fg='black',font=self.Font5, height=2, width=14, 
+                                 command=self.checkEquilibReachedButton)
+            self.b_equilib_reached.pack()
+            self.b_equilib_reached.place(x =COL2,y = Y1- 3*dY-20)
+
+            self.b_dose_sig_recieved = Button(self.root,text=" Dose Signal\nNot Recieved", bg="#dade12", 
+                                 fg='black',font=self.Font5, height=2, width=14, 
+                                 command=self.checkDoseSignalRecievedButton)
+            self.b_dose_sig_recieved.pack()
+            self.b_dose_sig_recieved.place(x =COL2,y = Y1- 4*dY-20)
+
+
+
+      def set_recipe_section(self):            
             COL1 = 50
             Y1  = 50
             dY1 = 50
@@ -571,4 +587,13 @@ class SM_GUI():
 
       def checkPauseButton(self):
             logger.debug("parent: Pause button pressed ...")
+
+      def checkEquilibReachedButton(self):
+            logger.debug("parent: Equilibraium  button pressed ...")
+
+      def checkDoseSignalRecievedButton(self):
+            logger.debug("parent: Dose Signa received  button pressed ...")
+
+      def checkMixingReadyButton(self):
+            logger.debug("parent: mixing signal ready button pressed ...")
 

@@ -67,10 +67,10 @@ def action1_1():
         GV.SM_TEXT_TO_DIAPLAY = "S1,E1 -> action1_1\n" "go to S1/E4"
         return 
 
-
-    cur_motor_pos= GV.motors.read_actual_position()    
-    h_position = RECIPE["GantrytoB"]["horizontal_titration_position"]
     GV.motors.select_axis(HW.GANTRY_VER_AXIS_ID)
+    cur_motor_pos= GV.motors.read_actual_position()    
+    h_position = RECIPE["GantrytoB"]["vertical_titration_position"]
+    
     GV.motors.set_POSOKLIM(1)
     abs_pos_tml = int(h_position / HW.TML_LENGTH_2_MM_VER )
     next_pos = abs_pos_tml  + cur_motor_pos
@@ -146,10 +146,10 @@ def action2_1():
     
     # HW.vertical_gantry_active_led
     # HW.vertical_gantry_homed_led 
-
-    cur_motor_pos= GV.motors.read_actual_position()
-    v_position = RECIPE["GantrytoB"]["vertical_titration_position"]
     GV.motors.select_axis(HW.GANTRY_HOR_AXIS_ID)
+    cur_motor_pos= GV.motors.read_actual_position()
+    v_position = RECIPE["GantrytoB"]["horizontal_titration_position"]
+    
     GV.motors.set_POSOKLIM(1)
     abs_pos_tml = int(v_position / HW.TML_LENGTH_2_MM_HOR )
     move_speed = RECIPE['GantrytoB']['gantry_move_speed'] 
@@ -229,9 +229,10 @@ def action3_1():
         return    
          
 
-    cur_motor_pos= GV.motors.read_actual_position()    
-    h_position = RECIPE["GantrytoB"]["horizontal_titration_position"]
     GV.motors.select_axis(HW.GANTRY_VER_AXIS_ID)
+    cur_motor_pos= GV.motors.read_actual_position()    
+    h_position = RECIPE["GantrytoB"]["vertical_titration_position"]
+    
     GV.motors.set_POSOKLIM(1)
     abs_pos_tml = int(h_position / HW.TML_LENGTH_2_MM_VER )
     next_pos =  cur_motor_pos - abs_pos_tml
