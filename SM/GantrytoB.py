@@ -24,6 +24,9 @@ state_name = {0:"S0: Initialization", 1:"S1: GantryZUp", 2:"S2: GantryXRight", 3
               4:"S4: GantryBComp", 5:"Pause", 6:"Error"}
 
 
+
+
+
 #---------------  ACTIONS  --------------
 def action0_0():
     str1 = "S0,E0 -> action0_0\n" "Initialization\n" "raise Z actuator to position"
@@ -44,10 +47,12 @@ def action1_0():
         return 
 
     
-    h_gantry_homed = GV.horizontal_gantry_homed_led
+    # h_gantry_homed = GV.horizontal_gantry_homed_led
+    v_gantry_homed = GV.vertical_gantry_homed_led
+    
     GV.vertical_gantry_active_led = True
 
-    if (h_gantry_homed == False):
+    if (v_gantry_homed == False):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" "Gantry not homed\n""going to ERROR state"
     else:        
@@ -84,7 +89,7 @@ def action1_1():
     GV.vertical_gantry_active_led = False
 
 
-
+    GV.vertical_gantry_active_led = False
     str1 = "actuator reached position\n" "going to S1/E2"
     GV.SM_TEXT_TO_DIAPLAY = "S1,E1 -> action1_1\n" + str1
     GV.next_E = 2
@@ -160,9 +165,8 @@ def action2_1():
     while (abs(cur_motor_pos - next_pos) > 50):
         time.sleep(1)
         cur_motor_pos= GV.motors.read_actual_position()
+
     GV.horizontal_gantry_active_led = False
-
-
     GV.SM_TEXT_TO_DIAPLAY ="S2,E1 -> action2_1\n" "move X actuator to position"
     GV.next_E = 2
     

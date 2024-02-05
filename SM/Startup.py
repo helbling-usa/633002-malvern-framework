@@ -43,6 +43,7 @@ def action0_0():
     AXIS_ID_01 = HW.MIXER_AXIS_ID
     AXIS_ID_02 = HW.GANTRY_HOR_AXIS_ID
     AXIS_ID_03 = HW.GANTRY_VER_AXIS_ID
+    # print("Axis ===== ", AXIS_ID_03)
     GV.motors.select_axis(AXIS_ID_03)    
     GV.motors.set_position() 
     GV.motors.set_POSOKLIM(1)    

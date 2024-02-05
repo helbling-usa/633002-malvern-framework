@@ -1,6 +1,6 @@
 {"Startup": 
     {
-        "enable": true,
+        "enable": false,
         "gantry_move_speed": 1,
         "gantry_home_timeout": 500,   
         "gantry_homing_speed": 1,
@@ -39,7 +39,7 @@
     },
  "Load_Prime": 
     {
-        "enable": false,
+        "enable": true,
         "pump_speed": 1000,
         "valve_move_timeout": 60,        
         "pump_move_timeout": 600, 
@@ -56,12 +56,12 @@
     },
     "Experiment": 
     {
-        "enable": true,
+        "enable": false,
         "titrationpump_speed": 100,
         "valve_move_timeout": 60,        
         "titrationpump_move_timeout": 600, 
         "dose_volume": 5,
-        "totaldose_count": 5,
+        "totaldose_count": 3,
         "mixing_speed": 200,
         "equilmix_time": 600,
         "dosestandby_time": 600

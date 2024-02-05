@@ -80,6 +80,15 @@ def action1_0():
     time.sleep(1)
     
 
+    GV.VALVE_1 = "Line to Pump"    
+    GV.VALVE_3 = "Titrant Line"    
+    GV.VALVE_5 = "Tirtant Port"
+    GV.VALVE_2 = "Line to Pump"
+    GV.VALVE_4 = "Sample Line"
+    GV.VALVE_7 = "Sample Port"
+    GV.VALVE_8 = "Air"
+    GV.VALVE_9 = "Air"
+
 
 
     str1 = " -V1 to LinetoPump\n" " -V3 to TitrantLine\n" " -V5 to TitrantPort\n" " -V2 to LinetoPump\n"
@@ -150,14 +159,17 @@ def action2_0():
         GV.SM_TEXT_TO_DIAPLAY = "S2,E0 -> action1_0\n" "going to S2/E4"
         return 
     
+    GV.pump1_titrant_active_led    = True
+    GV.pump2_sample_active_led     = True
     str1 = "  pump 1 pick up\n" "  pump 2 pickup"
     GV.SM_TEXT_TO_DIAPLAY ="S2,E0 -> action2_0" +str1
     GV.next_E = 1
 
+
 def action2_1():
     timeout = False 
-    bubble_sensor_3_triggered = True
-    bubble_sensor_4_triggered = True
+    # bubble_sensor_3_triggered = True
+    # bubble_sensor_4_triggered = True
     if (GV.PAUSE == True):
         GV.next_E = 3           
         GV.SM_TEXT_TO_DIAPLAY = "S2,E1 -> action2_1" "  goint to S2/E3"
@@ -211,7 +223,8 @@ def action2_1():
     time.sleep(.5)
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,HW.DEFAULT_PUMP_SPEEED)
 
-
+    GV.pump1_titrant_active_led    = False
+    GV.pump2_sample_active_led     = False
     GV.SM_TEXT_TO_DIAPLAY = "S2,E1 -> action2_1\n" "  bubble sensors both triggered\n" "  going to S2/E2\n"
     GV.next_E = 2
             
@@ -255,6 +268,8 @@ def action3_0():
         GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0\n" "  goint to S2/E4"
         return 
 
+    GV.VALVE_3 = "V3 to Air"        
+    GV.VALVE_4 = "V4 to Air"
     str1 = "  V3 to Air\n" "  V4 to Air\n""  wait for valves to reach position..."
     GV.SM_TEXT_TO_DIAPLAY ="S3,E0 -> action3_0"+str1
     GV.next_E = 1
@@ -329,6 +344,9 @@ def action4_0():
         GV.SM_TEXT_TO_DIAPLAY = "S4,E0 -> action4_0\n" "goint to S4/E4"
         return 
 
+    GV.pump1_titrant_active_led    = True
+    GV.pump2_sample_active_led     = True
+
     str1 = "  pump 1 to dispense\n"  " pump 2 to dispense"
     GV.SM_TEXT_TO_DIAPLAY ="S4,E0 -> action4_0\n" + str1
     GV.next_E = 1
@@ -394,10 +412,12 @@ def action4_1():
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,HW.DEFAULT_PUMP_SPEEED)
 
 
-
+    GV.pump1_titrant_active_led    = False
+    GV.pump2_sample_active_led     = False
     str1 = " bubble sensors 1&2 triggered\n" "  go to S4/E2"
     GV.SM_TEXT_TO_DIAPLAY ="S4,E1 -> action4_1\n"+ str1
     GV.next_E = 2
+
 
 def action4_2():
       
@@ -441,6 +461,15 @@ def action5_0():
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S5,E0 -> action5_0" "  goint to S5/E4"
         return    
+
+
+    GV.VALVE_1 = "Line to Pump"
+    GV.VALVE_3 = "Titrant Line"
+    GV.VALVE_5 = "Titrant Cannula"
+    GV.VALVE_2 = "Line to Gas"
+    GV.VALVE_7 = "Sample LIne"
+    GV.VALVE_4 = "Cell"
+
 
     str1 = "- V1 to LinetoPump\n""- V3 to TitrantLine\n""- V5 to TitrantCannula\n"
     str1 = str1 + "- V2 to LinetoGas\n""- V4 to SampleLine\n""- V7 to Cell\n""  Waiting for valve to go to positions..."
@@ -527,6 +556,11 @@ def action6_0():
         GV.SM_TEXT_TO_DIAPLAY = "S6,E0 -> action6_0" "goint to S6/E6"
         return 
 
+
+    GV.pump1_titrant_active_led    = True
+    GV.pump2_sample_active_led     = True
+
+
     str1 = "  pump 1 to dispense\n"    "  pump 2 to dispense"
     GV.SM_TEXT_TO_DIAPLAY ="S6,E0 -> action6_0\n" + str1
     GV.next_E = 1
@@ -590,6 +624,8 @@ def action6_1():
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,HW.DEFAULT_PUMP_SPEEED)
 
 
+
+
     str1 = "  bubble sensors 6&7 triggered\n" "  go to S6/E2\n"
     str1 = str1 +"  pump 1 to position\n"  "  pump 2 to position"
     GV.SM_TEXT_TO_DIAPLAY ="S6,E1 -> action6_1\n"+ str1
@@ -621,6 +657,11 @@ def action6_2():
     GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, target_pos_2)
     time.sleep(.5)
 
+
+    GV.pump1_titrant_active_led    = False
+    GV.pump2_sample_active_led     = False
+
+    
     str1 = "  pump 1 to position\n"  "  pump 2 to position"
     GV.SM_TEXT_TO_DIAPLAY ="S6,E2 -> action6_2\n" + str1
     GV.next_E = 3

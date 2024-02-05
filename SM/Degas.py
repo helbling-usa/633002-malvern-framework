@@ -65,6 +65,14 @@ def action1_0():
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["PumpInit_Reload"]["pump_speed"])
     time.sleep(1)
 
+    GV.VALVE_1 = "Line to Pump"    
+    GV.VALVE_3 = "Titrant Line"    
+    GV.VALVE_5 = "Titrant Port"
+    GV.VALVE_2 = "Line to Gas"
+    GV.VALVE_4 = "Sample Line"
+    GV.VALVE_7 = "Sample Port"
+
+
 
     str1 = "S0,E0 -> action0_0" "  -V1 to LinetoPump\n" "  -V3 to TitrantLine\n" "  -V5 to TitrantPort\n" "  -V2 to LinetoGas\n"
     str1 = str1 + "  -V4 to SampleLine\n"  "  -V7 to SamplePort"
@@ -135,7 +143,11 @@ def action2_0():
     TEC_cur_status = tec_dic['loop status'][0]        
     print('--->obj temp:{} , target temp:{}    status:{}'.format(obj_temp,  target_temp,TEC_cur_status))  
     
-    # GV.tec.mc.enable()
+    GV.tec.enable()
+    GV.TEC_IS_ON = True
+    GV.TEC_TARGET = target_temp
+    GV.TEC_ACTUAL = obj_temp
+
     # GV.tec.mc.disable()
 
     total_asipiration_number = RECIPE["Degas"]["total_asipiration_number"]    
@@ -179,13 +191,10 @@ def action2_2():
     while time.time() < t_end:
         time.sleep(1)
         counter += 1
-        print("\t time:", counter, " / ", heat_time)
+        if counter % 5 == 0:
+            print("\t time:", counter, " / ", heat_time)
 
 
-    # if (passed_time < GV.heat_time):
-    #     GV.SM_TEXT_TO_DIAPLAY ="S2,E2 -> action2_2" "  witing to reach. heat time .."
-    #     GV.next_E = 2
-    # else:
     GV.SM_TEXT_TO_DIAPLAY ="S2,E2 -> action2_2\n" "  Heat time reached\n"  "  go to S3/E0"
     GV.next_E = 3
 
@@ -199,6 +208,9 @@ def action2_3():
         GV.SM_TEXT_TO_DIAPLAY = "S2,E3 -> action2_3\n" "  going to S2/E5"
         return
     
+
+    GV.pump1_titrant_homed_led     = True    
+    GV.pump2_sample_homed_led      = True
     total_asipiration_number = RECIPE["Degas"]["total_asipiration_number"]    
     str0 = "\ncurrent # Aspiration:{}\nTotal Aspirations:{}".format(GV.current_Aspiration_count, total_asipiration_number)    
     str1 = str1 = "pump 1 pickup Var.:\n  Tit. Vol. +Asp. Overshoot\n""pump 2 pickup Var.:\n  Sample Vol. +Asp. Overshoot"
@@ -257,8 +269,6 @@ def action3_0():
     next_pos2 =  starting_pos2 + AspirationVolume_Overshoot
     GV.pump1.set_pos_absolute(pump_address2, next_pos2)
 
-
-
     pump_pos1 = 0
     pump_pos2 = 0
 
@@ -287,6 +297,10 @@ def action3_1():
         GV.SM_TEXT_TO_DIAPLAY = "S3,E1 -> action3_1\n" "  going to S3/E4"
         return    
          
+    GV.pump1_titrant_homed_led     = False
+    GV.pump2_sample_homed_led      = False
+
+
     if (Done == False):
         GV.next_E = 1
         GV.SM_TEXT_TO_DIAPLAY ="S3,E1 -> action3_1\n""   waiting for pump to reach position"
@@ -301,6 +315,11 @@ def action3_2():
         GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0" "  going to S3/E4"
         return 
     
+
+    GV.pump1_titrant_homed_led     = True
+    GV.pump2_sample_homed_led      = True
+
+
     total_asipiration_number = RECIPE["Degas"]["total_asipiration_number"]    
     str0 = "\ncurrent # Aspiration:{}\nTotal Aspirations:{}".format(GV.current_Aspiration_count, total_asipiration_number)    
     str1 =  "pump 1 dispense Var.:\nTit. Vol. +Asp. Overshoot\n""pump 2 dispense Var.:\nSample Vol. +Asp. Overshoot"
@@ -366,7 +385,8 @@ def action4_0():
         print("\tpump1 pos:",pump_pos1, "/", next_pos1,"\t\tpump2 pos:",pump_pos2,"/", next_pos2)
         time.sleep(0.5)
 
-
+    GV.pump1_titrant_homed_led     = False   
+    GV.pump2_sample_homed_led      = False
 
     str1 =  "pump 1 dispense Var.:\nTit. Vol. +Asp. Overshoot\n""pump 2 dispense Var.:\nSample Vol. +Asp. Overshoot"
     GV.SM_TEXT_TO_DIAPLAY ="S4,E0 -> action4_0" + str1
@@ -486,6 +506,11 @@ def action5_1():
         GV.SM_TEXT_TO_DIAPLAY = "S5,E1 -> action5_1" "  goint to S5/E4"
         return 
     
+    
+    experiment_temp = RECIPE["Degas"]["RECIPE"]
+    GV.TEC_TARGET =   experiment_temp
+    GV.tec.set_temp(float(experiment_temp))
+
     GV.terminate_SM = True
     GV.next_E = 2
     GV.SM_TEXT_TO_DIAPLAY ="S5,E1 -> action5_1\n"  "  Degasing completed\n" "  returning to the main GUI"

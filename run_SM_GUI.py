@@ -508,7 +508,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         #Sanity check: to see if all statemachines are listed in the json file, if not exit
         input_SMs = list(recipe_json.keys())
         input_SMs.sort()        
-        all_SMs = GV.SM_list_str
+        all_SMs = GV.SM_list_str.copy()
         all_SMs.sort()   
 
         if (all_SMs == input_SMs):
@@ -534,10 +534,15 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             RECIPE[key] = recipe_json[key]
             if (recipe_json[key]['enable'] == True):
                 GV.SM_enabled_dic[key] = True
-                info_str = info_str +key+": Enabled"+ "\n"
+                str_new = "{:20s}{:>20s}\n".format(key,"= Enabled")
+                info_str = info_str + str_new
+                # info_str = info_str +key+": Enabled"+ "\n"
+                
             else:
-                GV.SM_enabled_dic[key] = False
-                info_str = info_str +key+": Disabled"+ "\n"
+                GV.SM_enabled_dic[key] = False                
+                str_new = "{:20s}{:>20s}\n".format(key,"= Disabled")
+                info_str = info_str + str_new
+                # info_str = info_str +key+": Disabled"+ "\n"
 
         #Display SMs enable status in the status box
         self.t_status.delete("1.0", END)
@@ -617,15 +622,17 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         logger.debug("exit button pressed ...")
         # KILL_THREADS = True
         self.timer.cancel()
-        # self.root.destroy()
+        print("1-------------")
+        self.root.destroy()
         sys.exit(0)
+        
 
 
     def checkPauseButton(self):
         # logger.debug("child: Pause button pressed ...")
         if (GV.PAUSE == False):
             GV.PAUSE = True
-            self.b_pause.config(text=' UnPause All ')
+            self.b_pause.config(text=' Resume All ')
         else:
             GV.PAUSE = False
             self.b_pause.config(text='   Pause All  ')

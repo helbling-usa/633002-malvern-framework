@@ -7,14 +7,14 @@ from    general.recipe import RECIPE
 
 ##-----------------   ("next STATE","FUCNCTION") --------------------------------------------------
 #-------------   -------E0-------    ------E1-------  -------E2-------  -------E3-------  -------E4-------  -------E5-------  -------E6-------  
-TT = np.array([[( 1, '.action0_0'),  (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')      ],  #<---STATE0
-               [( 1, '.action1_0'),  (2, '.action1_1'), (6, '.action1_2'), (7, '.action1_3'), (0, 'None')      , (0, 'None')      , (0, 'None')      ],  #<---STATE1
-               [( 2, '.action2_0'),  (2, '.action2_1'), (3, '.action2_2'), (6, '.action2_3'), (7, '.action2_4'), (0, 'None')      , (0, 'None')      ],  #<---STATE2
-               [( 3, '.action3_0'),  (4, '.action3_1'), (6, '.action3_2'), (7, '.action3_3'), (0, 'None')      , (0, 'None')      , (0, 'None')      ],  #<---STATE3
-               [( 4, '.action4_0'),  (4, '.action4_1'), (4, '.action4_2'), (5, '.action4_3'), (3, '.action4_4'), (6, '.action4_5'), (7, '.action4_6')],  #<---STATE4
-               [( 5, '.action5_0'),  (5, '.action5_1'), (5, '.action5_2'), (6, '.action5_3'), (7, '.action5_4'), (0, 'None')      , (0, 'None')      ],  #<---STATE5
-               [( 6, '.action6_0'),  (1, '.action6_1'), (2, '.action6_2'), (3, '.action6_3'), (4, '.action6_4'), (5, '.action6_5'), (0, 'None')      ],  #<---STATE6
-               [( 7, '.action7_0'),  (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')      ]   #<---STATE7
+TT = np.array([[( 1, 'action0_0'),  (0, 'None')     , (0, 'None')     , (0, 'None')     , (0, 'None')     , (0, 'None')     , (0, 'None')      ],  #<---STATE0
+               [( 1, 'action1_0'),  (2, 'action1_1'), (6, 'action1_2'), (7, 'action1_3'), (0, 'None')     , (0, 'None')     , (0, 'None')      ],  #<---STATE1
+               [( 2, 'action2_0'),  (2, 'action2_1'), (3, 'action2_2'), (6, 'action2_3'), (7, 'action2_4'), (0, 'None')     , (0, 'None')      ],  #<---STATE2
+               [( 3, 'action3_0'),  (4, 'action3_1'), (6, 'action3_2'), (7, 'action3_3'), (0, 'None')     , (0, 'None')     , (0, 'None')      ],  #<---STATE3
+               [( 4, 'action4_0'),  (4, 'action4_1'), (4, 'action4_2'), (5, 'action4_3'), (3, 'action4_4'), (6, 'action4_5'), (7, 'action4_6') ],  #<---STATE4
+               [( 5, 'action5_0'),  (5, 'action5_1'), (5, 'action5_2'), (6, 'action5_3'), (7, 'action5_4'), (0, 'None')     , (0, 'None')      ],  #<---STATE5
+               [( 6, 'action6_0'),  (1, 'action6_1'), (2, 'action6_2'), (3, 'action6_3'), (4, 'action6_4'), (5, 'action6_5'), (0, 'None')      ],  #<---STATE6
+               [( 7, 'action7_0'),  (0, 'None')     , (0, 'None')     , (0, 'None')     , (0, 'None')     , (0, 'None')     , (0, 'None')      ]   #<---STATE7
                ])  
 
 def name():
@@ -30,8 +30,23 @@ state_name = {0:"S0: Initialization", 1:"S1: CheckPos", 2:"S2: Mix", 3:"S3: Dose
 
 #---------------  ACTIONS  --------------
 def action0_0():
+
+    GV.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, 'I')
+    time.sleep(.5)
+    GV.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,1)        
+    time.sleep(.5)
+    GV.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS, 'I')
+    time.sleep(.5)
+    GV.pump1.set_valve(HW.SAMPLE_CLEANING_ADDRESS, 'I')
+    time.sleep(.5)
+
+
     str1  = "S0,E0 -> action0_0\n" "  V1 to Line to Pump\n" "V3 to Titrant Line\n" "V5 to Titrant Port\n"
     str1 = str1 + " V9 to Air\n" "SM initialized ..."
+    GV.VALVE_1 = "Line to Pump"
+    GV.VALVE_3 = "Titrant Line"
+    GV.VALVE_4 = "Titrant Port"
+    GV.VALVE_9 = "V9 to Air"
     GV.SM_TEXT_TO_DIAPLAY = str1
     GV.next_E = 0    
 
@@ -41,28 +56,30 @@ def action1_0():
 
     if (GV.PAUSE == True):
         GV.next_E = 2            
-        GV.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" "Prepare to go to GV.PAUSE State"
+        GV.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" "Prepare to go to PAUSE State"
         return 
     if (GV.ERROR == True):
         GV.next_E = 3
-        GV.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" "Prepare to go to GV.ERROR State"
+        GV.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" "Prepare to go to ERROR State"
         return 
     
     str1 = "\tGantry Z is moving to lowered position"
     GV.next_E = 1    
     GV.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" + str1
 
+
 def action1_1():
     if (GV.PAUSE == True):
         GV.next_E = 2            
-        GV.SM_TEXT_TO_DIAPLAY = "S1,E1 -> action1_1\n" "Prepare to go to GV.PAUSE State"
+        GV.SM_TEXT_TO_DIAPLAY = "S1,E1 -> action1_1\n" "Prepare to go to PAUSE State"
         return 
     if (GV.ERROR == True):
         GV.next_E = 3
-        GV.SM_TEXT_TO_DIAPLAY = "S1,E1 -> action1_1\n" "Prepare to go to GV.ERROR State"
+        GV.SM_TEXT_TO_DIAPLAY = "S1,E1 -> action1_1\n" "Prepare to go to ERROR State"
         return 
 
     GV.motors.select_axis(HW.GANTRY_VER_AXIS_ID)
+    print("================ axis selected", HW.GANTRY_VER_AXIS_ID )
     cur_motor_pos= GV.motors.read_actual_position()    
     v_position = RECIPE["GantrytoB"]["vertical_titration_position"]    
     GV.motors.set_POSOKLIM(1)
@@ -83,7 +100,7 @@ def action1_1():
 def action1_2():
     if (GV.ERROR == True):
         GV.next_E = 3
-        GV.SM_TEXT_TO_DIAPLAY = "S1,E2 -> action1_2\n" "Prepare to go to GV.ERROR State"
+        GV.SM_TEXT_TO_DIAPLAY = "S1,E2 -> action1_2\n" "Prepare to go to ERROR State"
         return     
     GV.next_E = 0
     GV.prev_S = 1
