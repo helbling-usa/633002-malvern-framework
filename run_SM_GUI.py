@@ -22,6 +22,9 @@ import  SM.Func_NewAirSlugs
 import  SM.GantrytoB
 import  SM.Experiment
 import  hardware.config as HW
+import  grpc
+import  unary.unary_pb2_grpc as pb2_grpc
+import  unary.unary_pb2 as pb2
 #--------------  GLOBAL VARIABLES -----------------------------------------
 
 # GV = General_vars()
@@ -66,6 +69,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         self.b_start["state"] = DISABLED
         GV.SM_list = [SM.Startup, SM.PumpInit_Reload, SM.Degas, SM.Load_Prime, SM.GantrytoB, SM.Experiment,  SM.Func_NewAirSlugs]
         GV.SM_list_str = ["Startup", "PumpInit_Reload", "Degas", "Load_Prime", "GantrytoB", "Experiment", "Func_NewAirSlugs"]
+        GV.grPC_Client = UnaryClient()  #start grPC client service
 
 
     def InitTimer(self):
@@ -624,6 +628,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         self.timer.cancel()
         print("1-------------")
         self.root.destroy()
+        print("2------------")
         sys.exit(0)
         
 
@@ -637,42 +642,92 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             GV.PAUSE = False
             self.b_pause.config(text='   Pause All  ')
 
+
     def checkEquilibReachedButton(self):        
-        if (GV.EquilibriumReached == False):
-            GV.EquilibriumReached = True
-            self.b_equilib_reached.config(text=" Equlibrium\nReached")
-            self.b_equilib_reached.configure(bg="#51e81a")
-        else:
-            GV.EquilibriumReached = False
-            self.b_equilib_reached.config(text=" Equlibrium\nNot Reached")
-            self.b_equilib_reached.configure(bg="#dade12")
-        logger.debug("Equilibraium reached:{}".format(GV.EquilibriumReached))
+        # if (GV.EquilibriumReached == False):
+        #     GV.EquilibriumReached = True
+        #     self.b_equilib_reached.config(text=" Equlibrium\nReached")
+        #     self.b_equilib_reached.configure(bg="#51e81a")
+        # else:
+        #     GV.EquilibriumReached = False
+        #     self.b_equilib_reached.config(text=" Equlibrium\nNot Reached")
+        #     self.b_equilib_reached.configure(bg="#dade12")
+        # logger.debug("Equilibraium reached:{}".format(GV.EquilibriumReached))
+        result = GV.grPC_Client.get_url(message="Equilibrium_Reached")
+        print(f'{result}')
+        # print('==============',result.message)
+        # print('==============',result.value)
+        if result.message == "Equilibrium_Reached":
+            if result.value > 0:
+                print('equi. reached')
+                GV.EquilibriumReached = True
+                self.b_equilib_reached.config(text=" Equlibrium\nReached")
+                self.b_equilib_reached.configure(bg="#51e81a")
+            else:
+                print('equil. not reached')
+                GV.EquilibriumReached = False
+                self.b_equilib_reached.config(text=" Equlibrium\nNot Reached")
+                self.b_equilib_reached.configure(bg="#dade12")
 
 
     def checkDoseSignalRecievedButton(self):
+        # if (GV.DoseSignalRecived == False):
+        #     GV.DoseSignalRecived = True
+        #     self.b_dose_sig_recieved.config(text=' Dose Signal\nRecieved')
+        #     self.b_dose_sig_recieved.configure(bg="#51e81a")
+        # else:
+        #     GV.DoseSignalRecived = False
+        #     self.b_dose_sig_recieved.config(text=' Dose Signal\nNot Recieved')
+        #     self.b_dose_sig_recieved.configure(bg="#dade12")
+        # logger.debug("Dose Signal Recived:{}".format(GV.DoseSignalRecived))
+        result = GV.grPC_Client.get_url(message="Dose_Signal_Ready")
+        print(f'{result}')
+        # print('==============',result.message)
+        # print('==============',result.value)
+        if result.message == "Dose_Signal_Ready":
+            if result.value > 0 :
+                print('Dose signal recieved')
+                GV.DoseSignalRecived = True
+                self.b_dose_sig_recieved.config(text=' Dose Signal\nRecieved')
+                self.b_dose_sig_recieved.configure(bg="#51e81a")
+                TOTAL_DOSE_NUMBER   = result.value
+            else:
+                print('Dose signal not recieved')
+                GV.DoseSignalRecived = False
+                self.b_dose_sig_recieved.config(text=' Dose Signal\nNot Recieved')
+                self.b_dose_sig_recieved.configure(bg="#dade12")
+                TOTAL_DOSE_NUMBER   = result.value
 
-        if (GV.DoseSignalRecived == False):
-            GV.DoseSignalRecived = True
-            self.b_dose_sig_recieved.config(text=' Dose Signal\nRecieved')
-            self.b_dose_sig_recieved.configure(bg="#51e81a")
-        else:
-            GV.DoseSignalRecived = False
-            self.b_dose_sig_recieved.config(text=' Dose Signal\nNot Recieved')
-            self.b_dose_sig_recieved.configure(bg="#dade12")
-        logger.debug("Dose Signal Recived:{}".format(GV.DoseSignalRecived))
+
 
     def checkMixingReadyButton(self):
-        if (GV.MixingSignalReady == False):
-            GV.MixingSignalReady = True
-            self.b_mixing_ready.config(text=" Mixing Signal\nReady")
-            self.b_mixing_ready.configure(bg="#51e81a")
-        else:
-            GV.MixingSignalReady = False
-            self.b_mixing_ready.config(text=" Mixing Signal\nNot Ready")
-            self.b_mixing_ready.configure(bg="#dade12")
-        logger.debug("Mixing Signal Reachy:{}".format(GV.MixingSignalReady))
+        # if (GV.MixingSignalReady == False):
+        #     GV.MixingSignalReady = True
+        #     self.b_mixing_ready.config(text=" Mixing Signal\nReady")
+        #     self.b_mixing_ready.configure(bg="#51e81a")
+        # else:
+        #     GV.MixingSignalReady = False
+        #     self.b_mixing_ready.config(text=" Mixing Signal\nNot Ready")
+        #     self.b_mixing_ready.configure(bg="#dade12")
+        # logger.debug("Mixing Signal Reachy:{}".format(GV.MixingSignalReady))
+        result = GV.grPC_Client.get_url(message="Mixing_Ready")
+        print(f'{result}')
+        # print('==============',result.message)
+        # print('==============',result.value)
+        if result.message == "Mixing_Signal_Ready":
+            if result.value == 1:
+                print('mixing signal is ready')
+                GV.MixingSignalReady = True
+                self.b_mixing_ready.config(text=" Mixing Signal\nReady")
+                self.b_mixing_ready.configure(bg="#51e81a")
+            else:
+                print('mixing signal is not reay')
+                GV.MixingSignalReady = False
+                self.b_mixing_ready.config(text=" Mixing Signal\nNot Ready")
+                self.b_mixing_ready.configure(bg="#dade12")
 
-text=" Mixing Signal\nNot Ready"
+
+
 
 
 def is_float(element: any) -> bool:
@@ -684,6 +739,36 @@ def is_float(element: any) -> bool:
         return True
     except ValueError:
         return False
+
+
+
+
+
+
+class UnaryClient(object):
+    """
+    Client for gRPC functionality
+    """
+
+    def __init__(self):
+        self.host = 'localhost'
+        self.server_port = 50051
+
+        # instantiate a channel
+        self.channel = grpc.insecure_channel(
+            '{}:{}'.format(self.host, self.server_port))
+
+        # bind the client and the server
+        self.stub = pb2_grpc.UnaryStub(self.channel)
+
+    def get_url(self, message):
+        """
+        Client function to call the rpc for GetServerResponse
+        """
+        message = pb2.Message(message=message)
+        print(f'{message}')
+        return self.stub.GetServerResponse(message)
+    
 
 
 def main(): #run mianloop 

@@ -99,7 +99,7 @@ EquilibriumReached  = False     # is the equilibrium reached in Malvern box?
 MixingSignalReady   = False     # is the mxing signal ready received from Malvern box?
 current_dose_volume = 0         # current dose number (updates after each dose delivery in Experiment SM)
 
-
+grPC_Client = None
 
 
 

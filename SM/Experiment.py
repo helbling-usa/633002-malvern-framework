@@ -121,8 +121,21 @@ def action2_0():
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S2,E0 -> action2_1\n" "Prepare to go to ERROR State"
         return 
-    
+        
     #wait for mixing signal from thermal core        
+    result = GV.grPC_Client.get_url(message="Mixing_Ready")
+    print(f'{result}')
+    # print('==============',result.message)
+    # print('==============',result.value)
+    if result.message == "Mixing_Signal_Ready":
+        if result.value == 1:
+            print('mixing signal is ready')
+            GV.MixingSignalReady = True
+        else:
+            print('mixing signal is not reay')
+            GV.MixingSignalReady = False
+
+
     if (GV.MixingSignalReady==True):
         GV.next_E = 1
         str1 = "Waiting to reach equilibrium..." 
@@ -148,6 +161,19 @@ def action2_1():
             
     
     #wait for dose ready signal from thermal core
+
+    result = GV.grPC_Client.get_url(message="Equilibrium_Reached")
+    print(f'{result}')
+    # print('==============',result.message)
+    # print('==============',result.value)
+    if result.message == "Equilibrium_Reached":
+        if result.value > 0:
+            print('equi. reached')
+            GV.EquilibriumReached = True            
+        else:
+            print('equil. not reached')
+            GV.EquilibriumReached = False
+            
     str0 = "\tMixing Motor Speed = xxx\n"
     if (GV.EquilibriumReached == True):
         GV.next_E = 2
@@ -189,8 +215,20 @@ def action3_0():
         GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0\n" "Prepare to go to ERROR State"
         return 
+    
     #check if dose signal is receved 
-    # dose_ready_signal_ok = True
+    result = GV.grPC_Client.get_url(message="Total_Core_Number")
+    print(f'{result}')
+    # print('==============',result.message)
+    # print('==============',result.value)
+    if result.message == "Total_Core_Number":
+        if result.value > 0 :
+            print('Dose signal recieved')
+            GV.DoseSignalRecived = True
+        else:
+            print('Dose signal not recieved')
+            GV.DoseSignalRecived = False
+
     if (GV.DoseSignalRecived == True):
         GV.next_E = 1
         str1 = "\tDose Signal Ready: OK"
