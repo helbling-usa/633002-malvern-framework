@@ -628,6 +628,8 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         self.timer.cancel()
         print("1-------------")
         self.root.destroy()
+        
+
         print("2------------")
         sys.exit(0)
         
