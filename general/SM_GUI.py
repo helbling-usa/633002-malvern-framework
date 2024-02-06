@@ -247,24 +247,24 @@ class SM_GUI():
             self.b_pause.pack()
             self.b_pause.place(x =COL1,y = Y1- dY)
 
-            self.b_mixing_ready = Button(self.root,text=" Mixing Signal\nNot Ready", bg="#dade12", 
-                                 fg='black',font=self.Font5, height=2, width=14, 
-                                 command=self.checkMixingReadyButton)
-            self.b_mixing_ready.pack()
-            self.b_mixing_ready.place(x =COL2,y = Y1- 2*dY-20)
+            # self.b_mixing_ready = Button(self.root,text=" Mixing Signal\nNot Ready", bg="#dade12", 
+            #                      fg='black',font=self.Font5, height=2, width=14, 
+            #                      command=self.checkMixingReadyButton)
+            # self.b_mixing_ready.pack()
+            # self.b_mixing_ready.place(x =COL2,y = Y1- 2*dY-20)
 
 
-            self.b_equilib_reached = Button(self.root,text=" Equlibrium\nNot Reached", bg="#dade12", 
-                                 fg='black',font=self.Font5, height=2, width=14, 
-                                 command=self.checkEquilibReachedButton)
-            self.b_equilib_reached.pack()
-            self.b_equilib_reached.place(x =COL2,y = Y1- 3*dY-20)
+            # self.b_equilib_reached = Button(self.root,text=" Equlibrium\nNot Reached", bg="#dade12", 
+            #                      fg='black',font=self.Font5, height=2, width=14, 
+            #                      command=self.checkEquilibReachedButton)
+            # self.b_equilib_reached.pack()
+            # self.b_equilib_reached.place(x =COL2,y = Y1- 3*dY-20)
 
-            self.b_dose_sig_recieved = Button(self.root,text=" Dose Signal\nNot Recieved", bg="#dade12", 
-                                 fg='black',font=self.Font5, height=2, width=14, 
-                                 command=self.checkDoseSignalRecievedButton)
-            self.b_dose_sig_recieved.pack()
-            self.b_dose_sig_recieved.place(x =COL2,y = Y1- 4*dY-20)
+            # self.b_dose_sig_recieved = Button(self.root,text=" Dose Signal\nNot Recieved", bg="#dade12", 
+            #                      fg='black',font=self.Font5, height=2, width=14, 
+            #                      command=self.checkDoseSignalRecievedButton)
+            # self.b_dose_sig_recieved.pack()
+            # self.b_dose_sig_recieved.place(x =COL2,y = Y1- 4*dY-20)
 
 
 
@@ -588,12 +588,12 @@ class SM_GUI():
       def checkPauseButton(self):
             logger.debug("parent: Pause button pressed ...")
 
-      def checkEquilibReachedButton(self):
-            logger.debug("parent: Equilibraium  button pressed ...")
+      # def checkEquilibReachedButton(self):
+      #       logger.debug("parent: Equilibraium  button pressed ...")
 
-      def checkDoseSignalRecievedButton(self):
-            logger.debug("parent: Dose Signa received  button pressed ...")
+      # def checkDoseSignalRecievedButton(self):
+      #       logger.debug("parent: Dose Signa received  button pressed ...")
 
-      def checkMixingReadyButton(self):
-            logger.debug("parent: mixing signal ready button pressed ...")
+      # def checkMixingReadyButton(self):
+      #       logger.debug("parent: mixing signal ready button pressed ...")
 

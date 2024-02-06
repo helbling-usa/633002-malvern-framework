@@ -1,6 +1,6 @@
 {"Startup": 
     {
-        "enable": false,
+        "enable": true,
         "gantry_move_speed": 1,
         "gantry_home_timeout": 500,   
         "gantry_homing_speed": 1,
@@ -39,7 +39,7 @@
     },
  "Load_Prime": 
     {
-        "enable": true,
+        "enable": false,
         "pump_speed": 1000,
         "valve_move_timeout": 60,        
         "pump_move_timeout": 600, 
@@ -56,7 +56,7 @@
     },
     "Experiment": 
     {
-        "enable": false,
+        "enable": true,
         "titrationpump_speed": 100,
         "valve_move_timeout": 60,        
         "titrationpump_move_timeout": 600, 

@@ -143,6 +143,7 @@ def action2_0():
         GV.motors.select_axis(HW.MIXER_AXIS_ID)
         acceleration = 1        # mixing motor acceleration
         GV.motors.set_speed(mixing_speed,acceleration)
+        GV.MIXING_SPEED = mixing_speed                  #to update the GUI experiment
     
     else:
         GV.next_E = 0
@@ -217,11 +218,11 @@ def action3_0():
         return 
     
     #check if dose signal is receved 
-    result = GV.grPC_Client.get_url(message="Total_Core_Number")
+    result = GV.grPC_Client.get_url(message="Dose_Signal_Ready")
     print(f'{result}')
     # print('==============',result.message)
     # print('==============',result.value)
-    if result.message == "Total_Core_Number":
+    if result.message == "Dose_Signal_Ready":
         if result.value > 0 :
             print('Dose signal recieved')
             GV.DoseSignalRecived = True
@@ -237,6 +238,7 @@ def action3_0():
         str1 = "Dose signal not recieved\n" "Waiting for Dose Signal"
     GV.SM_TEXT_TO_DIAPLAY ="S3,E0 -> action3_0\n"+str1
 
+
 def action3_1():
     if (GV.PAUSE == True):
         GV.next_E = 2          
@@ -250,6 +252,7 @@ def action3_1():
     GV.next_E = 0
     GV.SM_TEXT_TO_DIAPLAY ="S3,E1 -> action3_1\n""\tPreparing to go to S4/E0"
 
+
 def action3_2():
     if (GV.ERROR == True):
         GV.next_E = 3
@@ -258,6 +261,7 @@ def action3_2():
     
     GV.next_E = 0
     GV.SM_TEXT_TO_DIAPLAY ="S3,E2 -> action3_2\n"
+
 
 def action3_3():
     GV.next_E = 0
@@ -290,6 +294,7 @@ def action4_1():
         return 
     
     dose_volume = RECIPE["Experiment"]["dose_volume"]
+    GV.DOSE_VOLUME = dose_volume        # to update the GUI experiment
     pump_address1 = HW.TIRRANT_PUMP_ADDRESS
     pump_address2 = HW.SAMPLE_PUMP_ADDRESS
 
@@ -322,8 +327,10 @@ def action4_2():
         return          
     
     totaldose_count = RECIPE["Experiment"]["totaldose_count"]
+    GV.TOTAL_DOSES = totaldose_count        #to update the GUI experiment
     #increment dose number variable
-    GV.current_dose_volume += 1        
+    GV.current_dose_volume += 1
+    GV.DOSE_COMPLETED = GV.current_dose_volume          #to update the GUI experiment
     #check if dose count is reached:
     if GV.current_dose_volume >= totaldose_count:
         GV.next_E = 3
@@ -412,6 +419,13 @@ def action5_1():
         GV.SM_TEXT_TO_DIAPLAY = "S5,E1 -> action5_1\n" "Prepare to go to ERROR State"
         return 
     
+    # Turn off the mixing motor
+    GV.motors.select_axis(HW.MIXER_AXIS_ID)
+    acceleration = 1        # mixing motor acceleration
+    mixing_speed = 0
+    GV.motors.set_speed(mixing_speed,acceleration)
+    GV.MIXING_SPEED = mixing_speed                  #to update the GUI experiment
+
     GV.terminate_SM = True
     # print("S5,E1 -> action5_1")
     GV.next_E = 2
