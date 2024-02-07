@@ -21,6 +21,7 @@ import  SM.Load_Prime
 import  SM.Func_NewAirSlugs
 import  SM.GantrytoB
 import  SM.Experiment
+import  SM.GantrytoA
 import  hardware.config as HW
 import  grpc
 import  unary.unary_pb2_grpc as pb2_grpc
@@ -67,8 +68,8 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         self.InitTimer()
         self.b_nextbutton["state"] = DISABLED
         self.b_start["state"] = DISABLED
-        GV.SM_list = [SM.Startup, SM.PumpInit_Reload, SM.Degas, SM.Load_Prime, SM.GantrytoB, SM.Experiment,  SM.Func_NewAirSlugs]
-        GV.SM_list_str = ["Startup", "PumpInit_Reload", "Degas", "Load_Prime", "GantrytoB", "Experiment", "Func_NewAirSlugs"]
+        GV.SM_list = [SM.Startup, SM.PumpInit_Reload, SM.Degas, SM.Load_Prime, SM.GantrytoB, SM.Experiment, SM.GantrytoB,  SM.Func_NewAirSlugs]
+        GV.SM_list_str = ["Startup", "PumpInit_Reload", "Degas", "Load_Prime", "GantrytoB", "Experiment","GantrytoA", "Func_NewAirSlugs"]
         GV.grPC_Client = UnaryClient()  #start grPC client service
 
 

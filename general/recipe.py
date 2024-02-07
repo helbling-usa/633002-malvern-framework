@@ -67,6 +67,14 @@ RECIPE= {
         "equilmix_time": 600,
         "dosestandby_time": 600
     },
+    "GantrytoA": 
+    {
+        "enable": False,
+        "gantry_move_speed": 0,
+        "horizontal_titration_position": 0,
+        "vertical_titration_position": 0,
+        "gantry_move_timeout": 0
+    },    
     "Func_NewAirSlugs": 
     {
         "enable": False,

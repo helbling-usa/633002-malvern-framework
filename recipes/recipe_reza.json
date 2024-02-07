@@ -1,4 +1,5 @@
-{"Startup": 
+{
+    "Startup": 
     {
         "enable": true,
         "gantry_move_speed": 1,
@@ -8,7 +9,7 @@
         "gantry_move_timeout": 60,
         "vertical_cell_fill_position": 70
     },
- "PumpInit_Reload": 
+    "PumpInit_Reload": 
     {
         "enable": false,
         "pump_speed": 1000,
@@ -24,7 +25,7 @@
 		"AirSlug_Volume": 100,
 		"WaterSlug_Volume": 100
     },   
- "Degas": 
+    "Degas": 
     {
         "enable": false,
         "pump_speed": 100,
@@ -37,7 +38,7 @@
         "AspirationVolume_Overshoot": 300,
         "total_asipiration_number":4
     },
- "Load_Prime": 
+    "Load_Prime": 
     {
         "enable": false,
         "pump_speed": 1000,
@@ -56,7 +57,7 @@
     },
     "Experiment": 
     {
-        "enable": true,
+        "enable": false,
         "titrationpump_speed": 100,
         "valve_move_timeout": 60,        
         "titrationpump_move_timeout": 600, 
@@ -66,7 +67,15 @@
         "equilmix_time": 600,
         "dosestandby_time": 600
     },    
- "Func_NewAirSlugs": 
+    "GantrytoA": 
+    {
+        "enable": true,
+        "gantry_move_speed": 10,
+        "horizontal_titration_position": 50,
+        "vertical_titration_position": 50,
+        "gantry_move_timeout": 60
+    },
+    "Func_NewAirSlugs": 
     {
         "enable": false,
         "pump_speed": 300,
