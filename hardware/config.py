@@ -32,3 +32,18 @@ GANTRY_HOR_AXIS_ID =  1                 # axis id of horizontal gantry
 
 SM_EXECUTION_ORDER = ['Startup', 'PumpInit_Reload', 'Degas', 'Load_Prime','Func_NewAirSlugs']
 
+#Bubble semsor IO port address on the labjack
+BS1_IO_PORT = 0
+BS2_IO_PORT = 1
+BS3_IO_PORT = 2
+BS4_IO_PORT = 3
+BS5_IO_PORT = 4
+BS6_IO_PORT = 5
+BS7_IO_PORT = 6
+BS8_IO_PORT = 7
+BS9_IO_PORT = 8
+BS10_IO_PORT = 9
+BS11_IO_PORT = 10
+BS12_IO_PORT = 11
+BS13_IO_PORT = 12
+BS14_IO_PORT = 13

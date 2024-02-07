@@ -47,12 +47,62 @@ state_name = {0:"S0: Initialization", 1:"S1: AdvancetoClean1", 2:"S2: AdvancetoC
               18:"S18: SwitchDryPort", 19:"S19: DegasDryWait", 20:"S20: GotoSwitchDryPort", 21:"S21: CloseGasLine", 
               22:"S22:  DegasCleanComplete", 23:"S23: Pause", 24:"S24: Error"}
 
+
+    
+
+#------ global variables used only in this statemachine
+DegasCleanFluid = 0
+DegasCleanPort = 0
+DegasDryPort = 0
+
+
+
+
+
 def air_or_liquid( voltage):
     if voltage > HW.BS_THRESHOLD:
         return 'liquid'
     else:
         return 'air'
+  
+
+
+def DiluteDetergent(pump_address, valve_address):
+    pump_speed = RECIPE["Func_DiluteDetergent"]["pump_speed"]
+    detergent_volume = RECIPE["Func_DiluteDetergent"]["detergent_volume"]
+    water_volume = RECIPE["Func_DiluteDetergent"]["water_volume"]
+
+    #Valve to detergent (3)
+    GV.pump1.set_multiwayvalve(valve_address,3)         
+    time.sleep(1)
+    GV.pump1.set_speed(pump_address, pump_speed)
+    time.sleep(1)   
+
+    pump_pos = GV.pump1.get_plunger_position(pump_address)
+    next_pos = pump_pos + detergent_volume
+    GV.pump1.set_pos_absolute(pump_address, next_pos)  #pump to position
+    while(abs (pump_pos < next_pos)> 50):
+        pump_pos = GV.pump1.get_plunger_position(pump_address)
+        # print("pump pos:", pump_pos, '  target:', next_pos)
+        time.sleep(1)   
     
+    #Valve to water 5
+    GV.pump1.set_multiwayvalve(valve_address,5)         
+    time.sleep(1)
+
+    pump_pos = GV.pump1.get_plunger_position(pump_address)
+    next_pos = pump_pos + water_volume
+    GV.pump1.set_pos_absolute(pump_address, next_pos)  #pump to position
+    while(abs (pump_pos < next_pos)> 50):
+        pump_pos = GV.pump1.get_plunger_position(pump_address)
+        # print("pump pos:", pump_pos, '  target:', next_pos)
+        time.sleep(1) 
+
+    # time.sleep(.5)
+    # GV.pump1.set_multiwayvalve(valve_address, 1) #valve  to air (1)
+
+
+
 def NewAirSlugs(pump_address, valve_address):
     pump_speed = RECIPE["Func_NewAirSlugs"]["pump_speed"]
     air_slug_total_count = RECIPE["Func_NewAirSlugs"]["AirSlug_Total_count"]
@@ -104,174 +154,73 @@ def NewAirSlugs(pump_address, valve_address):
         print("pump pos:", pump_pos, '  target:', next_pos)
         time.sleep(1)     
 
+
+
+
 #---------------  ACTIONS  --------------
 def action0_0():
     if (GV.PAUSE == True):
         GV.next_E = 4       
-        GV.SM_TEXT_TO_DIAPLAY = "S0,E0 -> action0_0\n" "Prepare to go to Pause State"
+        GV.SM_TEXT_TO_DIAPLAY =  "Prepare to go to Pause State"
         return 
     if (GV.ERROR == True):
         GV.next_E = 5
-        GV.SM_TEXT_TO_DIAPLAY = "S0,E0 -> action0_0\n" "Prepare to go to error State"
+        GV.SM_TEXT_TO_DIAPLAY =  "Prepare to go to error State"
         return     
     
-    GV.VALVE_1 = "Line to Pump"
+
     GV.VALVE_2 = "Line to Pump"
-    GV.VALVE_3 = "Titrant Line"
-    GV.VALVE_4 = "Sample Line"
-    GV.VALVE_5 = "Reservoirs"
+    GV.VALVE_4 = "Line to Pump"
     GV.VALVE_7 = "Reservoirs"
     GV.VALVE_8 = "Waste"
-    GV.VALVE_9 = "Waste"
 
 
-    str1 = "  prepare for initialization\n" "  -V1 to LinetoPump\n" "  -V3 to TitrantLine\n"
-    str1 = str1 +"  -V5 to Reservoirs\n" "  -V2 to LinetoPump\n" " - V4 to SampleLine\n" " - V7 to Reservoirs\n"
-    str1 = str1 +" - V8 to Waste\n" " - V9 to Waste\n" "  going to S0/E1" 
-    GV.SM_TEXT_TO_DIAPLAY = "S0,E0 -> action0_0\n" + str1
-    GV.next_E = 1
 
-    
+    str1 = "initialization\n" "Waitinf for valves to go to position\n" " -V2 to LinetoPump\n" 
+    str1 = str1 + " - V4 to LinetoPump\n" " - V7 to Reservoirs\n" " - V8 to Waste\n"
+    GV.SM_TEXT_TO_DIAPLAY = str1
+    GV.next_E = 0
 
-
-def action0_1():
+#-------------------------------------------------------------------------------------------
+def action1_0():
     if (GV.PAUSE == True):
-        GV.next_E = 4       
-        GV.SM_TEXT_TO_DIAPLAY = "S0,E1 -> action0_1\n" "Prepare to go to Pause State"
+        GV.next_E = 3
+        GV.SM_TEXT_TO_DIAPLAY = "Prepare to go to Pause State"
         return 
     if (GV.ERROR == True):
-        GV.next_E = 5
-        GV.SM_TEXT_TO_DIAPLAY = "S0,E1 -> action0_1\n" "Prepare to go to error State"
+        GV.next_E = 4
+        GV.SM_TEXT_TO_DIAPLAY = "Prepare to go to error State"
         return 
     
-    GV.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, 'E')
-    time.sleep(.5)
     GV.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, 'E')
     time.sleep(.5)
     GV.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,3)
-    time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,1)        
-    time.sleep(.5)
-    GV.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS, 'E')
-    time.sleep(.5)
-    GV.pump1.set_valve(HW.SAMPLE_LOOP_ADDRESS, 'E')
     time.sleep(.5)
     GV.pump1.set_multiwayvalve(HW.TITRANT_PORT_ADDRESS,3)
     time.sleep(.5)
     GV.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS,1)        
     time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.SAMPLE_CLEANING_ADDRESS,1)    
-    time.sleep(.5)
-    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["PumpInit_Reload"]["pump_speed"])
-    time.sleep(1)
-    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["PumpInit_Reload"]["pump_speed"])
-    time.sleep(1)
-    
 
-
-    str1 = "  prepare for initialization\n" "  -V1 to LinetoPump\n" "  -V3 to TitrantLine\n"
-    str1 = str1 +"  -V5 to Reservoirs\n" "  -V2 to LinetoPump\n" " - V4 to SampleLine\n" " - V7 to Reservoirs\n"
-    str1 = str1 +" - V8 to Waste\n" " - V9 to Waste\n" "  going to S0/E1"
-    GV.SM_TEXT_TO_DIAPLAY = "S0,E1 -> action0_1\n" + str1
-    
-    GV.next_E = 2
-
-def action0_2():
-    timeout = False
-    Done = True #False
-    if (GV.PAUSE == True):
-        GV.next_E = 4       
-        GV.SM_TEXT_TO_DIAPLAY = "S0,E2 -> action0_2\n" "going to S0/E4"
-        return 
-    if (GV.ERROR == True or timeout == True):
-        GV.next_E = 5
-        GV.SM_TEXT_TO_DIAPLAY = "S0,E2 -> action0_2\n" "going to S0/E5"
-        return 
-   
-    if (Done == False):
-        GV.next_E = 2
-        GV.SM_TEXT_TO_DIAPLAY = "S0,E0 -> action0_2\n" "  Waiting for valves to reach positions"
-    else:
-        GV.SM_TEXT_TO_DIAPLAY = "S0,E0 -> action0_2\n" "  Valves in Position" "going to S0/E3"
-    GV.next_E = 3
-
-
-def action0_3():
-    if (GV.PAUSE == True):
-        GV.next_E = 4       
-        GV.SM_TEXT_TO_DIAPLAY = "S0,E3 -> action0_3\n" "going to S0/E4"
-        return 
-    if (GV.ERROR == True):
-        GV.next_E = 5
-        GV.SM_TEXT_TO_DIAPLAY = "S0,E3 -> action0_3\n" "going to S0/E5"
-        return 
-    
-    str1 = "  Init. Titran Pump\n" "  Init. Sample Pump" 
-    GV.SM_TEXT_TO_DIAPLAY = "S0,E3 -> action0_3\n"  + str1
-     
-    GV.next_E = 0
-
-
-def action0_4():
-    if (GV.ERROR == True):
-        GV.next_E = 5
-        GV.SM_TEXT_TO_DIAPLAY = "S0,E4 -> action0_4\n" "going to S0/E5"
-        return     
-    GV.next_E = 0
-    GV.prev_S = 0
-    GV.SM_TEXT_TO_DIAPLAY ="S1,E2 -> action1_2\n\tgo to GV.PAUSE state"
-    
-    
-def action0_5():
-    GV.next_E = 0
-    GV.SM_TEXT_TO_DIAPLAY = "S1,E3 -> action1_3\n\tgoing to ERROR state"
-
-
-#-------------------------------------------------------------------------------------------
-def action1_0():  
-    if (GV.PAUSE == True):
-        GV.next_E = 3
-        GV.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" "going to S1/E4"
-        return 
-    if (GV.ERROR == True):
-        GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" "going to S1/E4"
-        return 
-
-    GV.pump1.pump_Zinit(HW.TIRRANT_PUMP_ADDRESS)
-    # # print("\t\tPump1 initialized")
-    time.sleep(3)
-    GV.pump1.pump_Zinit(HW.SAMPLE_PUMP_ADDRESS)    
-    # # print("\t\tPump2 initialized")
-    time.sleep(3)
-
-    
-    GV.pump1_titrant_homed_led     = True    
-    GV.pump2_sample_homed_led      = True
-
-    str1 = "  Init. Titran Pump\n" "  Init. Sample Pump\n" "  going to S1/E1"
-    GV.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" + str1
+    GV.SM_TEXT_TO_DIAPLAY = "Valves in position"     
     GV.next_E = 1
 
 
 def action1_1():
     timeout = False
-    Done = True #False
     if (GV.PAUSE == True):
         GV.next_E = 3
-        GV.SM_TEXT_TO_DIAPLAY = "S1,E1 -> action1_1\n" "going to S1/E3"
+        GV.SM_TEXT_TO_DIAPLAY = "going to  pause state"
         return 
     if (GV.ERROR == True or timeout==True):
         GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "S1,E1 -> action1_1\n" "going to S1/E4"
+        GV.SM_TEXT_TO_DIAPLAY =  "going to error state"
         return 
     
-    if (Done == False):        
-        GV.SM_TEXT_TO_DIAPLAY = "S1,E1 -> action1_1\n" "  Waiting for Pumps to initialize"
-        GV.next_E = 1
-    else:
-        GV.SM_TEXT_TO_DIAPLAY = "S1,E1 -> action1_1\n" "  Pumps initialized" "going to S1/E2"
-        GV.next_E = 2
+
+
+    GV.SM_TEXT_TO_DIAPLAY = "Valves in position"
+    GV.next_E = 2
+    
 
 
 def action1_2():
@@ -285,148 +234,170 @@ def action1_2():
         return     
     
 
-    str1 ="  Purge Sample and Titrant Lines"
-    GV.SM_TEXT_TO_DIAPLAY ="S1,E2 -> action1_2\n" + str1
+    
+    GV.SM_TEXT_TO_DIAPLAY = "Going to State 2"
     GV.next_E = 0
 
 def action1_3():
     if (GV.ERROR == True):
         GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "S1,E3 -> action1_3\n" "going to S1/E4"
+        GV.SM_TEXT_TO_DIAPLAY =  "going to error state"
         return     
-    GV.SM_TEXT_TO_DIAPLAY ="S1,E2 -> action1_3\n\tgoing to PAUSE state"
+    GV.SM_TEXT_TO_DIAPLAY ="going to PAUSE state"
     GV.next_E = 0
     GV.prev_S = 1
     
     
 def action1_4():
     GV.next_E = 0
-    GV.SM_TEXT_TO_DIAPLAY = "S1,E3 -> action1_3\n\tgoing to ERROR state"
+    GV.SM_TEXT_TO_DIAPLAY = "going to ERROR state"
 
 
 #----------------------------------------------------------------   
 def action2_0():
     if (GV.PAUSE == True):
-        GV.next_E = 3
-        GV.SM_TEXT_TO_DIAPLAY = "S2,E0 -> action1_0\n" "going to S2/E4"
+        GV.next_E = 5
+        GV.SM_TEXT_TO_DIAPLAY = "going to pause state"
         return 
     if (GV.ERROR == True):
-        GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "S2,E0 -> action1_0\n" "going to S2/E4"
+        GV.next_E = 6
+        GV.SM_TEXT_TO_DIAPLAY =  "going to error state"
         return 
-    
-    GV.VALVE_2 = "GastoLine"
-    GV.VALVE_4 = "LinetoGas"    
-    GV.VALVE_6 = "LinetoGas"
-    GV.VALVE_7 = "Reservoirs"
-    GV.VALVE_8 = "Waste"
-    GV.VALVE_1 = "Gas to Line"
-    GV.VALVE_3 = "Gas to Line"
-    GV.VALVE_5 = "Reservoirs"
-    GV.VALVE_9 = "Waste"
 
-    GV.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, 'E')
-    time.sleep(.5)
-    GV.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, 'E')
-    time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,3)
-    time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,1)        
-    time.sleep(.5)
-    GV.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS, 'E')
-    time.sleep(.5)
-    GV.pump1.set_valve(HW.SAMPLE_LOOP_ADDRESS, 'E')
-    time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.TITRANT_PORT_ADDRESS,3)
-    time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS,1)        
-    time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.SAMPLE_CLEANING_ADDRESS,1)    
-    time.sleep(.5)
-    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["PumpInit_Reload"]["pump_speed"])
-    time.sleep(1)
-    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["PumpInit_Reload"]["pump_speed"])
-    time.sleep(1)
-
-
-    GV.SM_TEXT_TO_DIAPLAY ="Purge Sample and Titrant Lines"
+    GV.SM_TEXT_TO_DIAPLAY ="pump 2 dispense \n waiting for transition in Bubble sensor 8"
     GV.next_E = 1
+
 
 def action2_1():
     timeout = False 
-    Done = True
     if (GV.PAUSE == True):
-        GV.next_E = 3           
-        GV.SM_TEXT_TO_DIAPLAY = "S2,E1 -> action2_1\n" "  goint to S2/E3"
+        GV.next_E = 5           
+        GV.SM_TEXT_TO_DIAPLAY = "going to pause state"
         return 
     if (GV.ERROR == True or timeout==True):
-        GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "S2,E1 -> action2_1\n" "  goint to S2/E4"
+        GV.next_E = 6
+        GV.SM_TEXT_TO_DIAPLAY = "going to error state"
         return 
     
-    if (Done == False):        
-        GV.SM_TEXT_TO_DIAPLAY = "S2,E1 -> action2_1\n" "  Waiting for valves to reach positions"
-        GV.next_E = 1
-    else:
-        GV.SM_TEXT_TO_DIAPLAY = "S2,E1 -> action2_1\n" "  Valves in position\n" "  going to S1/E2"
-        GV.next_E = 2
+    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
+    time.sleep(1)        
+    # GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, 10)
+    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, HW.DISPENSE_UNTIL_BUBBLE_TARGET)
+    time.sleep(1)
 
+    input1 = GV.labjack.getAIN(HW.BS8_IO_PORT)  # read bubble sensor 8
+
+    #check if the bubble semsor detect air or liquid
+    cur_state_1 = air_or_liquid(input1)
+    prev_state_1 = cur_state_1
+    bubble_1_search = True
+    
+    #wait until bubble sensor 7 detects a transition
+    while (bubble_1_search ) :
+        input1 = GV.labjack.getAIN(HW.BS8_IO_PORT)
+        cur_state_1 = air_or_liquid(input1)
+        pos1 =GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
+        if (cur_state_1 != prev_state_1):
+            bubble_1_search = False
+        print('        BS:{:.2f} position:{}'.format(input1,pos1))
+        time.sleep(.05)
+    
+    GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
+    time.sleep(.5)
+    print('\t\tBubble detection terminated')
+    speed = RECIPE["DegasClean"]["pump_speed"]
+    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,speed)
+    GV.SM_TEXT_TO_DIAPLAY = "Transition in BS8 detected\n" 
+    GV.next_E = 2
+    
     
 def action2_2():
     if (GV.PAUSE == True):
-        GV.next_E = 3           
-        GV.SM_TEXT_TO_DIAPLAY = "S2,E2 -> action2_2\n" "  goint to S2/E3"
+        GV.next_E = 5          
+        GV.SM_TEXT_TO_DIAPLAY = "  goint to pause"
         return 
     if (GV.ERROR == True ):
-        GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "S2,E2 -> action2_2\n" "  goint to S2/E4"
+        GV.next_E = 6
+        GV.SM_TEXT_TO_DIAPLAY =  "  goint to error"
+        return 
+
+    
+    GV.SM_TEXT_TO_DIAPLAY ="pump 2 to position variabl S4"    
+    GV.next_E = 3
+
+   
+def action2_3():
+    if (GV.PAUSE == True):
+        GV.next_E = 5          
+        GV.SM_TEXT_TO_DIAPLAY = "  goint to pause"
+        return 
+    if (GV.ERROR == True ):
+        GV.next_E = 6
+        GV.SM_TEXT_TO_DIAPLAY =  "  goint to error"
+        return 
+
+    S4_position = 1000 #??????????????????????????????????????????????????????????
+    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, S4_position)
+    time.sleep(.5) 
+    #check to see if the pump is in position
+    next_pos = S4_position
+    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, next_pos)  #pump to position
+    pump_pos = GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
+    time.sleep(.5)
+    while(abs( pump_pos - next_pos) >50) :
+        pump_pos = GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
+        print("pump pos:", pump_pos, '  target:', next_pos)
+        time.sleep(1)     
+
+    GV.SM_TEXT_TO_DIAPLAY ="pump2 in position S4"    
+    GV.next_E = 4
+
+
+def action2_4():
+    if (GV.PAUSE == True):
+        GV.next_E = 5          
+        GV.SM_TEXT_TO_DIAPLAY = "  goint to pause"
+        return 
+    if (GV.ERROR == True ):
+        GV.next_E = 6
+        GV.SM_TEXT_TO_DIAPLAY =  "  goint to error"
         return 
     
-    GV.SM_TEXT_TO_DIAPLAY ="Please press NEXT button to continue..."
-    GV.activate_NEXT_button = True
+    GV.SM_TEXT_TO_DIAPLAY ="Get New Air Slugs1"    
     GV.next_E = 0
 
 
-def action2_3():
+def action2_5():
     if (GV.ERROR == True):
-        GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "S2,E3 -> action2_3\n" "Prepare to go to error State"
+        GV.next_E = 6
+        GV.SM_TEXT_TO_DIAPLAY = "Prepare to go to error State"
         return         
 
     GV.next_E = 0
     GV.prev_S = 2
     GV.SM_TEXT_TO_DIAPLAY = "going to PAUSE state "
 
-def action2_4():
+def action2_6():
     GV.next_E = 0
-    GV.SM_TEXT_TO_DIAPLAY ="S2,E4 -> action2_4\n" "  goint to ERROR state"
+    GV.SM_TEXT_TO_DIAPLAY ="  goint to ERROR state"
 
 
 #----------------------------------------------------------------
 def action3_0():
     if (GV.PAUSE == True):
         GV.next_E = 3          
-        GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0\n" "  goint to S2/E3"
+        GV.SM_TEXT_TO_DIAPLAY = "ging to pause state"
         return 
     if (GV.ERROR == True):
         GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0\n" "  goint to S2/E4"
+        GV.SM_TEXT_TO_DIAPLAY = "going to error state"
         return 
 
-
-    while (GV.NEXT == False):        
-        time.sleep(1)
-        
-    GV.NEXT = False
-    GV.activate_NEXT_button = False
-    print('next button is:', GV.NEXT)
-    str1 = "  Purge Sample and Tritrandt Valves"
-    GV.SM_TEXT_TO_DIAPLAY ="S3,E0 -> action3_0\n"+str1
+    GV.SM_TEXT_TO_DIAPLAY ="Get New Air Slugs1" 
     GV.next_E = 1
 
 
 def action3_1():
-    NEXT = True
     if (GV.PAUSE == True):
         GV.next_E = 3        
         GV.SM_TEXT_TO_DIAPLAY = "S3,E1 -> action3_1\n" "  goint to S2/E3"
@@ -436,12 +407,12 @@ def action3_1():
         GV.SM_TEXT_TO_DIAPLAY = "S3,E1 -> action3_1\n" "  goint to S2/E4"
         return         
     
-    if (NEXT == False):
-        GV.SM_TEXT_TO_DIAPLAY ="S3,E1 -> action3_1\n""\t  wait for NEXT button to be pressed..."
-        GV.next_E = 1
-    else:    
-        GV.SM_TEXT_TO_DIAPLAY ="S3,E1 -> action3_1\n""\tgo to S3/E2"
-        GV.next_E = 2
+    pump_address = HW.SAMPLE_PUMP_ADDRESS
+    valve_address = HW.DEGASSER_ADDRESS
+    NewAirSlugs(pump_address, valve_address)
+    
+    GV.SM_TEXT_TO_DIAPLAY ="Get New Air Slug is done"
+    GV.next_E = 2
 
 
 def action3_2():
@@ -453,10 +424,8 @@ def action3_2():
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S3,E2 -> action3_2\n" "  goint to S2/E4"
         return 
-    
-    str1 = "  -V1 to PumptoLine\n" "  -V3 to PumptoLine\n""  -V5 to Reservoirs\n" "  -V9 to Water\n"
-    str1 = str1 +"  -V6 to V7\n" "  -V2 to PumptoLine\n" "  -V4 to PumptoLine\n" "  -V7 to Reservoirs\n" "  -V8 to Water"
-    GV.SM_TEXT_TO_DIAPLAY = str1
+        
+    GV.SM_TEXT_TO_DIAPLAY = "  -V4 to PumptoLine\n" "  -V7 to Reservoirs\n"  
     GV.next_E = 0
 
 
@@ -479,47 +448,40 @@ def action3_4():
 
 #---------------------------------------------------------------------------------------
 def action4_0():
+    global DegasCleanFluid
+    # global DegasCleanPort 
+    # global DegasDryPort 
+
     if (GV.PAUSE == True):
         GV.next_E = 3
-        GV.SM_TEXT_TO_DIAPLAY = "S4,E0 -> action4_0\n" "goint to S4/E3"
+        GV.SM_TEXT_TO_DIAPLAY = "going to pause state"
         return 
     if (GV.ERROR == True):
         GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "S4,E0 -> action4_0\n" "goint to S4/E4"
+        GV.SM_TEXT_TO_DIAPLAY = "going to error state"
         return 
 
-    GV.VALVE_1 = "Pump to Line"
-    GV.VALVE_3 = "Pump to LIne"
-    GV.VALVE_5 = "Reservoirs"
-    GV.VALVE_9 = "Water"
-    GV.VALVE_6 = "V7"
-    GV.VALVE_2 = "Pump to Line"
     GV.VALVE_4 = "Pump to Line"
     GV.VALVE_7 = "Reservoirs"
-    GV.VALVE_8 = "Water"
 
-
-
-    GV.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, 'I')
-    time.sleep(.5)
-    GV.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, 'I')
-    time.sleep(.5)
     GV.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,1)
-    time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,2)        
-    time.sleep(.5)
-    GV.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS, 'I')
-    time.sleep(.5)
-    GV.pump1.set_valve(HW.SAMPLE_LOOP_ADDRESS, 'I')
     time.sleep(.5)
     GV.pump1.set_multiwayvalve(HW.TITRANT_PORT_ADDRESS,2)
     time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS,2)        
-    time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.SAMPLE_CLEANING_ADDRESS,2)    
-    time.sleep(.5)
+
+    if (DegasCleanFluid == 0):
+        pump_address = HW.SAMPLE_PUMP_ADDRESS
+        valve_address = HW.DEGASSER_ADDRESS    
+        DiluteDetergent(pump_address, valve_address)
+    elif (DegasCleanFluid == 1):
+        GV.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS,4) #valve 8 to DI Water
+        time.sleep(.5)
+    elif (DegasCleanFluid == 2):
+        GV.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS,2) #valve 8 to MeOH
+        time.sleep(.5)
+
     GV.next_E = 1
-    GV.SM_TEXT_TO_DIAPLAY ="S4,E0 -> action4_0\n"  
+    GV.SM_TEXT_TO_DIAPLAY ="Valves reached position"  
 
 
 def action4_1():
@@ -527,50 +489,49 @@ def action4_1():
     timeout = False
     if (GV.PAUSE == True or timeout==True):
         GV.next_E = 3
-        GV.SM_TEXT_TO_DIAPLAY = "S4,E1 -> action4_1\n" "Pgoint to S4/E3"
+        GV.SM_TEXT_TO_DIAPLAY = "going to pause state"
         return 
     if (GV.ERROR == True):
         GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "S4,E1 -> action4_1\n" "goint to S4/E4"
+        GV.SM_TEXT_TO_DIAPLAY = "going to error state"
         return 
 
     if (Done == False):        
         GV.SM_TEXT_TO_DIAPLAY = "S4,E1 -> action2_1\n" "  Waiting for valves to reach positions"
         GV.next_E = 1
-    else:        
-        str1 = "  Valves reached position\n" "  go to S4/E2"
-        GV.SM_TEXT_TO_DIAPLAY ="S4,E1 -> action4_1\n"+ str1
+    else:                
+        GV.SM_TEXT_TO_DIAPLAY ="  Valves reached position\n"
         GV.next_E = 2
 
 def action4_2():
       
     if (GV.PAUSE == True):
         GV.next_E = 3
-        GV.SM_TEXT_TO_DIAPLAY = "S4,E2 -> action4_1\n" "goint to S4/E3"
+        GV.SM_TEXT_TO_DIAPLAY = "going to pause state"
         return 
     if (GV.ERROR == True):
         GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "S4,E2 -> action4_1\n" "goint to S4/E4"
+        GV.SM_TEXT_TO_DIAPLAY = "going to error state"
         return          
   
-    str1 = "pump1: dispense until bubble sensor\n" "pump2: dispense until bubble sensor"
-    GV.SM_TEXT_TO_DIAPLAY ="S4,E2 -> action4_2\n" + str1
+    # GV.terminate_SM = True
+    GV.SM_TEXT_TO_DIAPLAY ="V8 to Air"
     GV.next_E = 0
 
 
 def action4_3():
     if (GV.ERROR == True):
         GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "S4,E3 -> action4_3\n" "goint to S4/E4"
+        GV.SM_TEXT_TO_DIAPLAY = "going to error state"
         return         
     # print("S4,E3 -> action4_3")    
-    GV.SM_TEXT_TO_DIAPLAY = "S4,E3 -> action4_3\n" "  going to PAUSE"
+    GV.SM_TEXT_TO_DIAPLAY =   "  going to PAUSE"
     GV.next_E = 0
     GV.prev_S = 4
 
 
 def action4_4():    
-    GV.SM_TEXT_TO_DIAPLAY ="S4,E4 -> action4_4\n" " going to ERROR state"
+    GV.SM_TEXT_TO_DIAPLAY = " going to ERROR state"
     GV.next_E = 0
     GV.prev_S = 4
 

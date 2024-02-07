@@ -75,6 +75,24 @@ RECIPE= {
         "vertical_titration_position": 0,
         "gantry_move_timeout": 0
     },    
+    "DegasClean": 
+    {
+        "enable": False,
+        "pump_speed": 1000,
+        "valve_move_timeout": 60,        
+        "pump_move_timeout": 600, 
+        "detergentrinse_count": 1,
+        "waterrinse_count": 1,		
+        "meohrinse_count": 1
+    },
+    "Func_DiluteDetergent": 
+    {
+        "enable": False,
+        "pump_speed": 300,
+        "detergent_volume": 60,                
+        "water_volume": 50,
+        "lastairslug_volume":50
+    },
     "Func_NewAirSlugs": 
     {
         "enable": False,

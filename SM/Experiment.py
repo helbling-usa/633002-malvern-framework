@@ -123,7 +123,7 @@ def action2_0():
         return 
         
     #wait for mixing signal from thermal core        
-    result = GV.grPC_Client.get_url(message="Mixing_Ready")
+    result = GV.grPC_Client.get_url(message="Mixing_Signal_Ready")
     print(f'{result}')
     # print('==============',result.message)
     # print('==============',result.value)
