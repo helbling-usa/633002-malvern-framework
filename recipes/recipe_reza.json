@@ -1,17 +1,39 @@
 {
-    "Startup": 
+    "Constants":
     {
         "enable": false,
+        "titrant_volume": 30,
+        "sample_volume": 300,
+        "AspirationVolume_Overshoot": 10, 
+        "horizontal_cell_fill_position": 50,
+        "vertical_cell_fill_position": 50,
+        "tc2_volume": 120, 
+        "sc2_volume": 150, 
+        "horizontal_titration_position": 130,
+        "vertical_titration_position": 50,
+        "totalstack_volume":100,
+        "s_port_volume": 300, 
+        "t_port_volume": 50,
+        "sp2_volume": 100,
+        "tp3_volume":100, 
+        "s5_volume":100,
+        "degascleanfluid_volume":100, 
+        "samplecleanfluid_volume":100, 
+        "s4_volume":100
+	},    
+    "Startup": 
+    {
+        "enable": true,
         "gantry_move_speed": 1,
         "gantry_home_timeout": 500,   
         "gantry_homing_speed": 1,
-        "horizontal_cell_fill_position": 20,
-        "gantry_move_timeout": 60,
-        "vertical_cell_fill_position": 70
+        "gantry_move_timeout": 60
     },
     "PumpInit_Reload": 
     {
         "enable": false,
+        "sample_pump_step": "full step",
+        "titrant_pump_step": "full step",
         "pump_speed": 1000,
         "valve_move_timeout": 60,
         "pump_init_timeout": 60,
@@ -20,14 +42,13 @@
         "TitrantPumpt_syringe_fill_volume": 100,
         "SamplePumpt_syringe_fill_volume": 100,
         "titrantpump_expelair_volume": 200,
-        "samplepump_expelair_volume": 200,
-        "AirSlug_total_Count": 5,
-		"AirSlug_Volume": 100,
-		"WaterSlug_Volume": 100
+        "samplepump_expelair_volume": 200
     },   
     "Degas": 
     {
         "enable": false,
+        "sample_pump_step": "full step",
+        "titrant_pump_step": "full step",
         "pump_speed": 100,
         "valve_move_timeout": 30,        
         "pump_move_timeout": 360,
@@ -41,6 +62,8 @@
     "Load_Prime": 
     {
         "enable": false,
+        "sample_pump_step": "full step",
+        "titrant_pump_step": "full step",
         "pump_speed": 1000,
         "valve_move_timeout": 60,        
         "pump_move_timeout": 600, 
@@ -50,6 +73,8 @@
     "GantrytoB": 
     {
         "enable": false,
+        "sample_pump_step": "full step",
+        "titrant_pump_step": "full step",
         "gantry_move_speed": 10,
         "horizontal_titration_position": 50,
         "vertical_titration_position": 50,
@@ -58,6 +83,8 @@
     "Experiment": 
     {
         "enable": false,
+        "sample_pump_step": "full step",
+        "titrant_pump_step": "full step",
         "titrationpump_speed": 100,
         "valve_move_timeout": 60,        
         "titrationpump_move_timeout": 600, 
@@ -70,14 +97,16 @@
     "GantrytoA": 
     {
         "enable": false,
+        "sample_pump_step": "full step",
+        "titrant_pump_step": "full step",
         "gantry_move_speed": 10,
-        "horizontal_titration_position": 50,
-        "vertical_titration_position": 50,
         "gantry_move_timeout": 60
     },
     "DegasClean": 
     {
-        "enable": true,
+        "enable": false,
+        "sample_pump_step": "full step",
+        "titrant_pump_step": "full step",
         "pump_speed": 1000,
         "valve_move_timeout": 60,        
         "pump_move_timeout": 600, 
@@ -85,9 +114,45 @@
         "waterrinse_count": 1,		
         "meohrinse_count": 1
     },
+    "SampleLineClean": 
+    {
+        "enable": false,
+        "pump_speed": 1000,
+        "valve_move_timeout": 60,        
+        "pump_move_timeout": 600, 
+        "detergentrinse_count": 1,
+        "waterrinse_count": 1,		
+        "meohrinse_count": 1
+    },
+	"TitrantLineClean": 
+    {
+        "enable": false,
+        "pump_speed": 1000,
+	    "sample_pump_step": "full step",
+	    "titrant_pump_step": "full step",
+        "valve_move_timeout": 60,        
+        "pump_move_timeout": 600, 
+	    "detergentrinse_count": 1,
+	    "waterrinse_count": 1,		
+	    "meohrinse_count": 1
+    },
+	"RecovClean":
+    {
+        "enable": false,
+        "sample_pump_step": "full step",
+        "titrant_pump_step": "full step",
+        "pump_speed": 1000,
+        "valve_move_timeout": 60,        
+        "pump_move_timeout": 600, 
+	    "detergentrinse_count": 1,
+	    "waterrinse_count": 1,		
+	    "meohrinse_count": 1
+    },
     "Func_DiluteDetergent": 
     {
         "enable": false,
+        "sample_pump_step": "full step",
+        "titrant_pump_step": "full step",
         "pump_speed": 300,
         "detergent_volume": 60,                
         "water_volume": 50,
@@ -96,13 +161,14 @@
     "Func_NewAirSlugs": 
     {
         "enable": false,
+        "sample_pump_step": "full step",
+	    "titrant_pump_step": "full step",
         "pump_speed": 300,
-        "valve_move_timeout": 60,        
-        "pump_move_timeout": 600, 
+        "valve_move_timeout": 60,
+        "pump_move_timeout": 600,
         "AirSlug_Total_count": 2,
-        "AirSlug_Volume": 100,        
+        "AirSlug_Volume": 100,
         "LastAirSlug_Volume": 500,
-        "SC2_Volume": 100,
         "WaterSlug_Volume": 500
     }    
  }

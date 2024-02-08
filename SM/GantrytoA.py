@@ -74,7 +74,7 @@ def action1_1():
 
     GV.motors.select_axis(HW.GANTRY_VER_AXIS_ID)
     cur_motor_pos= GV.motors.read_actual_position()    
-    h_position = RECIPE["GantrytoA"]["vertical_titration_position"]
+    h_position = RECIPE["Constants"]["vertical_cell_fill_position"]
     
     GV.motors.set_POSOKLIM(1)
     abs_pos_tml = int(h_position / HW.TML_LENGTH_2_MM_VER )
@@ -153,7 +153,7 @@ def action2_1():
     # HW.vertical_gantry_homed_led 
     GV.motors.select_axis(HW.GANTRY_HOR_AXIS_ID)
     cur_motor_pos= GV.motors.read_actual_position()
-    v_position = RECIPE["GantrytoA"]["horizontal_titration_position"]
+    v_position = RECIPE["Constants"]["horizontal_cell_fill_position"]
     
     GV.motors.set_POSOKLIM(1)
     abs_pos_tml = int(v_position / HW.TML_LENGTH_2_MM_HOR )
@@ -235,7 +235,7 @@ def action3_1():
 
     GV.motors.select_axis(HW.GANTRY_VER_AXIS_ID)
     cur_motor_pos= GV.motors.read_actual_position()    
-    h_position = RECIPE["GantrytoA"]["vertical_titration_position"]
+    h_position = RECIPE["Constants"]["vertical_cell_fill_position"]
     
     GV.motors.set_POSOKLIM(1)
     abs_pos_tml = int(h_position / HW.TML_LENGTH_2_MM_VER )

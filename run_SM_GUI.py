@@ -14,16 +14,20 @@ import  sys
 import  numpy as np
 import  general.global_vars as GV
 from    general.recipe import RECIPE
+import  SM.Constants
 import  SM.Startup
 import  SM.PumpInit_Reload
 import  SM.Degas
 import  SM.Load_Prime
-import  SM.Func_NewAirSlugs
 import  SM.GantrytoB
 import  SM.Experiment
 import  SM.GantrytoA
 import  SM.DegasClean
+import  SM.SampleLineClean
+import  SM.TitrantLineClean
+import  SM.RecovClean
 import  SM.Func_DiluteDetergent
+import  SM.Func_NewAirSlugs
 import  hardware.config as HW
 import  grpc
 import  unary.unary_pb2_grpc as pb2_grpc
@@ -70,8 +74,11 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         self.InitTimer()
         self.b_nextbutton["state"] = DISABLED
         self.b_start["state"] = DISABLED
-        GV.SM_list = [SM.Startup, SM.PumpInit_Reload, SM.Degas, SM.Load_Prime, SM.GantrytoB, SM.Experiment, SM.GantrytoA, SM.DegasClean, SM.Func_DiluteDetergent, SM.Func_NewAirSlugs]
-        GV.SM_list_str = ["Startup", "PumpInit_Reload", "Degas", "Load_Prime", "GantrytoB", "Experiment","GantrytoA","DegasClean", "Func_DiluteDetergent","Func_NewAirSlugs"]
+
+        GV.SM_list = [SM.Constants, SM.Startup, SM.PumpInit_Reload, SM.Degas, SM.Load_Prime, SM.GantrytoB, SM.Experiment, SM.GantrytoA, SM.DegasClean, SM.SampleLineClean, SM.TitrantLineClean, SM.RecovClean, SM.Func_DiluteDetergent, SM.Func_NewAirSlugs]
+        GV.SM_list_str = ["Constants", "Startup", "PumpInit_Reload", "Degas", "Load_Prime", "GantrytoB", "Experiment", "GantrytoA", "DegasClean", "SampleLineClean", "TitrantLineClean", "RecovClean", "Func_DiluteDetergent", "Func_NewAirSlugs"]
+        # GV.SM_list = [SM.Startup, SM.PumpInit_Reload, SM.Degas, SM.Load_Prime, SM.GantrytoB, SM.Experiment, SM.GantrytoA, SM.DegasClean, SM.Func_DiluteDetergent, SM.Func_NewAirSlugs]
+        # GV.SM_list_str = ["Startup", "PumpInit_Reload", "Degas", "Load_Prime", "GantrytoB", "Experiment","GantrytoA","DegasClean", "Func_DiluteDetergent","Func_NewAirSlugs"]
         GV.grPC_Client = UnaryClient()  #start grPC client service
 
 
