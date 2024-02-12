@@ -962,7 +962,6 @@ def action8_0():
         GV.SM_TEXT_TO_DIAPLAY = " going to ERROR state"
         return 
 
-
     pump_address = HW.SAMPLE_PUMP_ADDRESS
     valve_address = HW.DEGASSER_ADDRESS
     NewAirSlugs(pump_address, valve_address)
