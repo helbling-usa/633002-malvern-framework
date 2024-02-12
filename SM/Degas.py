@@ -45,19 +45,23 @@ def action1_0():
         GV.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" "Prepare to go to error State"
         return 
     
-    GV.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, 'I')
+    GV.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, HW.VALVE1_P2)
     time.sleep(.5)
-    GV.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, 'I')
+    GV.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, HW.VALVE3_P2)
     time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,1)        
+    # GV.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,HW.VALVE5_P2)
+    GV.pump1.set_valve(HW.TITRANT_PIPETTE_ADDRESS,HW.VALVE5_P2)
     time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,3)
+    # GV.pump1.set_multiwayvalve(HW.TITRANT_PORT_ADDRESS,2)
+    GV.pump1.set_valve(HW.TITRANT_PORT_ADDRESS, HW.VALVE6_P2)
+    time.sleep(.5)
+    GV.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS,  HW.VALVE2_P2)
+    time.sleep(.5)
+    GV.pump1.set_valve(HW.SAMPLE_LOOP_ADDRESS, HW.VALVE4_P1)
+    time.sleep(.5)
+    GV.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS, HW.VALVE7_P3)
     time.sleep(.5)
 
-    GV.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS, 'I')
-    time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.TITRANT_PORT_ADDRESS,2)
-    time.sleep(.5)
 
 
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["PumpInit_Reload"]["pump_speed"])

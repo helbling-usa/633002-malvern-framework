@@ -48,15 +48,15 @@ TITRANT_PUMP_VOLUM_2_STEP       = 192       # conversion ratio fro titrant pump 
 TITRANT_PUMP_VOLUM_2_MICROSTEP  = 1536      # conversion ratio fro titrant pump for full microstep mode
 
 #------------------------------- Pumps/valves RS485 addresses -------------------------------------
-TIRRANT_PUMP_ADDRESS            = 1         # Pump 1
-TITRANT_LOOP_ADDRESS            = 3         # pump 1 loop valve
-TITRANT_PIPETTE_ADDRESS         = 5         # titrant line: pipette valve
-TITRANT_CLEANING_ADDRESS        = 9         # titrant line: cleaning valve
-SAMPLE_PUMP_ADDRESS             = 2         # pump 2
-SAMPLE_LOOP_ADDRESS             = 4         # pump 2 loop valve
-TITRANT_PORT_ADDRESS            = 6         # sample line: titrant port valve
-DEGASSER_ADDRESS                = 7         # sample line: degasser valve
-SAMPLE_CLEANING_ADDRESS         = 8         # sample line: cleaning valve
+TIRRANT_PUMP_ADDRESS            = 1         #4way- Pump 1
+TITRANT_LOOP_ADDRESS            = 3         #4way- pump 1 loop valve
+TITRANT_PIPETTE_ADDRESS         = 5         #3way- titrant line: pipette valve
+TITRANT_CLEANING_ADDRESS        = 9         #6way- titrant line: cleaning valve
+SAMPLE_PUMP_ADDRESS             = 2         #4way- pump 2
+SAMPLE_LOOP_ADDRESS             = 4         #4way- pump 2 loop valve
+TITRANT_PORT_ADDRESS            = 6         #3way- sample line: titrant port valve
+DEGASSER_ADDRESS                = 7         #6way- sample line: degasser valve
+SAMPLE_CLEANING_ADDRESS         = 8         #6way- sample line: cleaning valve
 
 #------------------------------- Valves port assignment -------------------------------------------
 VALVE1_P1   = 'E'
