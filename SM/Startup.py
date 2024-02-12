@@ -9,14 +9,14 @@ from    general.recipe import RECIPE
 
 ##-----------------   ("next STATE","FUCNCTION") --------------------------------------------------
 #-------------   -------E0-------    ------E1-------  -------E2-------  -------E3-------  -------E4-------  -------E5-------  
-TT = np.array([[( 1, 'action0_0'),  (0, 'None')     , (0, 'None')     , (0, 'None')     , (0, 'None')     ],  #<---STATE0
-               [( 1, 'action1_0'),  (1, 'action1_1'), (2, 'action1_2'), (6, 'action1_3'), (7, 'action1_4')],  #<---STATE1
-               [( 2, 'action2_0'),  (2, 'action2_1'), (3, 'action2_2'), (6, 'action2_3'), (7, 'action2_4')],  #<---STATE2
-               [( 3, 'action3_0'),  (3, 'action3_1'), (4, 'action3_2'), (6, 'action3_3'), (7, 'action3_4')],  #<---STATE3
-               [( 4, 'action4_0'),  (4, 'action4_1'), (5, 'action4_2'), (5, 'action4_3'), (3, 'action4_4')],  #<---STATE4
-               [( 5, 'action5_0'),  (5, 'action5_1'), (6, 'action5_2'), (7, 'action5_3'), (0, 'None')     ],  #<---STATE5
-               [( 6, 'action6_0'),  (1, 'action6_1'), (2, 'action6_2'), (3, 'action6_3'), (4, 'action6_4')],  #<---STATE6
-               [( 7, 'action7_0'),  (0, 'None')     , (0, 'None')     , (0, 'None')     , (0, 'None')     ]   #<---STATE7
+TT = np.array([[( 1, 'action0_0'),  (0, 'None')     , (0, 'None')     , (0, 'None')     , (0, 'None')     , (0, 'None')     ],  #<---STATE0
+               [( 1, 'action1_0'),  (1, 'action1_1'), (2, 'action1_2'), (6, 'action1_3'), (7, 'action1_4'), (0, 'None')     ],  #<---STATE1
+               [( 2, 'action2_0'),  (2, 'action2_1'), (3, 'action2_2'), (6, 'action2_3'), (7, 'action2_4'), (0, 'None')     ],  #<---STATE2
+               [( 3, 'action3_0'),  (3, 'action3_1'), (4, 'action3_2'), (6, 'action3_3'), (7, 'action3_4'), (0, 'None')     ],  #<---STATE3
+               [( 4, 'action4_0'),  (4, 'action4_1'), (5, 'action4_2'), (6, 'action4_3'), (7, 'action4_4'), (0, 'None')     ],  #<---STATE4
+               [( 5, 'action5_0'),  (5, 'action5_1'), (6, 'action5_2'), (7, 'action5_3'), (0, 'None')     , (0, 'None')     ],  #<---STATE5
+               [( 6, 'action6_0'),  (1, 'action6_1'), (2, 'action6_2'), (3, 'action6_3'), (4, 'action6_4'), (0, 'action6_5')],  #<---STATE6
+               [( 7, 'action7_0'),  (0, 'None')     , (0, 'None')     , (0, 'None')     , (0, 'None')     , (0, 'None')     ]   #<---STATE7
                ])  
 
 

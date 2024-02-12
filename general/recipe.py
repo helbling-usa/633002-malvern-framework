@@ -1,6 +1,7 @@
 RECIPE= {
-    "Constants":
+"Constants":
     {
+        "enable": False,
         "titrant_volume": 30,
         "sample_volume": 300,
         "AspirationVolume_Overshoot": 10, 
@@ -22,7 +23,7 @@ RECIPE= {
 	},    
     "Startup": 
     {
-        "enable": False,
+        "enable": True,
         "gantry_move_speed": 1,
         "gantry_home_timeout": 500,   
         "gantry_homing_speed": 1,
@@ -33,7 +34,8 @@ RECIPE= {
         "enable": False,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
-        "pump_speed": 1000,
+        "titrant_pump_speed": 1000,
+        "sample_pump_speed": 1000,
         "valve_move_timeout": 60,
         "pump_init_timeout": 60,
         "pump_move_timeout": 60,  
@@ -48,7 +50,8 @@ RECIPE= {
         "enable": False,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
-        "pump_speed": 100,
+        "titrant_pump_speed": 100,
+        "sample_pump_speed": 100,
         "valve_move_timeout": 30,        
         "pump_move_timeout": 360,
         "degas_temp": 25,
@@ -56,14 +59,15 @@ RECIPE= {
         "temperature_settledown_timeout": 1000,
         "heat_time": 10,
         "AspirationVolume_Overshoot": 300,
-        "total_asipiration_number":4,
+        "total_asipiration_number":4
     },
     "Load_Prime": 
     {
         "enable": False,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
-        "pump_speed": 1000,
+        "titrant_pump_speed": 1000,
+        "sample_pump_speed": 1000,
         "valve_move_timeout": 60,        
         "pump_move_timeout": 600, 
         "TC2_Volume": 120,
@@ -103,10 +107,11 @@ RECIPE= {
     },
     "DegasClean": 
     {
-        "enable": True,
+        "enable": False,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
-        "pump_speed": 1000,
+        "titrant_pump_speed": 1000,
+        "sample_pump_speed": 1000,
         "valve_move_timeout": 60,        
         "pump_move_timeout": 600, 
         "detergentrinse_count": 1,
@@ -115,8 +120,9 @@ RECIPE= {
     },
     "SampleLineClean": 
     {
-        "enable": True,
-        "pump_speed": 1000,
+        "enable": False,
+        "titrant_pump_speed": 1000,
+        "sample_pump_speed": 1000,
         "valve_move_timeout": 60,        
         "pump_move_timeout": 600, 
         "detergentrinse_count": 1,
@@ -125,8 +131,9 @@ RECIPE= {
     },
 	"TitrantLineClean": 
     {
-        "enable": True,
-        "pump_speed": 1000,
+        "enable": False,
+        "titrant_pump_speed": 1000,
+        "sample_pump_speed": 1000,
 	    "sample_pump_step": "full step",
 	    "titrant_pump_step": "full step",
         "valve_move_timeout": 60,        
@@ -137,10 +144,11 @@ RECIPE= {
     },
 	"RecovClean":
     {
-        "enable": True,
+        "enable": False,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
-        "pump_speed": 1000,
+        "titrant_pump_speed": 1000,
+        "sample_pump_speed": 1000,
         "valve_move_timeout": 60,        
         "pump_move_timeout": 600, 
 	    "detergentrinse_count": 1,
@@ -152,7 +160,8 @@ RECIPE= {
         "enable": False,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
-        "pump_speed": 300,
+        "titrant_pump_speed": 300,
+        "sample_pump_speed": 300,
         "detergent_volume": 60,                
         "water_volume": 50,
         "lastairslug_volume":50
@@ -162,7 +171,8 @@ RECIPE= {
         "enable": False,
         "sample_pump_step": "full step",
 	    "titrant_pump_step": "full step",
-        "pump_speed": 300,
+        "titrant_pump_speed": 300,
+        "sample_pump_speed": 300,
         "valve_move_timeout": 60,
         "pump_move_timeout": 600,
         "AirSlug_Total_count": 2,

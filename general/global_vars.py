@@ -36,6 +36,10 @@ mixing_motor_homed_led      = False
 
 current_Aspiration_count = 0        #?????????????????????????????
 
+# Sacling factor for converting volume to pump internal units
+PUMP_SAMPLE_SCALING_FACTOR = 1
+PUMP_TITRANT_SCALING_FACTOR = 1
+
 # The folloiwng varialbes hold the value read from bubble sensors
 BS1 = 0
 BS2 = 0
