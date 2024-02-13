@@ -3,9 +3,18 @@ import  general.global_vars as GV
 import  hardware.config as HW
 import  time
 from    general.recipe import RECIPE
+import  logging
 
-
-
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(levelname)s:%(message)s')
+file_handler = logging.FileHandler('./logs/error.log')
+file_handler.setLevel(logging.ERROR)
+file_handler.setFormatter(formatter)
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
+logger.addHandler(stream_handler)
 
 ##-----------------   ("next STATE","FUCNCTION") --------------------------------------------------
 #-------------   -------E0-------    ------E1-------  -------E2-------  -------E3-------  -------E4-------  -------E5-------  
@@ -20,7 +29,6 @@ TT = np.array([[( 1, 'action0_0'),  (0, 'None')     , (0, 'None')     , (0, 'Non
                ])  
 
 
-
 def name():
     return "Startup"
 
@@ -33,9 +41,8 @@ state_name = {0:"S0: Initialization", 1:"S1: Gantry Z Homing", 2:"S2: Gantry X H
 def action0_0():    
     # #/*	Setup and initialize the axis */	
     if (GV.motors.InitAxis()==False):
-        print("Failed to start up the Technosoft drive")    
-    print("\t\tMotors are Initialized")        
-
+        logger.error("Failed to start up the Technosoft drive")    
+    logger.info("\t\tMotors are Initialized")
     AXIS_ID_01 = HW.MIXER_AXIS_ID
     AXIS_ID_02 = HW.GANTRY_HOR_AXIS_ID
     AXIS_ID_03 = HW.GANTRY_VER_AXIS_ID
@@ -53,9 +60,7 @@ def action0_0():
 
 
 #--------------
-def action1_0():
-    
-    
+def action1_0():    
     if (GV.PAUSE == True):
         GV.next_E = 3          
         GV.SM_TEXT_TO_DIAPLAY = "going to Pause state"
@@ -64,9 +69,7 @@ def action1_0():
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "going to Error state"
         return 
-
     ret_val = GV.motors.homing(HW.GANTRY_VER_AXIS_ID)    
-
     if ret_val == False:
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY =  "  Homing Error!!!\n""going to Error state"
@@ -85,8 +88,7 @@ def action1_1():
     if (GV.ERROR == True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "going to Error state"
-        return 
-    
+        return     
     GV.next_E = 2    
     GV.SM_TEXT_TO_DIAPLAY = "  Homing completed\n"  
 
@@ -104,6 +106,7 @@ def action1_2():
     GV.next_E = 0
     GV.prev_S = 1
     GV.SM_TEXT_TO_DIAPLAY ="  Gantry X Homing procedure\n"
+
 
 def action1_3():
     if (GV.ERROR == True):
@@ -139,9 +142,9 @@ def action2_0():
         return 
     GV.horizontal_gantry_homed_led = True
     GV.horizontal_gantry_active_led = False
-
     GV.next_E = 1    
     GV.SM_TEXT_TO_DIAPLAY = "  Gantry X Homing is done\n" 
+
 
 def action2_1():
     if (GV.PAUSE == True):
@@ -151,8 +154,7 @@ def action2_1():
     if (GV.ERROR == True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "going to Error state"
-        return 
-    
+        return     
     GV.next_E = 2    
     GV.SM_TEXT_TO_DIAPLAY =str1 = "  X Homing completed\n" 
     
@@ -199,11 +201,6 @@ def action3_0():
     move_speed = RECIPE['Startup']['gantry_move_speed'] 
     # home_speed = RECIPE['Startup']['gantry_home_timeout'] 
     GV.motors.move_absolute_position(abs_pos_tml, move_speed, HW.GANTRY_HOR_ACCELERATION)
-    # if ret_val == False:
-    #     GV.next_E = 4
-    #     GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0\n" "  Homing Error!!!\n" "  going to S3/E4"
-    #     return 
-
     cur_motor_pos= GV.motors.read_actual_position()
     while (abs (cur_motor_pos - abs_pos_tml)>50):
         time.sleep(1)
@@ -227,6 +224,7 @@ def action3_1():
     GV.next_E = 2
     GV.SM_TEXT_TO_DIAPLAY = "  Gantry X in position\n"
 
+
 def action3_2():
     if (GV.ERROR == True):
         GV.next_E = 3
@@ -236,14 +234,15 @@ def action3_2():
     GV.next_E = 0
     GV.SM_TEXT_TO_DIAPLAY ="  Gantry Z to position \n"
 
+
 def action3_3():
     if (GV.ERROR == True):
         GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "going to Error state"
-        return 
-    
+        return     
     GV.next_E = 0
     GV.SM_TEXT_TO_DIAPLAY ="Going to Pause state"
+
 
 def action3_4():
     # print("S3,E3 -> action3_3")
@@ -262,7 +261,6 @@ def action4_0():
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "going to Error state"
         return 
-
     GV.next_E = 1
     GV.SM_TEXT_TO_DIAPLAY = "  wait for gantry Z to get to position...\n" 
 
@@ -276,7 +274,6 @@ def action4_1():
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "going to Error state"
         return 
-
     fill_pos = RECIPE['Constants']['vertical_cell_fill_position']    
     GV.motors.select_axis(HW.GANTRY_VER_AXIS_ID)
     GV.motors.set_POSOKLIM(1)
@@ -284,16 +281,11 @@ def action4_1():
     # print("=============>",fill_pos, ' = ', abs_pos_tml)
     move_speed = RECIPE['Startup']['gantry_move_speed'] 
     GV.motors.move_absolute_position(abs_pos_tml, move_speed, HW.GANTRY_VER_ACCELERATION)
-    # if ret_val == False:
-    #     GV.next_E = 4
-    #     GV.SM_TEXT_TO_DIAPLAY = "S4,E0 -> action4_0\n" "  Homing Error!!!\n" "  going to S4/E4"
-    #     return 
     cur_motor_pos= GV.motors.read_actual_position()
     while (abs(cur_motor_pos - abs_pos_tml)>50):
         time.sleep(1)
         cur_motor_pos= GV.motors.read_actual_position()
     GV.vertical_gantry_active_led = False
-
     GV.next_E = 2
     GV.SM_TEXT_TO_DIAPLAY =" Gantry Z is in  position \n" 
 
@@ -306,8 +298,7 @@ def action4_2():
     if (GV.ERROR == True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "going to Error state"
-        return          
-  
+        return  
     GV.next_E = 0
     GV.SM_TEXT_TO_DIAPLAY = "Completing the Start up\n "
 
@@ -338,8 +329,7 @@ def action5_0():
     if (GV.ERROR == True):
         GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "going to Error state"
-        return    
-            
+        return            
     # experiment is complete
     GV.next_E = 1
     GV.SM_TEXT_TO_DIAPLAY = "  STATE 5: start up complete"
@@ -353,8 +343,7 @@ def action5_1():
     if (GV.ERROR == True):
         GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "going to Error state"
-        return 
-    
+        return    
     GV.terminate_SM = True
     GV.next_E = 1
     GV.SM_TEXT_TO_DIAPLAY =" start up completed\n" "  returning to the main GUI"
@@ -364,8 +353,7 @@ def action5_2():
     if (GV.ERROR == True):
         GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "going to Error state"
-        return 
-    
+        return    
     GV.next_E = 0
     GV. prev_S = 5
     GV.SM_TEXT_TO_DIAPLAY ="going to Pause state"
@@ -411,7 +399,7 @@ def action6_5():
 
 #--------------
 def action7_0():
-    print("S7,E0 -> action7_0")
+    # print("S7,E0 -> action7_0")
     GV.next_E = 0
     GV.SM_TEXT_TO_DIAPLAY ="system in Error State"
 

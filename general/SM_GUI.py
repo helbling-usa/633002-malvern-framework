@@ -126,7 +126,7 @@ class SM_GUI():
             self.text_loop_valve3.place(x=COL3, y=Y4+dY2)            
 
             self.text_pipette_valve5 = Text(self.root, height=1, width=20,font=self.Font2 )
-            self.text_5ette_valve5.pack()
+            self.text_pipette_valve5.pack()
             self.text_pipette_valve5.place(x=COL3, y=Y5+dY2)
 
             self.text_cleaning_valve9 = Text(self.root, height=1, width=20,font=self.Font2 )

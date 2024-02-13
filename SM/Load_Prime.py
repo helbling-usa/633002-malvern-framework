@@ -55,30 +55,30 @@ def action1_0():
         return 
 
 
-    GV.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, 'E')
+    GV.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, HW.VALVE1_P2)
     time.sleep(.5)
-    GV.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, 'E')
+    GV.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, HW.VALVE3_P2)
     time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,1)        
-    time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,3)
+    GV.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,HW.VALVE5_P2)
     time.sleep(.5)    
-    GV.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS, 'E')
+    GV.pump1.set_multiwayvalve(HW.TITRANT_PORT_ADDRESS,HW.VALVE6_P2)
+    time.sleep(.5)    
+    GV.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS, HW.VALVE2_P3)
     time.sleep(.5)
-    # GV.pump1.set_valve(HW.SAMPLE_LOOP_ADDRESS, 'E')
-    # time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.TITRANT_PORT_ADDRESS,3)
+    GV.pump1.set_valve(HW.SAMPLE_LOOP_ADDRESS, HW.VALVE4_P1)
     time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS,1)        
+    GV.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS, HW.VALVE7_P3)        
     time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.SAMPLE_CLEANING_ADDRESS,1)    
+    GV.pump1.set_multiwayvalve(HW.SAMPLE_CLEANING_ADDRESS, HW.VALVE8_P6)    
+    time.sleep(.5)
+    GV.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS, HW.VALVE9_P2)        
     time.sleep(.5)
 
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["PumpInit_Reload"]["pump_speed"])
-    time.sleep(1)
+    time.sleep(.5)
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["PumpInit_Reload"]["pump_speed"])
-    time.sleep(1)
-    
+    time.sleep(.5)
+
 
     GV.VALVE_1 = "Line to Pump"    
     GV.VALVE_3 = "Titrant Line"    
@@ -189,8 +189,8 @@ def action2_1():
     time.sleep(1)
     GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, HW.PICKUP_UNTIL_BUBBLE_TARGET)
     time.sleep(1)
-    input1 = GV.labjack.getAIN(2)  #bubble sensor 3
-    input2 = GV.labjack.getAIN(3)   #bubble snesor 4
+    input1 = GV.labjack.getAIN(HW.BS3_IO_PORT)  #bubble sensor 3
+    input2 = GV.labjack.getAIN(HW.BS4_IO_PORT)   #bubble snesor 4
     #check if the bubble semsor detect air or liquid
     cur_state_1 = air_or_liquid(input1)
     cur_state_2 = air_or_liquid(input2)
@@ -200,17 +200,19 @@ def action2_1():
     bubble_2_search = True
     
     while (bubble_1_search  or bubble_2_search) :
-        input1 = GV.labjack.getAIN(0)
+        # input1 = GV.labjack.getAIN(0)
+        input1 = GV.labjack.getAIN(HW.BS3_IO_PORT)  #bubble sensor 3
         cur_state_1 = air_or_liquid(input1)
         pos1 =GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
         if (cur_state_1 != prev_state_1):
             bubble_1_search = False
 
         time.sleep(.025)
-        input2 = GV.labjack.getAIN(1)
+        # input2 = GV.labjack.getAIN(1)
+        input2 = GV.labjack.getAIN(HW.BS4_IO_PORT)   #bubble snesor 4
         cur_state_2 = air_or_liquid(input2)
         pos2 =GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
-        print('        BS1:{:.2f} position:{},   BS2:{:.2f} position:{}'.format(input1,pos1,input2, pos2))
+        print('        BS3:{:.2f} position:{},   BS4:{:.2f} position:{}'.format(input1,pos1,input2, pos2))
         if (cur_state_2 != prev_state_2):
             bubble_2_search = False
         time.sleep(.025)
@@ -287,9 +289,9 @@ def action3_1():
         GV.SM_TEXT_TO_DIAPLAY = "S3,E1 -> action3_1\n" "  goint to S2/E4"
         return         
 
-    GV.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,1)        
+    GV.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS,HW.VALVE3_P3)        
     time.sleep(.5)    
-    GV.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,3)
+    GV.pump1.set_valve(HW.SAMPLE_LOOP_ADDRESS,HW.VALVE4_P4)
     time.sleep(.5)
 
 
@@ -376,8 +378,8 @@ def action4_1():
     time.sleep(1)
     GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, HW.DISPENSE_UNTIL_BUBBLE_TARGET)
     time.sleep(1)
-    input1 = GV.labjack.getAIN(0)   #bubble sensor 1
-    input2 = GV.labjack.getAIN(1)   #bubble sensor 2
+    input1 = GV.labjack.getAIN(HW.BS1_IO_PORT)   #bubble sensor 1
+    input2 = GV.labjack.getAIN(HW.BS2_IO_PORT)   #bubble sensor 2
     #check if the bubble semsor detect air or liquid
     cur_state_1 = air_or_liquid(input1)
     cur_state_2 = air_or_liquid(input2)
@@ -387,14 +389,16 @@ def action4_1():
     bubble_2_search = True
     
     while (bubble_1_search  or bubble_2_search) :
-        input1 = GV.labjack.getAIN(0)
+        # input1 = GV.labjack.getAIN(0)
+        input1 = GV.labjack.getAIN(HW.BS1_IO_PORT)   #bubble sensor 1
         cur_state_1 = air_or_liquid(input1)
         pos1 =GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
         if (cur_state_1 != prev_state_1):
             bubble_1_search = False
 
         time.sleep(.025)
-        input2 = GV.labjack.getAIN(1)
+        # input2 = GV.labjack.getAIN(1)
+        input2 = GV.labjack.getAIN(HW.BS2_IO_PORT)   #bubble sensor 2
         cur_state_2 = air_or_liquid(input2)
         pos2 =GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
         print('        BS1:{:.2f} position:{},   BS2:{:.2f} position:{}'.format(input1,pos1,input2, pos2))
@@ -414,8 +418,7 @@ def action4_1():
 
     GV.pump1_titrant_active_led    = False
     GV.pump2_sample_active_led     = False
-    str1 = " bubble sensors 1&2 triggered\n" "  go to S4/E2"
-    GV.SM_TEXT_TO_DIAPLAY ="S4,E1 -> action4_1\n"+ str1
+    GV.SM_TEXT_TO_DIAPLAY =" bubble sensors 1&2 triggered\n"
     GV.next_E = 2
 
 
@@ -489,23 +492,18 @@ def action5_1():
         GV.SM_TEXT_TO_DIAPLAY = "S5,E1 -> action5_1" "  goint to S5/E4"
         return    
     
-
-    GV.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, 'I')
+    GV.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, HW.VALVE1_P2)
     time.sleep(.5)
-    GV.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, 'I')
+    GV.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, HW.VALVE3_P2)
     time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,2)        
+    GV.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS, HW.VALVE5_P1)
     time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,1)
+    GV.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS, HW.VALVE2_P3)
     time.sleep(.5)
-    GV.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS, 'I')
+    GV.pump1.set_valve(HW.SAMPLE_LOOP_ADDRESS, HW.VALVE4_P1)        
     time.sleep(.5)
-    GV.pump1.set_multiwayvalve(HW.TITRANT_PORT_ADDRESS,2)
+    GV.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS, HW.VALVE7_P6)
     time.sleep(.5)
-
-
-
-
     if (Done == False):        
         GV.SM_TEXT_TO_DIAPLAY = "S5,E1 -> action5_1\n" "  Waiting for valve to go to positions..."
         GV.next_E = 1
@@ -525,7 +523,7 @@ def action5_2():
         GV.SM_TEXT_TO_DIAPLAY = "S5,E2 -> action5_2" "  goint to S5/E4"
         return    
     
-    GV.SM_TEXT_TO_DIAPLAY ="S5,E2 -> action5_2" "  going to S6/E0"
+    GV.SM_TEXT_TO_DIAPLAY ="going to S6/E0"
     GV.next_E = 0
 
 
@@ -588,8 +586,8 @@ def action6_1():
     time.sleep(1)
     GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, HW.DISPENSE_UNTIL_BUBBLE_TARGET)
     time.sleep(1)
-    input1 = GV.labjack.getAIN(5)   #bubble sensor 6
-    input2 = GV.labjack.getAIN(6)   #bubble sensor 7
+    input1 = GV.labjack.getAIN(HW.BS6_IO_PORT)   #bubble sensor 6
+    input2 = GV.labjack.getAIN(HW.BS7_IO_PORT)   #bubble sensor 7
     #check if the bubble semsor detect air or liquid
     cur_state_1 = air_or_liquid(input1)
     cur_state_2 = air_or_liquid(input2)
@@ -599,22 +597,22 @@ def action6_1():
     bubble_2_search = True
     
     while (bubble_1_search  or bubble_2_search) :
-        input1 = GV.labjack.getAIN(0)
+        # input1 = GV.labjack.getAIN(0)
+        input1 = GV.labjack.getAIN(HW.BS6_IO_PORT)   #bubble sensor 6
         cur_state_1 = air_or_liquid(input1)
         pos1 =GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
         if (cur_state_1 != prev_state_1):
             bubble_1_search = False
-
         time.sleep(.025)
-        input2 = GV.labjack.getAIN(1)
+        # input2 = GV.labjack.getAIN(1)
+        input2 = GV.labjack.getAIN(HW.BS7_IO_PORT)   #bubble sensor 7
         cur_state_2 = air_or_liquid(input2)
         pos2 =GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
-        print('        BS1:{:.2f} position:{},   BS2:{:.2f} position:{}'.format(input1,pos1,input2, pos2))
+        print('        BS6:{:.2f} position:{},   BS7:{:.2f} position:{}'.format(input1,pos1,input2, pos2))
         if (cur_state_2 != prev_state_2):
             bubble_2_search = False
         time.sleep(.025)
 
-        
     GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
     time.sleep(.5)
     GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
@@ -622,10 +620,6 @@ def action6_1():
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,HW.DEFAULT_PUMP_SPEEED)
     time.sleep(.5)
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,HW.DEFAULT_PUMP_SPEEED)
-
-
-
-
     str1 = "  bubble sensors 6&7 triggered\n" "  go to S6/E2\n"
     str1 = str1 +"  pump 1 to position\n"  "  pump 2 to position"
     GV.SM_TEXT_TO_DIAPLAY ="S6,E1 -> action6_1\n"+ str1
@@ -642,25 +636,36 @@ def action6_2():
         GV.SM_TEXT_TO_DIAPLAY = "S6,E2 -> action6_1" "goint to S6/E6"
         return          
   
-    TC2_pos = RECIPE['Load_Prime']['TC2_Volume']
-    SC2_pos = RECIPE['Load_Prime']['SC2_Volume']
+    TC2_pos = int( RECIPE['Load_Prime']['TC2_Volume']* GV.PUMP_TITRANT_SCALING_FACTOR )
+    SC2_pos = int( RECIPE['Load_Prime']['SC2_Volume']* GV.PUMP_SAMPLE_SCALING_FACTOR )
 
     pump1_pos = GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
     time.sleep(.5)
     target_pos_1 = pump1_pos + TC2_pos
     GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, target_pos_1)
     time.sleep(.5)
-
     pump2_pos = GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
     time.sleep(.5)
     target_pos_2 = pump2_pos + SC2_pos
-    GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, target_pos_2)
+    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, target_pos_2)
     time.sleep(.5)
-
-
+    #wait until pumps reach targets
+    cur_pump_pos1 = 0
+    cur_pump_pos2 = 0
+    pump1_away_from_target = True
+    pump2_away_from_target = True
+    while(  pump1_away_from_target or pump2_away_from_target ):
+        cur_pump_pos1 = GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
+        pump1_away_from_target = (abs (cur_pump_pos1 - target_pos_1) > 5)
+        time.sleep(.5)
+        cur_pump_pos2 = GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
+        pump2_away_from_target = (abs (cur_pump_pos2 - target_pos_2) > 5)
+        time.sleep(.5)
+        print("Pump1 cur pos:{}, target:{},   pump2 cur pos{},  target{}".format(cur_pump_pos1,target_pos_1,
+                                                                                 cur_pump_pos2, target_pos_2))
+             
     GV.pump1_titrant_active_led    = False
     GV.pump2_sample_active_led     = False
-
     
     str1 = "  pump 1 to position\n"  "  pump 2 to position"
     GV.SM_TEXT_TO_DIAPLAY ="S6,E2 -> action6_2\n" + str1
@@ -697,8 +702,7 @@ def action6_4():
         GV.SM_TEXT_TO_DIAPLAY = "S6,E4 -> action6_4\n" "goint to S6/E6"
         return          
   
-    str1 = "  going to S7/E0"
-    GV.SM_TEXT_TO_DIAPLAY ="S6,E2 -> action6_2\n" + str1
+    GV.SM_TEXT_TO_DIAPLAY = "  going to S7/E0"
     GV.next_E = 0
 
 

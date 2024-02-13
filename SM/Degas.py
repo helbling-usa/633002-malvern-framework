@@ -3,6 +3,19 @@ import  general.global_vars as GV
 import  hardware.config as HW
 import  time
 from    general.recipe import RECIPE
+import  logging
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(levelname)s:%(message)s')
+file_handler = logging.FileHandler('./logs/error.log')
+file_handler.setLevel(logging.ERROR)
+file_handler.setFormatter(formatter)
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(formatter)
+logger.addHandler(file_handler)
+logger.addHandler(stream_handler)
+
 
 ##-----------------   ("next STATE","FUCNCTION") --------------------------------------------------
 #-------------   -------E0-------    ------E1-------  -------E2-------  -------E3-------  -------E4-------  -------E5-------  
@@ -138,14 +151,14 @@ def action2_0():
         return 
     
     temp = RECIPE['Degas']['degas_temp']
-    print("===================>",temp)
+    # logger.info("===================>".format(temp))
     GV.tec.set_temp(float(temp))
 
     tec_dic =  GV.tec.get_data()
     obj_temp = round(tec_dic['object temperature'][0], 1)
     target_temp = round(tec_dic['target object temperature'][0], 1)
     TEC_cur_status = tec_dic['loop status'][0]        
-    print('--->obj temp:{} , target temp:{}    status:{}'.format(obj_temp,  target_temp,TEC_cur_status))  
+    logger.info('--->obj temp:{} , target temp:{}    status:{}'.format(obj_temp,  target_temp,TEC_cur_status))  
     
     GV.tec.enable()
     GV.TEC_IS_ON = True
@@ -196,7 +209,8 @@ def action2_2():
         time.sleep(1)
         counter += 1
         if counter % 5 == 0:
-            print("\t time:", counter, " / ", heat_time)
+            # logger.info("\t time:", counter, " / ", heat_time)
+            logger.info(f"\t time:{ counter} / { heat_time}")
 
 
     GV.SM_TEXT_TO_DIAPLAY ="S2,E2 -> action2_2\n" "  Heat time reached\n"  "  go to S3/E0"
@@ -280,7 +294,8 @@ def action3_0():
         pump_pos1 = GV.pump1.get_plunger_position(pump_address1)        
         time.sleep(0.5)
         pump_pos2 = GV.pump1.get_plunger_position(pump_address2)
-        print("\tpump1 pos:",pump_pos1, "/", next_pos1,"\t\tpump2 pos:",pump_pos2,"/", next_pos2)
+        # logger.info("\tpump1 pos:",pump_pos1, "/", next_pos1,"\t\tpump2 pos:",pump_pos2,"/", next_pos2)
+        logger.info("\tpump1 pos:{} /{}\t\tpump2 pos:{}/{}".format(pump_pos1, next_pos1, pump_pos2, next_pos2))
         time.sleep(0.5)
 
     #check if dose signal is receved 
@@ -341,7 +356,7 @@ def action3_3():
     GV.next_E = 0
 
 def action3_4():
-    # print("S3,E3 -> action3_3")
+    # logger.info("S3,E3 -> action3_3")
     GV.next_E = 0
     GV.SM_TEXT_TO_DIAPLAY ="S3,E3 -> action3_3" " go to ERROR state"
 
@@ -386,7 +401,8 @@ def action4_0():
         pump_pos1 = GV.pump1.get_plunger_position(pump_address1)        
         time.sleep(0.5)
         pump_pos2 = GV.pump1.get_plunger_position(pump_address2)
-        print("\tpump1 pos:",pump_pos1, "/", next_pos1,"\t\tpump2 pos:",pump_pos2,"/", next_pos2)
+        # logger.info("\tpump1 pos:",pump_pos1, "/", next_pos1,"\t\tpump2 pos:",pump_pos2,"/", next_pos2)
+        logger.info("\tpump1 pos:  {}/{}  \t\tpump2 pos: {}/{}".format(pump_pos1, next_pos1, pump_pos2, next_pos2))
         time.sleep(0.5)
 
     GV.pump1_titrant_homed_led     = False   
@@ -562,7 +578,7 @@ def action6_0():
     
 
 def action6_1():
-    # print("S6,E1 -> action6_1")
+    # logger.info("S6,E1 -> action6_1")
     GV.next_E = 0
     GV.SM_TEXT_TO_DIAPLAY ="S6,E1 -> action6_1\n" "  going back to S1/E0"
 
@@ -580,17 +596,17 @@ def action6_4():
 
 def action6_5():
     GV.next_E = 0
-    # print("S6,E5 -> action6_5")
+    # logger.info("S6,E5 -> action6_5")
     GV.SM_TEXT_TO_DIAPLAY ="S6,E5 -> action6_5\n""  going back to S5/E0"
 
 def action6_6():
     GV.next_E = 0
-    # print("S6,E5 -> action6_5")
+    # logger.info("S6,E5 -> action6_5")
     GV.SM_TEXT_TO_DIAPLAY ="S6,E6 -> action6_6\n""  going to S6/E6"
 
 #--------------
 def action7_0():
-    print("S7,E0 -> action7_0")
+    logger.info("S7,E0 -> action7_0")
     GV.next_E = 0
     GV.SM_TEXT_TO_DIAPLAY ="S7,E0 -> action7_0"
 
