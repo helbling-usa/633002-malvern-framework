@@ -779,3 +779,7 @@ ERROR:json file not valid: some statemachines are missing ...
 2024-02-09 11:26:30,546:Lib.Pump:exception happened in pump!!
 2024-02-09 11:26:34,048:Lib.Pump:Error reading pump!!!
 2024-02-09 11:26:34,048:Lib.Pump:exception happened in pump!!
+2024-02-13 12:03:14,213:Lib.Pump:Error reading pump!!!
+2024-02-13 12:03:14,218:Lib.Pump:exception happened in pump!!
+2024-02-13 12:04:33,602:Lib.Pump:Error reading pump!!!
+2024-02-13 12:04:33,602:Lib.Pump:exception happened in pump!!

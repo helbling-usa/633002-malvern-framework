@@ -31,7 +31,7 @@
     },
     "PumpInit_Reload": 
     {
-        "enable": true,
+        "enable": false,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
         "titrant_pump_speed": 1000,
@@ -47,7 +47,7 @@
     },   
     "Degas": 
     {
-        "enable": false,
+        "enable": true,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
         "titrant_pump_speed": 100,
@@ -57,7 +57,7 @@
         "degas_temp": 25,
         "experiment_temp": 30,
         "temperature_settledown_timeout": 1000,
-        "heat_time": 10,
+        "heat_time": 11,
         "AspirationVolume_Overshoot": 300,
         "total_asipiration_number":4
     },

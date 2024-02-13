@@ -37,6 +37,11 @@ BS14_IO_PORT    = 13
 #-------------------------------- Bubble sensor detection threshold -------------------------------
 BS_THRESHOLD                    = 2.5       # Threshold value for bubble sensor 1
 
+#-------------------------------- Temperature threshold for TEC -----------------------------------
+TEC_ACCEPTABLE_TEMP_DIFF        = 1         # This is acceptable temp. difference of current temp. to the target temp.
+                                            #  is considered close enough once the tec temp reahced this 
+                                            #  distance from target temp, it will move to next state
+
 #------------------------------ Pumps Parameters --------------------------------------------------
 PICKUP_UNTIL_BUBBLE_TARGET      = 20000     # Target position when pickup until bubble
 DISPENSE_UNTIL_BUBBLE_TARGET    = 0         # Target position when pickup until bubble

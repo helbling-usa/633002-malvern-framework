@@ -34,8 +34,6 @@ import  unary.unary_pb2_grpc as pb2_grpc
 import  unary.unary_pb2 as pb2
 
 
-
-
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(levelname)s:%(message)s')
@@ -46,8 +44,6 @@ stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 logger.addHandler(stream_handler)
-
-
 
 
 class run_SM_GUI(SM_GUI.SM_GUI):
@@ -78,12 +74,12 @@ class run_SM_GUI(SM_GUI.SM_GUI):
     # def PortAssignment(self):
 
     #     logger.info("Assigning Ports .....")
-    #     print("tec:",HW.TEC_PORT )
-    #     print("pump1:",HW.PUMP1_PORT )
-    #     print("technosoft:",HW.TECHNOSOFT_PORT)
-    #     print("gantry v:",HW.GANTRY_VER_AXIS_ID)
-    #     print("gantry H:",HW.GANTRY_HOR_AXIS_ID)
-    #     print("mixer",HW.MIXER_AXIS_ID )
+    #     logger.info("tec:",HW.TEC_PORT )
+    #     logger.info("pump1:",HW.PUMP1_PORT )
+    #     logger.info("technosoft:",HW.TECHNOSOFT_PORT)
+    #     logger.info("gantry v:",HW.GANTRY_VER_AXIS_ID)
+    #     logger.info("gantry H:",HW.GANTRY_HOR_AXIS_ID)
+    #     logger.info("mixer",HW.MIXER_AXIS_ID )
 
 
     def Init_Pumps_Valves(self):        
@@ -135,6 +131,10 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.b_nextbutton["state"] = NORMAL
         else:
             self.b_nextbutton["state"] = DISABLED
+
+        if  (GV.PAUSE == True):
+            self.b_pause.config(text=' Resume All ')
+            
         #-------- repeat the timer ----------------------------------------------
         self.timer = threading.Timer(.50, self.timerCallback_1)
         self.timer.start()
@@ -188,20 +188,20 @@ class run_SM_GUI(SM_GUI.SM_GUI):
 
     def read_BubbleSensors(self):
         # read bubble sensor and update the LEDs
-        GV.BS1 = (GV.labjack.getAIN(0))
-        GV.BS2 = (GV.labjack.getAIN(1))
-        GV.BS3 = (GV.labjack.getAIN(2))
-        GV.BS4 = (GV.labjack.getAIN(3))
-        GV.BS5 = (GV.labjack.getAIN(4))
-        GV.BS6 = (GV.labjack.getAIN(5))
-        GV.BS7 = (GV.labjack.getAIN(6))
-        GV.BS8 = (GV.labjack.getAIN(7))
-        GV.BS9 = (GV.labjack.getAIN(8))
-        GV.BS10 = (GV.labjack.getAIN(9))
-        GV.BS11 = (GV.labjack.getAIN(10))
-        GV.BS12 = (GV.labjack.getAIN(11))
-        GV.BS13 = (GV.labjack.getAIN(12))
-        GV.BS14 = (GV.labjack.getAIN(13))
+        GV.V_BS1 = (GV.labjack.getAIN(HW.BS1_IO_PORT))
+        GV.V_BS2 = (GV.labjack.getAIN(HW.BS2_IO_PORT))
+        GV.V_BS3 = (GV.labjack.getAIN(HW.BS3_IO_PORT))
+        GV.V_BS4 = (GV.labjack.getAIN(HW.BS4_IO_PORT))
+        GV.V_BS5 = (GV.labjack.getAIN(HW.BS5_IO_PORT))
+        GV.V_BS6 = (GV.labjack.getAIN(HW.BS6_IO_PORT))
+        GV.V_BS7 = (GV.labjack.getAIN(HW.BS7_IO_PORT))
+        GV.V_BS8 = (GV.labjack.getAIN(HW.BS8_IO_PORT))
+        GV.V_BS9 = (GV.labjack.getAIN(HW.BS9_IO_PORT))
+        GV.V_BS10 = (GV.labjack.getAIN(HW.BS10_IO_PORT))
+        GV.V_BS11 = (GV.labjack.getAIN(HW.BS11_IO_PORT))
+        GV.V_BS12 = (GV.labjack.getAIN(HW.BS12_IO_PORT))
+        GV.V_BS13 = (GV.labjack.getAIN(HW.BS13_IO_PORT))
+        GV.V_BS14 = (GV.labjack.getAIN(HW.BS14_IO_PORT))
 
 
     def updateGUI_LEDs(self):
@@ -299,8 +299,8 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         Y1  = 50
         dY1 = 40
         dd=40
-        # print('---',GV.BS11)
-        if (GV.BS1 < HW.BS_THRESHOLD):
+        # logger.info('---',GV.V_BS11)
+        if (GV.V_BS1 < HW.BS_THRESHOLD):
             self.led_on_11.place_forget()
             self.led_off_11.pack()
             self.led_off_11.place(x = COL9+dd,y = Y1 + 1*dY1)
@@ -309,7 +309,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_11.pack()            
             self.led_on_11.place(x =COL9+dd,y = Y1 + 1*dY1)
 
-        if (GV.BS2 < HW.BS_THRESHOLD):
+        if (GV.V_BS2 < HW.BS_THRESHOLD):
             self.led_on_12.place_forget()
             self.led_off_12.pack()
             self.led_off_12.place(x = COL9+dd,y = Y1 + 2*dY1)            
@@ -318,7 +318,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_12.pack()            
             self.led_on_12.place(x =COL9+dd,y = Y1 + 2*dY1)
 
-        if (GV.BS3 < HW.BS_THRESHOLD):
+        if (GV.V_BS3 < HW.BS_THRESHOLD):
             self.led_on_13.place_forget()
             self.led_off_13.pack()
             self.led_off_13.place(x = COL9+dd,y = Y1 + 3*dY1)            
@@ -327,7 +327,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_13.pack()            
             self.led_on_13.place(x =COL9+dd,y = Y1 + 3*dY1)
 
-        if (GV.BS4 < HW.BS_THRESHOLD):
+        if (GV.V_BS4 < HW.BS_THRESHOLD):
             self.led_on_14.place_forget()
             self.led_off_14.pack()
             self.led_off_14.place(x = COL9+dd,y = Y1 + 4*dY1)            
@@ -336,7 +336,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_14.pack()            
             self.led_on_14.place(x =COL9+dd,y = Y1 + 4*dY1)
 
-        if (GV.BS5 < HW.BS_THRESHOLD):
+        if (GV.V_BS5 < HW.BS_THRESHOLD):
             self.led_on_15.place_forget()
             self.led_off_15.pack()
             self.led_off_15.place(x = COL9+dd,y = Y1 + 5*dY1)            
@@ -345,7 +345,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_15.pack()            
             self.led_on_15.place(x =COL9+dd,y = Y1 + 5*dY1)
 
-        if (GV.BS6 < HW.BS_THRESHOLD):
+        if (GV.V_BS6 < HW.BS_THRESHOLD):
             self.led_on_16.place_forget()
             self.led_off_16.pack()
             self.led_off_16.place(x = COL9+dd,y = Y1 + 6*dY1)            
@@ -354,7 +354,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_16.pack()            
             self.led_on_16.place(x =COL9+dd,y = Y1 + 6*dY1)
 
-        if (GV.BS7 < HW.BS_THRESHOLD):
+        if (GV.V_BS7 < HW.BS_THRESHOLD):
             self.led_on_17.place_forget()
             self.led_off_17.pack()
             self.led_off_17.place(x = COL9+dd,y = Y1 + 7*dY1)            
@@ -363,7 +363,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_17.pack()            
             self.led_on_17.place(x =COL9+dd,y = Y1 + 7*dY1)                                                
 
-        if (GV.BS8 < HW.BS_THRESHOLD):
+        if (GV.V_BS8 < HW.BS_THRESHOLD):
             self.led_on_18.place_forget()
             self.led_off_18.pack()
             self.led_off_18.place(x = COL11+dd,y = Y1 + 1*dY1)
@@ -372,7 +372,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_18.pack()            
             self.led_on_18.place(x =COL11+dd,y = Y1 + 1*dY1)
 
-        if (GV.BS9 < HW.BS_THRESHOLD):
+        if (GV.V_BS9 < HW.BS_THRESHOLD):
             self.led_on_19.place_forget()
             self.led_off_19.pack()
             self.led_off_19.place(x = COL11+dd,y = Y1 + 2*dY1)            
@@ -381,7 +381,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_19.pack()            
             self.led_on_19.place(x =COL11+dd,y = Y1 + 2*dY1)
 
-        if (GV.BS10 < HW.BS_THRESHOLD):
+        if (GV.V_BS10 < HW.BS_THRESHOLD):
             self.led_on_20.place_forget()
             self.led_off_20.pack()
             self.led_off_20.place(x = COL11+dd,y = Y1 + 3*dY1)            
@@ -390,7 +390,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_20.pack()            
             self.led_on_20.place(x =COL11+dd,y = Y1 + 3*dY1)
 
-        if (GV.BS11 < HW.BS_THRESHOLD):
+        if (GV.V_BS11 < HW.BS_THRESHOLD):
             self.led_on_21.place_forget()
             self.led_off_21.pack()
             self.led_off_21.place(x = COL11+dd,y = Y1 + 4*dY1)            
@@ -399,7 +399,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_21.pack()            
             self.led_on_21.place(x =COL11+dd,y = Y1 + 4*dY1)
 
-        if (GV.BS12 < HW.BS_THRESHOLD):
+        if (GV.V_BS12 < HW.BS_THRESHOLD):
             self.led_on_22.place_forget()
             self.led_off_22.pack()
             self.led_off_22.place(x = COL11+dd,y = Y1 + 5*dY1)            
@@ -408,7 +408,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_22.pack()            
             self.led_on_22.place(x =COL11+dd,y = Y1 + 5*dY1)
 
-        if (GV.BS13 < HW.BS_THRESHOLD):
+        if (GV.V_BS13 < HW.BS_THRESHOLD):
             self.led_on_23.place_forget()
             self.led_off_23.pack()
             self.led_off_23.place(x = COL11+dd,y = Y1 + 6*dY1)            
@@ -417,7 +417,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_23.pack()            
             self.led_on_23.place(x =COL11+dd,y = Y1 + 6*dY1)
 
-        if (GV.BS14 < HW.BS_THRESHOLD):
+        if (GV.V_BS14 < HW.BS_THRESHOLD):
             self.led_on_24.place_forget()
             self.led_off_24.pack()
             self.led_off_24.place(x = COL11+dd,y = Y1 + 7*dY1)            
@@ -465,7 +465,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         info_str = ""
         GV.SM_enabled_dic = {}
         for key in recipe_json.keys():
-            # print("==", key)
+            # logger.info("==", key)
             RECIPE[key] = recipe_json[key]
             if (recipe_json[key]['enable'] == True):
                 GV.SM_enabled_dic[key] = True
@@ -485,18 +485,20 @@ class run_SM_GUI(SM_GUI.SM_GUI):
     def b_start_recipe(self):
         logger.debug("Start button pressed")
         for item,item_str in zip(GV.SM_list, GV.SM_list_str):                        
-            print("item:", item_str, "  value:", GV.SM_enabled_dic[item_str] )
+            # logger.info("item:", item_str, "  value:", GV.SM_enabled_dic[item_str] )
+            logger.info("item: {}  value: {}".format( item_str, GV.SM_enabled_dic[item_str] ))
             if (GV.SM_enabled_dic[item_str] == True):
-                print(item_str, '  is about to run')
+                # logger.info(item_str, '  is about to run')
+                logger.info(f'{item_str}  is about to run')
                 str = "SM."+item_str 
-                # print("module:", str, '  ==== ', sys.modules[str]
-                print("Running:{} Statemachine".format( sys.modules[str].name()))
+                # logger.info("module:", str, '  ==== ', sys.modules[str]
+                logger.info("Running:{} Statemachine".format( sys.modules[str].name()))
                 self.t1 = threading.Thread(target=self.execute, args=(sys.modules[str],))
                 self.t1.start()
                 GV.SM_enabled_dic[item_str] = False
                 break
-            print("------------------next state machine -----------------")        
-        print('Recipe terminated')
+            logger.info("------------------next state machine -----------------")        
+        logger.info('Recipe terminated')
         self.b_start["state"] =  DISABLED  #enable START button on the GUI
         self.b_start.config(text=' Start ')
 
@@ -525,16 +527,16 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         # i=0
         while (GV.terminate_SM == False):
             time.sleep(.5)   
-            print("------------------")
-            print("---cur_s:",GV.cur_S, " E:",Event)
+            # logger.info("------------------")
+            # logger.info("---cur_s:",GV.cur_S, " E:",Event)
             S_next = statemachine.TT[GV.cur_S][Event]
-            print("---",S_next)
+            # logger.info("---",S_next)
             Next_State = int(S_next[0])    
             Next_action= statemachine.name() + '.'+ S_next[1]
             GV.cur_S = Next_State  
-            print("next action:", Next_action, '  cur_S:', Next_State)          
+            # logger.info("next action:", Next_action, '  cur_S:', Next_State)          
             eval('SM.'+Next_action+'()')
-            print(GV.SM_TEXT_TO_DIAPLAY)
+            # logger.info(GV.SM_TEXT_TO_DIAPLAY)
             self.t_status.delete("1.0", END)
             self.t_status.insert(END, GV.SM_TEXT_TO_DIAPLAY)
             Event = GV.next_E 
@@ -542,7 +544,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.t_cur_state.insert(END, statemachine.state_name[Next_State])            
             self.t_cur_proc.delete("1.0",END)
             self.t_cur_proc.insert(END, statemachine.name())
-        print('SM Terminated')
+        logger.info('SM Terminated')
         self.b_start["state"] =  NORMAL  #enable START button on the GUI
         self.b_start.config(text=' Continue ')
         
@@ -598,7 +600,7 @@ class UnaryClient(object):
         Client function to call the rpc for GetServerResponse
         """
         message = pb2.Message(message=message)
-        print(f'{message}')
+        logger.info(f'{message}')
         return self.stub.GetServerResponse(message)
     
 

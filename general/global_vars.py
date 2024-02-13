@@ -40,21 +40,21 @@ current_Aspiration_count = 0        #?????????????????????????????
 PUMP_SAMPLE_SCALING_FACTOR = 1
 PUMP_TITRANT_SCALING_FACTOR = 1
 
-# The folloiwng variables hold the value read from bubble sensors
-BS1 = 0
-BS2 = 0
-BS3 = 0
-BS4 = 0
-BS5 = 0
-BS6 = 0
-BS7 = 0
-BS8 = 0
-BS9 = 0
-BS10 = 0
-BS11 = 0
-BS12 = 0
-BS13 = 0
-BS14 = 0
+# The folloiwng variables hold the voltage read from bubble sensors
+V_BS1 = 0
+V_BS2 = 0
+V_BS3 = 0
+V_BS4 = 0
+V_BS5 = 0
+V_BS6 = 0
+V_BS7 = 0
+V_BS8 = 0
+V_BS9 = 0
+V_BS10 = 0
+V_BS11 = 0
+V_BS12 = 0
+V_BS13 = 0
+V_BS14 = 0
 # The following booleans are in the GUI to show bubble sensor LEDS to be on or off
 BS1_LED = False
 BS2_LED = False
@@ -94,7 +94,6 @@ MIXING_SPEED    = "0 RPM"
 
 SM_list     = None                  # Note: this varialbe must be filled as soon as run_GUI is executed (it's in run_SM_GUI.init)
 SM_list_str = None              # Note: this varialbe must be filled as soon as run_GUI is executed (it's in run_SM_GUI.init)
-
 SM_enabled_dic = None           # a dictionary that keeps track of what statemchines are enabled in the recipe
 
 # the folowwing variables are used to keep track of Dose/Mixing/Equilibrium signals

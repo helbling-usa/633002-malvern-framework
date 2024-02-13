@@ -13,8 +13,8 @@ file_handler.setLevel(logging.ERROR)
 file_handler.setFormatter(formatter)
 stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(formatter)
-logger.addHandler(file_handler)
-logger.addHandler(stream_handler)
+# logger.addHandler(file_handler)
+# logger.addHandler(stream_handler)
 
 ##-----------------   ("next STATE","FUCNCTION") --------------------------------------------------
 #-------------   -------E0-------    ------E1-------  -------E2-------  -------E3-------  -------E4-------  -------E5------ -------E6------- -------E7-------  -------E8-------  -------E9-------   -------E10-------  -------E11-------      -------E12-------    -------E13-------
@@ -73,7 +73,6 @@ def NewAirSlugs(pump_address, valve_address):
     starting_pos = GV.pump1.get_plunger_position(pump_address)
     next_pos =  starting_pos
     while (airslug_count < air_slug_total_count):        
-        # logger.info("\tair slug:{}".format(airslug_count+1)) 
         logger.info(f"\t\tair slug:{airslug_count+1} / {air_slug_total_count}")
         # Air slug
         GV.pump1.set_multiwayvalve(valve_address,HW.VALVE8_P1)        #Valve to Air
