@@ -79,6 +79,7 @@ RECIPE= {
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
         "gantry_move_speed": 10,
+        "vertical_high_position": 15,
         "horizontal_titration_position": 50,
         "vertical_titration_position": 50,
         "gantry_move_timeout": 60

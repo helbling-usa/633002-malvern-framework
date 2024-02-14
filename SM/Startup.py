@@ -13,8 +13,8 @@ file_handler.setLevel(logging.ERROR)
 file_handler.setFormatter(formatter)
 stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(formatter)
-# logger.addHandler(file_handler)
-# logger.addHandler(stream_handler)
+logger.addHandler(file_handler)
+logger.addHandler(stream_handler)
 
 ##-----------------   ("next STATE","FUCNCTION") --------------------------------------------------
 #-------------   -------E0-------    ------E1-------  -------E2-------  -------E3-------  -------E4-------  -------E5-------  
@@ -198,7 +198,7 @@ def action3_0():
     GV.motors.set_POSOKLIM(1)
     abs_pos_tml = int(fill_pos / HW.TML_LENGTH_2_MM_HOR )
     # print("=============>",fill_pos, ' = ', abs_pos_tml)    
-    move_speed = RECIPE['Startup']['gantry_move_speed'] 
+    move_speed = RECIPE['Startup']['gantry_move_speed'] / HW.TML_SPEED_2_MM_PER_SEC_HOR
     # home_speed = RECIPE['Startup']['gantry_home_timeout'] 
     GV.motors.move_absolute_position(abs_pos_tml, move_speed, HW.GANTRY_HOR_ACCELERATION)
     cur_motor_pos= GV.motors.read_actual_position()
@@ -279,7 +279,7 @@ def action4_1():
     GV.motors.set_POSOKLIM(1)
     abs_pos_tml = int(fill_pos / HW.TML_LENGTH_2_MM_VER )
     # print("=============>",fill_pos, ' = ', abs_pos_tml)
-    move_speed = RECIPE['Startup']['gantry_move_speed'] 
+    move_speed = RECIPE['Startup']['gantry_move_speed']  / HW.TML_SPEED_2_MM_PER_SEC_VER
     GV.motors.move_absolute_position(abs_pos_tml, move_speed, HW.GANTRY_VER_ACCELERATION)
     cur_motor_pos= GV.motors.read_actual_position()
     while (abs(cur_motor_pos - abs_pos_tml)>50):

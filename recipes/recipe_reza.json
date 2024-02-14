@@ -5,7 +5,7 @@
         "titrant_volume": 30,
         "sample_volume": 300,
         "AspirationVolume_Overshoot": 10, 
-        "horizontal_cell_fill_position": 50,
+        "horizontal_cell_fill_position": 100,
         "vertical_cell_fill_position": 50,
         "tc2_volume": 120, 
         "sc2_volume": 150, 
@@ -23,8 +23,8 @@
 	},    
     "Startup": 
     {
-        "enable": false,
-        "gantry_move_speed": 1,
+        "enable": true,
+        "gantry_move_speed": 2,
         "gantry_home_timeout": 500,   
         "gantry_homing_speed": 1,
         "gantry_move_timeout": 60
@@ -63,7 +63,7 @@
     },
     "Load_Prime": 
     {
-        "enable": true,
+        "enable": false,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
         "titrant_pump_speed": 1000,
@@ -78,7 +78,8 @@
         "enable": false,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
-        "gantry_move_speed": 10,
+        "gantry_move_speed": 5,
+        "vertical_high_position": 15,
         "horizontal_titration_position": 50,
         "vertical_titration_position": 50,
         "gantry_move_timeout": 60
@@ -102,7 +103,7 @@
         "enable": false,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
-        "gantry_move_speed": 10,
+        "gantry_move_speed": 4,
         "gantry_move_timeout": 60
     },
     "DegasClean": 

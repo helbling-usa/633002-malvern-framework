@@ -461,8 +461,8 @@ class motor_3axes():
 
         tt = x(abs_pos, speed, acceleration,UPDATE_IMMEDIATE,FROM_REFERENCE)
         
-        if (tt==True):
-            logger.info("\t\tmoving to absolute position is done")
+        # if (tt==True):
+        #     logger.info("\t\tmoving to absolute position is done")
         
         # /*	Wait until the positioning is ended */
         if (self.mydll1.TS_SetEventOnMotionComplete(NO_WAIT_EVENT,STOP) == False):

@@ -7,7 +7,8 @@ MIXING_ACCELERATION             = 1         # mixing motor acceleration
 RPM_2_TML_SPEED                 = 0.1365    # conversion from rpm to mixing motor TML unit  (0.267 for Reza's mixer)
 TML_LENGTH_2_MM_VER             = 10. /1000      # tml unit for length to um
 TML_LENGTH_2_MM_HOR             = 7.5 /1000      # tml unit for length to um
-
+TML_SPEED_2_MM_PER_SEC_HOR      = 7.5
+TML_SPEED_2_MM_PER_SEC_VER      = 7.5
 #------------------------------ Com Ports ---------------------------------------------------------
 TEC_PORT                        = "COM5"                       # port address for TEC controller
 TECHNOSOFT_PORT                 = "COM7"               # port address for mixer motor controller
@@ -25,7 +26,7 @@ BS3_IO_PORT     = 2
 BS4_IO_PORT     = 3
 BS5_IO_PORT     = 4
 BS6_IO_PORT     = 5
-BS7_IO_PORT     = 6  #set this to 7 for Reza's setup
+BS7_IO_PORT     = 6  #set this to 7 for Reza's setupyea
 BS8_IO_PORT     = 7
 BS9_IO_PORT     = 8
 BS10_IO_PORT    = 9
