@@ -47,7 +47,7 @@
     },   
     "Degas": 
     {
-        "enable": true,
+        "enable": false,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
         "titrant_pump_speed": 100,
@@ -63,7 +63,7 @@
     },
     "Load_Prime": 
     {
-        "enable": false,
+        "enable": true,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
         "titrant_pump_speed": 1000,

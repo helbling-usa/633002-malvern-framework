@@ -254,8 +254,8 @@ def action2_3():
         GV.next_E = 5
         GV.SM_TEXT_TO_DIAPLAY = "S2,E3 -> action2_3\n" "  going to S2/E5"
         return
-    GV.pump1_titrant_homed_led     = True    
-    GV.pump2_sample_homed_led      = True
+    GV.pump1_titrant_active_led     = True   
+    GV.pump2_sample_active_led      = True
     total_asipiration_number = RECIPE["Degas"]["total_asipiration_number"]    
     str0 = "\nCurrent Aspiration:{}\nTotal Aspirations:{}".format(GV.current_Aspiration_count+1, 
                                                                     total_asipiration_number)    
@@ -325,6 +325,8 @@ def action3_0():
         logger.info("\t\tpump1 pos:{} /{}\tpump2 pos:{}/{}".format(pump_pos1, next_pos1, pump_pos2, next_pos2))
         time.sleep(0.5)
 
+    GV.pump1_titrant_active_led     = False   
+    GV.pump2_sample_active_led      = False
     #check if dose signal is receved 
     GV.next_E = 1
     str1 = "pump 1 pickup Var.:Tit. Vol. +Asp. Overshoot\n""pump 2 pickup Var.: Sample Vol. +Asp. Overshoot"
@@ -353,8 +355,8 @@ def action3_2():
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0" "  going to S3/E4"
         return 
-    GV.pump1_titrant_homed_led     = True
-    GV.pump2_sample_homed_led      = True
+    GV.pump1_titrant_active_led     = True   
+    GV.pump2_sample_active_led      = True
     total_asipiration_number = RECIPE["Degas"]["total_asipiration_number"]    
     str0 = "\nCurrent Aspiration:{}\nTotal Aspirations:{}".format(GV.current_Aspiration_count+1, total_asipiration_number)    
     str1 =  "pump 1 dispense Var.: Tit. Vol. +Asp. Overshoot\n""pump 2 dispense Var.: Sample Vol. +Asp. Overshoot"
@@ -386,43 +388,32 @@ def action4_0():
         GV.next_E = 6
         GV.SM_TEXT_TO_DIAPLAY = "S4,E0 -> action4_0" " going to S4/E6"
         return 
-
     # pump_speed = RECIPE["Degas"]["pump_speed"]    
-
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["Degas"]["titrant_pump_speed"])
     time.sleep(1)
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["Degas"]["sample_pump_speed"])
     time.sleep(1)  
-
     AspirationVolume_Overshoot = RECIPE["Degas"]["AspirationVolume_Overshoot"]
     pump_address1 = HW.TIRRANT_PUMP_ADDRESS
     pump_address2 = HW.SAMPLE_PUMP_ADDRESS
     starting_pos1 = GV.pump1.get_plunger_position(pump_address1)
     time.sleep(.5)
-    # GV.pump1.set_speed(pump_address1, pump_speed)
-    # time.sleep(.5)
     next_pos1 =  starting_pos1 - AspirationVolume_Overshoot
     GV.pump1.set_pos_absolute(pump_address1, next_pos1)
     time.sleep(1)
     starting_pos2 = GV.pump1.get_plunger_position(pump_address2)
     time.sleep(.5)
-    # GV.pump1.set_speed(pump_address2, pump_speed)
-    # time.sleep(1)
     next_pos2 =  starting_pos2 - AspirationVolume_Overshoot
     GV.pump1.set_pos_absolute(pump_address2, next_pos2)
-
     pump_pos1 = 0
     pump_pos2 = 0
     while (pump_pos1 != next_pos1  or   pump_pos2 != next_pos2):
         pump_pos1 = GV.pump1.get_plunger_position(pump_address1)        
         time.sleep(0.5)
         pump_pos2 = GV.pump1.get_plunger_position(pump_address2)
-        # logger.info("\tpump1 pos:",pump_pos1, "/", next_pos1,"\t\tpump2 pos:",pump_pos2,"/", next_pos2)
         logger.info("\t\tpump1 pos:  {}/{}  \tpump2 pos: {}/{}".format(pump_pos1, next_pos1, pump_pos2, next_pos2))
         time.sleep(0.5)
     #turn off the pump active LED
-    # GV.pump1_titrant_homed_led     = False   
-    # GV.pump2_sample_homed_led      = False
     GV.pump1_titrant_active_led     = False   
     GV.pump2_sample_active_led      = False
     str1 =  "pump 1 dispense Var.: Tit. Vol. +Asp. Overshoot\n""pump 2 dispense Var.: Sample Vol. +Asp. Overshoot"
@@ -460,14 +451,13 @@ def action4_2():
     # str0 = "current # Aspiration:{}  Total Aspirations:{}".format(GV.current_Aspiration_count, total_asipiration_number)
     if (GV.current_Aspiration_count < total_asipiration_number):
         GV.next_E = 3
-        str1 = "aspiration count = {}/{}\n".format(GV.current_Aspiration_count+1, total_asipiration_number) 
+        str1 = "Aspiration count = {}/{}\n".format(GV.current_Aspiration_count+1, total_asipiration_number) 
         str1 += "aspiration count not reached yet\n"
         GV.SM_TEXT_TO_DIAPLAY =str1 
     else:
         GV.next_E = 4
-        str1 = "  aspiratin count reached" "  go to S4/E3"
+        str1 = "Aspiratin count reached" "  go to S4/E3"
         GV.SM_TEXT_TO_DIAPLAY = str1
-
 
 
 def action4_3():
