@@ -13,14 +13,14 @@ file_handler.setLevel(logging.ERROR)
 file_handler.setFormatter(formatter)
 stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(formatter)
-# logger.addHandler(file_handler)
-# logger.addHandler(stream_handler)
+logger.addHandler(file_handler)
+logger.addHandler(stream_handler)
 
 ##-----------------   ("next STATE","FUCNCTION") --------------------------------------------------
 #-------------   -------E0-------    ------E1-------  -------E2-------  -------E3-------  -------E4-------  -------E5------ -------E6------- -------E7-------  -------E8-------  -------E9-------   -------E10-------  -------E11-------      -------E12-------    -------E13-------
 TT = np.array([[( 0, 'action0_0')  ,(0, 'action0_1') ,(0, 'action0_2') ,(1, 'action0_3') ,(12,'action0_4') ,(13, 'action0_5'), (0, 'None')     , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ],  #<---STATE0
                [( 1, 'action1_0')  ,(1, 'action1_1') ,(2, 'action1_2') ,(12, 'action1_3'),(13, 'action1_4'),(0, 'None')      , (0, 'None')     , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ],  #<---STATE1
-               [( 2, 'action2_0')  ,(2, 'action2_1') ,(3, 'action2_2') ,(12,'action2_3') ,(12,'action2_4') ,(0, 'None')      , (0, 'None')     , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ],  #<---STATE2
+               [( 2, 'action2_0')  ,(2, 'action2_1') ,(3, 'action2_2') ,(12,'action2_3') ,(13,'action2_4') ,(0, 'None')      , (0, 'None')     , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ],  #<---STATE2
                [( 3, 'action3_0')  ,(3, 'action3_1') ,(4, 'action3_2') ,(12,'action3_3') ,(12,'action3_4') ,(0, 'None')      , (0, 'None')     , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ],  #<---STATE3
                [( 4, 'action4_0')  ,(4, 'action4_1') ,(5, 'action4_2') ,(12,'action4_3') ,(13,'action4_4') ,(0, 'None')      , (0, 'None')     , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ],  #<---STATE4
                [( 5, 'action5_0')  ,(5, 'action5_1') ,(5, 'action5_2') ,(5, 'action5_3') ,(6, 'action5_4') ,(12, 'action5_5'), (13,'action5_6'),(0, 'None')       , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ],  #<---STATE5
@@ -30,7 +30,7 @@ TT = np.array([[( 0, 'action0_0')  ,(0, 'action0_1') ,(0, 'action0_2') ,(1, 'act
                [( 9, 'action9_0')  ,(9, 'action9_1') ,(10,'action9_2') ,(12,'action9_3') ,(13,'action9_4') ,(0, 'None')      , (0, 'None')     , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ],  #<---STATE9
                [( 10,'action10_0') ,(10,'action10_1'),(11,'action10_2'),(12,'action10_3'),(13,'action10_4'),(0, 'None')      , (0, 'None')     , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ],  #<---STATE10
                [( 11,'action11_0') ,(11,'action11_1'),(12,'action11_2'),(13,'action11_3'),(0, 'None')      ,(0, 'None')      , (0, 'None')     , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ],  #<---STATE11
-               [( 12,'action12_0') ,(0, 'action12_1'),(1, 'action12_2'),(2, 'action12_3'),(3, 'action12_4'),(4, 'action12_5'),(5, 'action12_6'), (6, 'action12_7'), (7, 'action12_8'), (8, 'action12_9'), (9, 'action12_10'), (10, 'action12_11'), (11, 'action12_12'), (13, 'action12_13') ],  #<---STATE12
+               [( 12,'action12_0') ,(0, 'action12_1'),(1, 'action12_2'),(2, 'action12_3'),(3, 'action12_4'),(4, 'action12_5'),(5, 'action12_6'), (6, 'action12_7'), (7, 'action12_8'), (8, 'action12_9'), (9, 'action12_10'), (10, 'action12_11'), (11, 'action12_12'), (0, 'None')         ],  #<---STATE12
                [( 13,'action13_0') ,(0, 'None')      ,(0, 'None')      ,(0, 'None')      ,(0, 'None')      ,(0, 'None')      , (0, 'None')     , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ]   #<---STATE13
                ])  
 
@@ -466,8 +466,7 @@ def action4_0():
 
 
 def action4_1():
-    timeout = False
-    if (GV.PAUSE == True or timeout==True):
+    if (GV.PAUSE == True ):
         GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "going to Pause state"
         return 
@@ -553,15 +552,19 @@ def action5_0():
 
 
 def action5_1():
-    timeout = False
+    timeout_flag = False
     if (GV.PAUSE == True):
         GV.next_E = 5
         GV.SM_TEXT_TO_DIAPLAY = "going to Pause state"
         return 
-    if (GV.ERROR == True  or timeout==True):
+    if (GV.ERROR == True ):
         GV.next_E = 6
         GV.SM_TEXT_TO_DIAPLAY = " going to ERROR state"
         return    
+    
+    bubble_pickup_timeout = RECIPE["PumpInit_Reload"]["pump_move_timeout"]
+
+
     logger.info('Pickup until bubble')
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
     time.sleep(1)        
@@ -580,26 +583,39 @@ def action5_1():
     prev_state_2 = cur_state_2
     bubble_1_search = True
     bubble_2_search = True    
-    while (bubble_1_search  or bubble_2_search) :
+    start_time = time.time()
+    wait_time = 0
+    while (bubble_1_search  or bubble_2_search)  :
         #bubble sensor 1 & Pump 1
         input1 = GV.labjack.getAIN(HW.BS1_IO_PORT)      
         cur_state_1 = air_or_liquid(input1)
-        pos1 =GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
         if (cur_state_1 != prev_state_1):
             bubble_1_search = False
+            #Stop  pump1
+            time.sleep(.5)
+            GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
         time.sleep(.025)
+        pos1 =GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
         #bubble sensor 2 and Pump 2
         input2 = GV.labjack.getAIN(HW.BS2_IO_PORT)
-        cur_state_2 = air_or_liquid(input2)
-        pos2 =GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
+        cur_state_2 = air_or_liquid(input2)        
         if (cur_state_2 != prev_state_2):
             bubble_2_search = False
+            time.sleep(.5)
+            GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
         time.sleep(.025)
+        pos2 =GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
         logger.info('\t\tBS1:{:.2f}  position:{},   BS2:{:.2f}  position:{}'.format(input1,pos1,input2, pos2))
-    #Stop both pumps
-    GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
-    time.sleep(.5)
-    GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
+        wait_time = time.time() - start_time
+        if (wait_time >  bubble_pickup_timeout):
+            logger.error("\t\tpickup timeout. going to Pause state")
+            timeout_flag = True
+            break
+
+    # #Stop both pumps
+    # GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
+    # time.sleep(.5)
+    # GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
     logger.info('\t\tBubble detection terminated')
     #set pumps speeds to their defaults
     pump1_speed = int(RECIPE["PumpInit_Reload"]["titrant_pump_speed"] * GV.PUMP_TITRANT_SCALING_FACTOR)
@@ -608,8 +624,14 @@ def action5_1():
     time.sleep(1)
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
     time.sleep(1)
-    GV.SM_TEXT_TO_DIAPLAY ="pump 1 to position XX\n""pump 2 to position XX"
-    GV.next_E = 2
+
+    if (timeout_flag == True):
+        GV.SM_TEXT_TO_DIAPLAY ="Pickup timeout.\n going to Pause state"
+        GV.PAUSE = True
+        GV.next_E = 5
+    else:
+        GV.SM_TEXT_TO_DIAPLAY ="pump 1 to position XX\n""pump 2 to position XX"
+        GV.next_E = 2
     
 
 def action5_2():
@@ -1008,12 +1030,13 @@ def action10_0():
     GV.pump1_titrant_active_led    = True
     GV.pump2_sample_active_led     = True
     GV.SM_TEXT_TO_DIAPLAY = "  pump 1 pickup\n" "  pump 2 pickup"
+    print(GV.SM_TEXT_TO_DIAPLAY)
     GV.next_E = 1
 
 
 def action10_1():
-    timeout = False
-    if (GV.PAUSE == True or timeout==True):
+    timeout_flag = False
+    if (GV.PAUSE == True):
         GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "going to Pause state"
         return 
@@ -1021,6 +1044,8 @@ def action10_1():
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = " going to ERROR state"
         return 
+    
+    bubble_pickup_timeout = RECIPE["PumpInit_Reload"]["pump_move_timeout"]    
     logger.info('Pickup until bubble')
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
     time.sleep(1)        
@@ -1039,7 +1064,8 @@ def action10_1():
     prev_state_2 = cur_state_2
     bubble_1_search = True
     bubble_2_search = True
-    
+    start_time = time.time()
+    wait_time = 0    
     while (bubble_1_search  or bubble_2_search) :
         # check bs3
         input1 = GV.labjack.getAIN(HW.BS3_IO_PORT)   #bubble sensor 3
@@ -1047,6 +1073,8 @@ def action10_1():
         pos1 =GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
         if (cur_state_1 != prev_state_1):
             bubble_1_search = False
+            GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
+            time.sleep(.5)
         time.sleep(.025)
         #check bs 4
         input2 = GV.labjack.getAIN(HW.BS4_IO_PORT)   #bubble sensor 4
@@ -1054,12 +1082,20 @@ def action10_1():
         pos2 =GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
         if (cur_state_2 != prev_state_2):
             bubble_2_search = False
+            GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
+            time.sleep(.5)
         time.sleep(.025)
         logger.info('        BS3:{:.2f}  position:{},   BS4:{:.2f}  position:{}'.format(input1,pos1,input2, pos2))
-    # Stop pumps
-    GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
-    time.sleep(.5)
-    GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
+        wait_time = time.time() - start_time
+        if (wait_time >  bubble_pickup_timeout):
+            logger.error("\t\tpickup timeout. going to Pause state")
+            timeout_flag = True
+            break
+
+    # # Stop pumps
+    # GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
+    # time.sleep(.5)
+    # GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
     logger.info('\t\tBubble detection terminated')
     pump1_speed = int(RECIPE["PumpInit_Reload"]["titrant_pump_speed"] * GV.PUMP_TITRANT_SCALING_FACTOR)
     pump2_speed = int(RECIPE["PumpInit_Reload"]["sample_pump_speed"] * GV.PUMP_SAMPLE_SCALING_FACTOR)
@@ -1070,8 +1106,14 @@ def action10_1():
     #Turn off pumps LEDs
     GV.pump1_titrant_active_led    = False
     GV.pump2_sample_active_led     = False
-    GV.SM_TEXT_TO_DIAPLAY ="  bubble sensor triggered" "  pumps stopped" 
-    GV.next_E = 2
+    if (timeout_flag == True):
+        GV.SM_TEXT_TO_DIAPLAY ="Pickup timeout.\n going to Pause state"
+        GV.PAUSE = True
+        GV.next_E = 5
+    else:    
+        GV.SM_TEXT_TO_DIAPLAY ="  bubble sensor triggered" "  pumps stopped" 
+        GV.next_E = 2
+        print(GV.SM_TEXT_TO_DIAPLAY)
 
 
 def action10_2():      
@@ -1084,6 +1126,7 @@ def action10_2():
         GV.SM_TEXT_TO_DIAPLAY = " going to ERROR state"
         return  
     GV.SM_TEXT_TO_DIAPLAY ="  prepare to go to S11"  
+    print(GV.SM_TEXT_TO_DIAPLAY)
     GV.next_E = 0
 
 
@@ -1093,12 +1136,14 @@ def action10_3():
         GV.SM_TEXT_TO_DIAPLAY = " going to ERROR state"
         return         
     GV.SM_TEXT_TO_DIAPLAY = "  going to PAUSE"
+    print(GV.SM_TEXT_TO_DIAPLAY)
     GV.next_E = 0
     GV.prev_S = 10
 
 
 def action10_4():    
     GV.SM_TEXT_TO_DIAPLAY =" going to ERROR state"
+    print(GV.SM_TEXT_TO_DIAPLAY)
     GV.next_E = 0
     GV.prev_S = 10
 
@@ -1157,7 +1202,7 @@ def action12_0():
     if (GV.PAUSE == True):
         GV.next_E = 0
     else:
-        GV.next_E = GV.prev_S
+        GV.next_E = GV.prev_S + 1
 
     # GV.SM_TEXT_TO_DIAPLAY ="S12,E0 -> action12_0\n"
 
@@ -1205,7 +1250,7 @@ def action12_10():
 def action12_11():
     GV.next_E = 0
     GV.SM_TEXT_TO_DIAPLAY ="S12,E11 -> action12_11"  "  going to S10/E0"
-def action12_11():
+def action12_12():
     GV.next_E = 0
     GV.SM_TEXT_TO_DIAPLAY ="S12,E11 -> action12_11"  "  going to S11/E0"
 

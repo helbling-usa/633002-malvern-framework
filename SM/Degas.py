@@ -4,6 +4,7 @@ import  hardware.config as HW
 import  time
 from    general.recipe import RECIPE
 import  logging
+import  numpy as np
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

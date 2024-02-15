@@ -783,3 +783,12 @@ ERROR:json file not valid: some statemachines are missing ...
 2024-02-13 12:03:14,218:Lib.Pump:exception happened in pump!!
 2024-02-13 12:04:33,602:Lib.Pump:Error reading pump!!!
 2024-02-13 12:04:33,602:Lib.Pump:exception happened in pump!!
+2024-02-15 08:57:42,281:Lib.Pump:Error reading pump!!!
+2024-02-15 08:57:42,287:Lib.Pump:exception happened in pump!!
+ERROR:	Commumication error! 939587472
+2024-02-15 09:00:09,820:Lib.Pump:Error reading pump!!!
+2024-02-15 09:00:09,821:Lib.Pump:exception happened in pump!!
+ERROR:		pickup timeout.
+ERROR:		pickup timeout. going to Pause state
+ERROR:		pickup timeout. going to Pause state
+ERROR:		pickup timeout. going to Pause state

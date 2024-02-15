@@ -241,6 +241,7 @@ def action3_3():
         GV.SM_TEXT_TO_DIAPLAY = "going to Error state"
         return     
     GV.next_E = 0
+    GV. prev_S = 3
     GV.SM_TEXT_TO_DIAPLAY ="Going to Pause state"
 
 
