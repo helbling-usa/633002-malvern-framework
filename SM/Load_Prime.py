@@ -174,6 +174,8 @@ def action2_1():
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S2,E1 -> action2_1" "  goint to S2/E4"
         return 
+    
+    bubble_pickup_timeout = RECIPE["Load_Prime"]["pump_move_timeout"]
     logger.info('Pickup until bubble')
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
     time.sleep(1)        
@@ -191,7 +193,9 @@ def action2_1():
     prev_state_1 = cur_state_1
     prev_state_2 = cur_state_2    
     bubble_1_search = True
-    bubble_2_search = True    
+    bubble_2_search = True  
+    start_time = time.time()
+    wait_time = 0      
     while (bubble_1_search  or bubble_2_search) :
         # input1 = GV.labjack.getAIN(0)
         input1 = GV.labjack.getAIN(HW.BS3_IO_PORT)  #bubble sensor 3
@@ -199,6 +203,8 @@ def action2_1():
         pos1 =GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
         if (cur_state_1 != prev_state_1):
             bubble_1_search = False
+            GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
+            time.sleep(.5)
         time.sleep(.025)
         # input2 = GV.labjack.getAIN(1)
         input2 = GV.labjack.getAIN(HW.BS4_IO_PORT)   #bubble snesor 4
@@ -206,12 +212,19 @@ def action2_1():
         pos2 =GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
         if (cur_state_2 != prev_state_2):
             bubble_2_search = False
+            GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
+            time.sleep(0.5)
         time.sleep(.025)        
-        logger.info('\t\tBS3: {:.2f} position: {},   BS4: {:.2f} position: {}'.format(input1,pos1,input2, pos2))        
+        logger.info('\t\tBS3: {:.2f} position: {},   BS4: {:.2f} position: {}'.format(input1,pos1,input2, pos2))   
+        wait_time = time.time() - start_time
+        if (wait_time >  bubble_pickup_timeout):
+            logger.error("\t\tpickup timeout. going to Pause state")
+            timeout_flag = True
+            break
     # Stop the pumps
-    GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
-    time.sleep(.5)
-    GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
+    # GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
+    # time.sleep(.5)
+    # GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
     logger.info('\t\tBubble detection terminated')
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["Load_Prime"]["titrant_pump_speed"])
     time.sleep(1)
@@ -219,8 +232,13 @@ def action2_1():
     time.sleep(1)  
     GV.pump1_titrant_active_led    = False
     GV.pump2_sample_active_led     = False
-    GV.SM_TEXT_TO_DIAPLAY ="bubble sensors both triggered\n" "going to S2/E2\n"
-    GV.next_E = 2
+    if (timeout_flag == True):
+        GV.SM_TEXT_TO_DIAPLAY ="Pickup timeout.\n going to Pause state"
+        GV.PAUSE = True
+        GV.next_E = 3
+    else:    
+        GV.SM_TEXT_TO_DIAPLAY ="bubble sensors both triggered\n" "going to S2/E2\n"
+        GV.next_E = 2
             
 
 def action2_2():
@@ -342,6 +360,7 @@ def action4_1():
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S4,E1 -> action4_1" "goint to S4/E4"
         return 
+    bubble_pickup_timeout = RECIPE["Load_Prime"]["pump_move_timeout"]
     logger.info('Dispense until bubble')
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
     time.sleep(1)        
@@ -360,24 +379,36 @@ def action4_1():
     prev_state_2 = cur_state_2
     bubble_1_search = True
     bubble_2_search = True    
+    start_time = time.time()
+    wait_time = 0
     while (bubble_1_search  or bubble_2_search) :
         input1 = GV.labjack.getAIN(HW.BS1_IO_PORT)   #bubble sensor 1
         cur_state_1 = air_or_liquid(input1)
         pos1 =GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
         if (cur_state_1 != prev_state_1):
             bubble_1_search = False
+            GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
+            time.sleep(.5)            
         time.sleep(.025)
         input2 = GV.labjack.getAIN(HW.BS2_IO_PORT)   #bubble sensor 2
         cur_state_2 = air_or_liquid(input2)
         pos2 =GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
         if (cur_state_2 != prev_state_2):
             bubble_2_search = False
+            GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
+            time.sleep(0.5)
         time.sleep(.025)
+        wait_time = time.time() - start_time
         logger.info('\t\tBS1: {:.2f} position: {},   BS2: {:.2f} position: {}'.format(input1,pos1,input2, pos2))
-    #stop the pumps
-    GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
-    time.sleep(.5)
-    GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
+        if (wait_time >  bubble_pickup_timeout):
+            logger.error("\t\tpickup timeout. going to Pause state")
+            timeout_flag = True
+            break
+
+    # #stop the pumps
+    # GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
+    # time.sleep(.5)
+    # GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
     logger.info('\t\tBubble detection terminated')
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["Load_Prime"]["titrant_pump_speed"])
     time.sleep(1)
@@ -385,8 +416,13 @@ def action4_1():
     time.sleep(1)  
     GV.pump1_titrant_active_led    = False
     GV.pump2_sample_active_led     = False
-    GV.SM_TEXT_TO_DIAPLAY =" bubble sensors 1&2 triggered\n"
-    GV.next_E = 2
+    if (timeout_flag == True):
+        GV.SM_TEXT_TO_DIAPLAY ="Pickup timeout.\n going to Pause state"
+        GV.PAUSE = True
+        GV.next_E = 3
+    else:    
+        GV.SM_TEXT_TO_DIAPLAY =" bubble sensors 1&2 triggered\n"
+        GV.next_E = 2
 
 
 def action4_2():      
@@ -521,6 +557,7 @@ def action6_1():
         GV.next_E = 6
         GV.SM_TEXT_TO_DIAPLAY = "S6,E1 -> action6_1" "goint to S6/E6"
         return 
+    bubble_pickup_timeout = RECIPE["Load_Prime"]["pump_move_timeout"]
     logger.info('Dispense until bubble')
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
     time.sleep(1)        
@@ -538,7 +575,9 @@ def action6_1():
     prev_state_1 = cur_state_1
     prev_state_2 = cur_state_2
     bubble_1_search = True
-    bubble_2_search = True    
+    bubble_2_search = True  
+    start_time = time.time()
+    wait_time = 0  
     while (bubble_1_search  or bubble_2_search) :
         # input1 = GV.labjack.getAIN(0)
         input1 = GV.labjack.getAIN(HW.BS6_IO_PORT)   #bubble sensor 6
@@ -546,6 +585,8 @@ def action6_1():
         pos1 =GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
         if (cur_state_1 != prev_state_1):
             bubble_1_search = False
+            GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
+            time.sleep(.5)
         time.sleep(.025)
         # input2 = GV.labjack.getAIN(1)
         input2 = GV.labjack.getAIN(HW.BS7_IO_PORT)   #bubble sensor 7
@@ -553,12 +594,19 @@ def action6_1():
         pos2 =GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
         if (cur_state_2 != prev_state_2):
             bubble_2_search = False
+            GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
+            time.sleep(.5)
         time.sleep(.025)
         logger.info('\t\tBS6: {:.2f} position: {},   BS7: {:.2f} position: {}'.format(input1,pos1,input2, pos2))
+        wait_time = time.time() - start_time
+        if (wait_time >  bubble_pickup_timeout):
+            logger.error("\t\tpickup timeout. going to Pause state")
+            timeout_flag = True
+            break        
     # stop the pumps
-    GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
-    time.sleep(.5)
-    GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
+    # GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
+    # time.sleep(.5)
+    # GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
     logger.info('\t\tBubble detection terminated')
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["Load_Prime"]["titrant_pump_speed"])
     time.sleep(1)
@@ -566,8 +614,13 @@ def action6_1():
     time.sleep(1)  
     str1 = "Bubble sensors 6&7 triggered\n" "go to S6/E2\n"
     str1 = str1 +"Pump 1 to position\n"  " Pump 2 to position"
-    GV.SM_TEXT_TO_DIAPLAY ="S6,E1 -> action6_1\n"+ str1
-    GV.next_E = 2
+    if (timeout_flag == True):
+        GV.SM_TEXT_TO_DIAPLAY ="Pickup timeout.\n going to Pause state"
+        GV.PAUSE = True
+        GV.next_E = 5
+    else:    
+        GV.SM_TEXT_TO_DIAPLAY ="S6,E1 -> action6_1\n"+ str1
+        GV.next_E = 2
 
 
 def action6_2():      

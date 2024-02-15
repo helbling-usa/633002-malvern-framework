@@ -69,7 +69,7 @@
         "titrant_pump_speed": 1000,
         "sample_pump_speed": 1000,
         "valve_move_timeout": 60,        
-        "pump_move_timeout": 600, 
+        "pump_move_timeout": 60, 
         "TC2_Volume": 120,
         "SC2_Volume": 150
     },

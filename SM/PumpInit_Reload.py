@@ -563,8 +563,6 @@ def action5_1():
         return    
     
     bubble_pickup_timeout = RECIPE["PumpInit_Reload"]["pump_move_timeout"]
-
-
     logger.info('Pickup until bubble')
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
     time.sleep(1)        
