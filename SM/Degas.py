@@ -42,9 +42,31 @@ heating_wait_time = 0 #to hold how much time is passed since the TEC controller 
 settle_wait_start_time  = 0 # keeps track of temperature the settle time
 #---------------  ACTIONS  --------------
 def action0_0():
-    str1 ="-V1 to LinetoPump\n" "-V3 to TitrantLine\n" "-V5 to TitrantPort\n" "-V2 to LinetoGas\n"
-    str1 = str1 + "-V4 to SampleLine\n"  "-V7 to SamplePort"
-    GV.SM_TEXT_TO_DIAPLAY = str1
+
+    #seting the scale factor for converting volume to pump position units
+    sample_pump_step = RECIPE["Degas"]["sample_pump_step"]
+    titrant_pump_step = RECIPE["Degas"]["titrant_pump_step"]
+    if sample_pump_step == "full step":
+        str0 = 'pump 2: full step\n'
+        GV.PUMP_SAMPLE_SCALING_FACTOR = HW.SAMPLE_PUMP_VOLUM_2_STEP
+    else:
+        str0 = 'pump 2: micro step\n'
+        GV.PUMP_SAMPLE_SCALING_FACTOR = HW.SAMPLE_PUMP_VOLUM_2_MICROSTEP
+
+    if titrant_pump_step == "full step":
+        str1 = 'pump 2: full step\n'
+        GV.PUMP_TITRANT_SCALING_FACTOR = HW.TITRANT_PUMP_VOLUM_2_STEP
+    else:
+        str1 = 'pump 2: micro step\n'
+        GV.PUMP_TITRANT_SCALING_FACTOR = HW.TITRANT_PUMP_VOLUM_2_MICROSTEP
+
+    logger.info("Sample pump scale facotr:{}".format(str0))
+    logger.info("Titranst pump scale facotr:{}".format(str1))
+
+
+    str2 = "-V1 to LinetoPump\n" "-V3 to TitrantLine\n" "-V5 to TitrantPort\n" "-V2 to LinetoGas\n"
+    str2 = str1 + "-V4 to SampleLine\n"  "-V7 to SamplePort"
+    GV.SM_TEXT_TO_DIAPLAY = str2 + str1 + str0
     GV.current_Aspiration_count = 0
     GV.next_E = 0    
 
@@ -76,10 +98,17 @@ def action1_0():
     time.sleep(.5)
     GV.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS, HW.VALVE7_P3)
     time.sleep(.5)
-    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["Degas"]["titrant_pump_speed"])
+    # GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["Degas"]["titrant_pump_speed"])
+    # time.sleep(1)
+    # GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["Degas"]["sample_pump_speed"])
+    # time.sleep(1)
+    pump1_speed = int(RECIPE["Degas"]["titrant_pump_speed"] * GV.PUMP_TITRANT_SCALING_FACTOR)
+    pump2_speed = int(RECIPE["Degas"]["sample_pump_speed"] * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, pump1_speed)
     time.sleep(1)
-    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["Degas"]["sample_pump_speed"])
-    time.sleep(1)
+    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
+    time.sleep(1) 
+
     GV.VALVE_1 = "Line to Pump"    
     GV.VALVE_3 = "Titrant Line"    
     GV.VALVE_5 = "Titrant Port"
@@ -296,11 +325,20 @@ def action3_0():
     # valve_address = HW.DEGASSER_ADDRESS
     # pump_speed = RECIPE["Degas"]["pump_speed"] 
 
-    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["Degas"]["titrant_pump_speed"])
+    # GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["Degas"]["titrant_pump_speed"])
+    # time.sleep(1)
+    # GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["Degas"]["sample_pump_speed"])
+    # time.sleep(1)          
+    pump1_speed = int(RECIPE["Degas"]["titrant_pump_speed"] * GV.PUMP_TITRANT_SCALING_FACTOR)
+    pump2_speed = int(RECIPE["Degas"]["sample_pump_speed"] * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, pump1_speed)
     time.sleep(1)
-    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["Degas"]["sample_pump_speed"])
-    time.sleep(1)       
-    AspirationVolume_Overshoot = RECIPE["Degas"]["AspirationVolume_Overshoot"]
+    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
+    time.sleep(1) 
+
+
+    # AspirationVolume_Overshoot = RECIPE["Degas"]["AspirationVolume_Overshoot"]
+    AspirationVolume_Overshoot = int(RECIPE["Degas"]["AspirationVolume_Overshoot"]* GV.PUMP_TITRANT_SCALING_FACTOR )
     pump_address1 = HW.TIRRANT_PUMP_ADDRESS
     pump_address2 = HW.SAMPLE_PUMP_ADDRESS
     starting_pos1 = GV.pump1.get_plunger_position(pump_address1)
@@ -389,12 +427,21 @@ def action4_0():
         GV.next_E = 6
         GV.SM_TEXT_TO_DIAPLAY = "S4,E0 -> action4_0" " going to S4/E6"
         return 
-    # pump_speed = RECIPE["Degas"]["pump_speed"]    
-    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["Degas"]["titrant_pump_speed"])
+    # # pump_speed = RECIPE["Degas"]["pump_speed"]    
+    # GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["Degas"]["titrant_pump_speed"])
+    # time.sleep(1)
+    # GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["Degas"]["sample_pump_speed"])
+    # time.sleep(1)
+    pump1_speed = int(RECIPE["Degas"]["titrant_pump_speed"] * GV.PUMP_TITRANT_SCALING_FACTOR)
+    pump2_speed = int(RECIPE["Degas"]["sample_pump_speed"] * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, pump1_speed)
     time.sleep(1)
-    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["Degas"]["sample_pump_speed"])
-    time.sleep(1)  
-    AspirationVolume_Overshoot = RECIPE["Degas"]["AspirationVolume_Overshoot"]
+    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
+    time.sleep(1) 
+
+
+    # AspirationVolume_Overshoot = RECIPE["Degas"]["AspirationVolume_Overshoot"]
+    AspirationVolume_Overshoot = int(RECIPE["Degas"]["AspirationVolume_Overshoot"]* GV.PUMP_TITRANT_SCALING_FACTOR )
     pump_address1 = HW.TIRRANT_PUMP_ADDRESS
     pump_address2 = HW.SAMPLE_PUMP_ADDRESS
     starting_pos1 = GV.pump1.get_plunger_position(pump_address1)

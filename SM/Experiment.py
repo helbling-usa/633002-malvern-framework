@@ -41,12 +41,28 @@ def action0_0():
     time.sleep(.5)
 
 
-    str1  = "S0,E0 -> action0_0\n" "  V1 to Line to Pump\n" "V3 to Titrant Line\n" "V5 to Titrant Port\n"
-    str1 = str1 + " V9 to Air\n" "SM initialized ..."
+    str1  = "SM initialized ..." "V1 to Line to Pump\n" "V3 to Titrant Line\n" 
+    str1 = str1 + "V5 to Titrant Port\n" " V9 to Air\n" 
     GV.VALVE_1 = "Line to Pump"
     GV.VALVE_3 = "Titrant Line"
     GV.VALVE_4 = "Titrant Port"
     GV.VALVE_9 = "V9 to Air"
+
+    GV.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, HW.VALVE1_P2)
+    time.sleep(.5)
+    GV.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, HW.VALVE3_P3)
+    time.sleep(.5)
+    GV.pump1.set_valve(HW.TITRANT_PIPETTE_ADDRESS,HW.VALVE5_P2)
+    time.sleep(.5)
+    GV.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,HW.VALVE9_P2)        
+    time.sleep(.5)
+    pump1_speed = int(RECIPE["Experiment"]["titrant_pump_speed"] * GV.PUMP_TITRANT_SCALING_FACTOR)
+    pump2_speed = int(RECIPE["Experiment"]["sample_pump_speed"] * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, pump1_speed)
+    time.sleep(1)
+    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
+    time.sleep(1)
+
     GV.SM_TEXT_TO_DIAPLAY = str1
     GV.next_E = 0    
 
@@ -62,10 +78,8 @@ def action1_0():
         GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" "Prepare to go to ERROR State"
         return 
-    
-    str1 = "\tGantry Z is moving to lowered position"
+    GV.SM_TEXT_TO_DIAPLAY = "\tGantry Z is moving to lowered position"
     GV.next_E = 1    
-    GV.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" + str1
 
 
 def action1_1():
