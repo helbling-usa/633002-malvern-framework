@@ -23,8 +23,8 @@
 	},    
     "Startup": 
     {
-        "enable": false,
-        "gantry_move_speed": 2,
+        "enable": true,
+        "gantry_move_speed": 20,
         "gantry_home_timeout": 500,   
         "gantry_homing_speed": 1,
         "gantry_move_timeout": 60
@@ -47,7 +47,7 @@
     },   
     "Degas": 
     {
-        "enable": true,
+        "enable": false,
         "sample_pump_step": "micro step",
         "titrant_pump_step": "micro step",
         "titrant_pump_speed": 100,
@@ -87,16 +87,21 @@
     "Experiment": 
     {
         "enable": false,
-        "sample_pump_step": "full step",
-        "titrant_pump_step": "full step",
+        "sample_pump_step": "micro step",
+        "titrant_pump_step": "micro step",
+        "titrant_pump_speed": 10,
+        "sample_pump_speed": 200,
         "titrationpump_speed": 100,
         "valve_move_timeout": 60,        
         "titrationpump_move_timeout": 600, 
-        "dose_volume": 5,
+        "dose_volume": 500,
         "totaldose_count": 3,
         "mixing_speed": 200,
         "equilmix_time": 600,
-        "dosestandby_time": 600
+        "dosestandby_time": 600,
+        "mixingsignal_timeout": 100,
+        "equilsignal_timeout": 100,
+        "dosesignal_timeout": 100
     },    
     "GantrytoA": 
     {

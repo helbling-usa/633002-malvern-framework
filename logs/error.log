@@ -796,3 +796,9 @@ ERROR:		pickup timeout. going to Pause state
 2024-02-16 09:10:22,800:Lib.Pump:exception happened in pump!!
 ERROR:	Commumication error! 461371280
 ERROR:		pickup timeout. going to Pause state
+ERROR:	can't select axis 1
+ERROR:		error in set event on motion complete
+ERROR:	can't select axis 1
+ERROR:		error in set event on motion complete
+ERROR:	can't select axis 1
+ERROR:		error in set event on motion complete

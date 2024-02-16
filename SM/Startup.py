@@ -163,6 +163,7 @@ def action2_2():
     #preprate to  going to S3
     GV.next_E = 0    
     GV.SM_TEXT_TO_DIAPLAY ="  Gantry X to position A..."
+    GV.horizontal_gantry_active_led = True
 
 
 def action2_3():
@@ -171,7 +172,6 @@ def action2_3():
         GV.SM_TEXT_TO_DIAPLAY = "going to Error state"
         return         
     # print("S2,E3 -> action2_3")
-    GV.horizontal_gantry_active_led = True
     GV.next_E = 0
     GV. prev_S = 2
     GV.SM_TEXT_TO_DIAPLAY ="going to Pause state"

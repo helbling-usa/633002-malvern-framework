@@ -600,7 +600,7 @@ class UnaryClient(object):
         Client function to call the rpc for GetServerResponse
         """
         message = pb2.Message(message=message)
-        logger.info(f'{message}')
+        # logger.info(f'{message}')
         return self.stub.GetServerResponse(message)
     
 

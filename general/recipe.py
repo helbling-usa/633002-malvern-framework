@@ -86,9 +86,11 @@ RECIPE= {
     },
     "Experiment": 
     {
-        "enable": False,
+        "enable": True,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
+        "titrant_pump_speed": 100,
+        "sample_pump_speed": 2000,
         "titrationpump_speed": 100,
         "valve_move_timeout": 60,        
         "titrationpump_move_timeout": 600, 
@@ -96,8 +98,11 @@ RECIPE= {
         "totaldose_count": 3,
         "mixing_speed": 200,
         "equilmix_time": 600,
-        "dosestandby_time": 600
-    },    
+        "dosestandby_time": 600,
+        "mixingsignal_timeout": 100,
+        "equilsignal_timeout": 100,
+        "dosesignal_timeout": 100
+    },      
     "GantrytoA": 
     {
         "enable": False,
