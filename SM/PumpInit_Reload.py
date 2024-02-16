@@ -121,9 +121,6 @@ def action0_0():
         GV.next_E = 5
         GV.SM_TEXT_TO_DIAPLAY =  "Prepare to go to error State"
         return     
-    
-    
-
     #seting the scale factor for converting volume to pump position units
     sample_pump_step = RECIPE["PumpInit_Reload"]["sample_pump_step"]
     titrant_pump_step = RECIPE["PumpInit_Reload"]["titrant_pump_step"]

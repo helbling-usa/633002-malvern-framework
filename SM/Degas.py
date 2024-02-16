@@ -338,31 +338,42 @@ def action3_0():
 
 
     # AspirationVolume_Overshoot = RECIPE["Degas"]["AspirationVolume_Overshoot"]
-    AspirationVolume_Overshoot = int(RECIPE["Degas"]["AspirationVolume_Overshoot"]* GV.PUMP_TITRANT_SCALING_FACTOR )
+    # AspirationVolume_Overshoot = int(RECIPE["Degas"]["AspirationVolume_Overshoot"]* GV.PUMP_TITRANT_SCALING_FACTOR )
+
+    AspVol_Overshoot_titrant = int(RECIPE["Degas"]["AspirationVolume_Overshoot"]* GV.PUMP_TITRANT_SCALING_FACTOR )
+    AspVol_Overshoot_sample = int(RECIPE["Degas"]["AspirationVolume_Overshoot"]* GV.PUMP_SAMPLE_SCALING_FACTOR )
+
     pump_address1 = HW.TIRRANT_PUMP_ADDRESS
     pump_address2 = HW.SAMPLE_PUMP_ADDRESS
     starting_pos1 = GV.pump1.get_plunger_position(pump_address1)
-    time.sleep(.5)
+    time.sleep(1)
     # GV.pump1.set_speed(pump_address1, pump_speed)
     # time.sleep(.5)
-    next_pos1 =  starting_pos1 + AspirationVolume_Overshoot
+    next_pos1 =  starting_pos1 + AspVol_Overshoot_titrant
     GV.pump1.set_pos_absolute(pump_address1, next_pos1)
     time.sleep(1)
     starting_pos2 = GV.pump1.get_plunger_position(pump_address2)
-    time.sleep(.5)
+    time.sleep(1)
     # GV.pump1.set_speed(pump_address2, pump_speed)
     # time.sleep(1)
-    next_pos2 =  starting_pos2 + AspirationVolume_Overshoot
+    next_pos2 =  starting_pos2 + AspVol_Overshoot_sample
     GV.pump1.set_pos_absolute(pump_address2, next_pos2)
     # wait untl pumps reach positions
-    pump_pos1 = 0
-    pump_pos2 = 0
-    while (pump_pos1 != next_pos1  or   pump_pos2 != next_pos2):
+    pump_pos1 = starting_pos1
+    pump_pos2 = starting_pos2
+    logger.info("\tAspiration IN")
+    logger.info("\t\tpump1 pos: {}, Asp. vol 1: {},  pump2 pos: {}, Asp. vol 2: {}".format(pump_pos1,
+                                                                                           AspVol_Overshoot_titrant,
+                                                                                           pump_pos2,
+                                                                                           AspVol_Overshoot_sample))
+        
+    while (pump_pos1 != next_pos1  or   pump_pos2 != next_pos2):    
         pump_pos1 = GV.pump1.get_plunger_position(pump_address1)        
         time.sleep(0.5)
         pump_pos2 = GV.pump1.get_plunger_position(pump_address2)
         logger.info("\t\tpump1 pos:{} /{}\tpump2 pos:{}/{}".format(pump_pos1, next_pos1, pump_pos2, next_pos2))
         time.sleep(0.5)
+    time.sleep(5)
 
     GV.pump1_titrant_active_led     = False   
     GV.pump2_sample_active_led      = False
@@ -441,26 +452,37 @@ def action4_0():
 
 
     # AspirationVolume_Overshoot = RECIPE["Degas"]["AspirationVolume_Overshoot"]
-    AspirationVolume_Overshoot = int(RECIPE["Degas"]["AspirationVolume_Overshoot"]* GV.PUMP_TITRANT_SCALING_FACTOR )
+    AspVol_Overshoot_titrant = int(RECIPE["Degas"]["AspirationVolume_Overshoot"]* GV.PUMP_TITRANT_SCALING_FACTOR )
+    AspVol_Overshoot_sample = int(RECIPE["Degas"]["AspirationVolume_Overshoot"]* GV.PUMP_SAMPLE_SCALING_FACTOR )
     pump_address1 = HW.TIRRANT_PUMP_ADDRESS
     pump_address2 = HW.SAMPLE_PUMP_ADDRESS
     starting_pos1 = GV.pump1.get_plunger_position(pump_address1)
     time.sleep(.5)
-    next_pos1 =  starting_pos1 - AspirationVolume_Overshoot
+    next_pos1 =  starting_pos1 - AspVol_Overshoot_titrant
     GV.pump1.set_pos_absolute(pump_address1, next_pos1)
     time.sleep(1)
     starting_pos2 = GV.pump1.get_plunger_position(pump_address2)
     time.sleep(.5)
-    next_pos2 =  starting_pos2 - AspirationVolume_Overshoot
+    next_pos2 =  starting_pos2 - AspVol_Overshoot_sample
     GV.pump1.set_pos_absolute(pump_address2, next_pos2)
-    pump_pos1 = 0
-    pump_pos2 = 0
+    pump_pos1 = starting_pos1
+    pump_pos2 = starting_pos2
+    # print("Pump1 pos:", pump)
+    # print('starting the despiration loop')
+    logger.info("\tDispense OUT")
+    logger.info("\t\tpump1 pos: {}, Asp. vol 1: {},  pump2 pos: {}, Asp. vol 2: {}".format(pump_pos1,
+                                                                                           AspVol_Overshoot_titrant,
+                                                                                           pump_pos2,
+                                                                                           AspVol_Overshoot_sample))
+    # while ( abs( pump_pos1 - next_pos1)> 5   or   abs( pump_pos2 - next_pos2)>5):
     while (pump_pos1 != next_pos1  or   pump_pos2 != next_pos2):
         pump_pos1 = GV.pump1.get_plunger_position(pump_address1)        
         time.sleep(0.5)
         pump_pos2 = GV.pump1.get_plunger_position(pump_address2)
         logger.info("\t\tpump1 pos:  {}/{}  \tpump2 pos: {}/{}".format(pump_pos1, next_pos1, pump_pos2, next_pos2))
         time.sleep(0.5)
+    # print('ending the despiration loop')
+    time.sleep(5)
     #turn off the pump active LED
     GV.pump1_titrant_active_led     = False   
     GV.pump2_sample_active_led      = False

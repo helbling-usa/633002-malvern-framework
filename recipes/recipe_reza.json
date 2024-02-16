@@ -31,7 +31,7 @@
     },
     "PumpInit_Reload": 
     {
-        "enable": true,
+        "enable": false,
         "sample_pump_step": "micro step",
         "titrant_pump_step": "micro step",
         "titrant_pump_speed": 1000,
@@ -47,18 +47,18 @@
     },   
     "Degas": 
     {
-        "enable": false,
-        "sample_pump_step": "full step",
-        "titrant_pump_step": "full step",
+        "enable": true,
+        "sample_pump_step": "micro step",
+        "titrant_pump_step": "micro step",
         "titrant_pump_speed": 100,
-        "sample_pump_speed": 100,
+        "sample_pump_speed": 2000,
         "valve_move_timeout": 30,        
         "pump_move_timeout": 360,
         "degas_temp": 25,
         "experiment_temp": 30,
         "temperature_settledown_timeout": 1000,
         "heat_time": 11,
-        "AspirationVolume_Overshoot": 300,
+        "AspirationVolume_Overshoot": 30,
         "total_asipiration_number":4
     },
     "Load_Prime": 
