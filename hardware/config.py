@@ -51,7 +51,7 @@ DEFAULT_PUMP_SPEEED             = 1000      # speed of pump at start up
 SAMPLE_PUMP_VOLUM_2_STEP        = 9.6       # conversion ratio fro sample pump for full step mode
 SAMPLE_PUMP_VOLUM_2_MICROSTEP   = 76.8      # conversion ratio fro sample pump for full microstep mode
 TITRANT_PUMP_VOLUM_2_STEP       = 192       # conversion ratio fro titrant pump for full step mode
-TITRANT_PUMP_VOLUM_2_MICROSTEP  = 1536      # conversion ratio fro titrant pump for full microstep mode
+TITRANT_PUMP_VOLUM_2_MICROSTEP  = 768       # conversion ratio fro titrant pump for full microstep mode
 
 #------------------------------- Pumps/valves RS485 addresses -------------------------------------
 TIRRANT_PUMP_ADDRESS            = 1         #4way- Pump 1

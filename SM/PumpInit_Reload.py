@@ -71,15 +71,18 @@ def NewAirSlugs(pump_address, valve_address):
     time.sleep(.5)
     airslug_count = 0
     starting_pos = GV.pump1.get_plunger_position(pump_address)
+    time.sleep(1)
     next_pos =  starting_pos
     while (airslug_count < air_slug_total_count):        
         logger.info(f"\t\tair slug:{airslug_count+1} / {air_slug_total_count}")
         # Air slug
-        GV.pump1.set_multiwayvalve(valve_address,HW.VALVE8_P1)        #Valve to Air
         time.sleep(1)   
+        GV.pump1.set_multiwayvalve(valve_address,HW.VALVE8_P1)        #Valve to Air
+        time.sleep(2)   
         next_pos +=  air_slug_volume
         take_slug(pump_address, next_pos)            
         # Water slug
+        time.sleep(1)  
         GV.pump1.set_multiwayvalve(valve_address,HW.VALVE8_P2)        #Valve to water
         time.sleep(2)        
         logger.info("water slug:{}".format(airslug_count+1)) 
@@ -96,12 +99,15 @@ def NewAirSlugs(pump_address, valve_address):
 
 
 def take_slug(pump_address, next_pos):
+    time.sleep(1)
     GV.pump1.set_pos_absolute(pump_address, next_pos)
+    time.sleep(1)
     pump_pos = 0
     while( abs (pump_pos - next_pos) > 10):
         time.sleep(1)
         pump_pos = GV.pump1.get_plunger_position(pump_address)
         logger.info(f"\t\tpump pos: {pump_pos}   target: { next_pos}")    
+    time.sleep(5)
 
 
 
@@ -1107,7 +1113,7 @@ def action10_1():
     if (timeout_flag == True):
         GV.SM_TEXT_TO_DIAPLAY ="Pickup timeout.\n going to Pause state"
         GV.PAUSE = True
-        GV.next_E = 5
+        GV.next_E = 3
     else:    
         GV.SM_TEXT_TO_DIAPLAY ="  bubble sensor triggered" "  pumps stopped" 
         GV.next_E = 2
