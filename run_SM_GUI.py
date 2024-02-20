@@ -22,6 +22,7 @@ import  SM.Load_Prime
 import  SM.GantrytoB
 import  SM.Experiment
 import  SM.GantrytoA
+import  SM.GantryReturn
 import  SM.DegasClean
 import  SM.SampleLineClean
 import  SM.TitrantLineClean
@@ -66,8 +67,12 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         self.InitTimer()
         self.b_nextbutton["state"] = DISABLED
         self.b_start["state"] = DISABLED
-        GV.SM_list = [SM.Constants, SM.Startup, SM.PumpInit_Reload, SM.Degas, SM.Load_Prime, SM.GantrytoB, SM.Experiment, SM.GantrytoA, SM.DegasClean, SM.SampleLineClean, SM.TitrantLineClean, SM.RecovClean, SM.Func_DiluteDetergent, SM.Func_NewAirSlugs]
-        GV.SM_list_str = ["Constants", "Startup", "PumpInit_Reload", "Degas", "Load_Prime", "GantrytoB", "Experiment", "GantrytoA", "DegasClean", "SampleLineClean", "TitrantLineClean", "RecovClean", "Func_DiluteDetergent", "Func_NewAirSlugs"]
+        GV.SM_list = [SM.Constants, SM.Startup, SM.PumpInit_Reload, SM.Degas, SM.Load_Prime, SM.GantrytoB, SM.Experiment, 
+                      SM.GantrytoA,SM.GantryReturn, SM.DegasClean, SM.SampleLineClean, SM.TitrantLineClean, SM.RecovClean,
+                        SM.Func_DiluteDetergent, SM.Func_NewAirSlugs]
+        GV.SM_list_str = ["Constants", "Startup", "PumpInit_Reload", "Degas", "Load_Prime", "GantrytoB", "Experiment", 
+                          "GantrytoA", "GantryReturn","DegasClean", "SampleLineClean", "TitrantLineClean", "RecovClean", 
+                          "Func_DiluteDetergent", "Func_NewAirSlugs"]
         GV.grPC_Client = UnaryClient()  #start grPC client service
 
 

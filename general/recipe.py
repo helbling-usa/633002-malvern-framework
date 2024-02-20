@@ -114,6 +114,16 @@ RECIPE= {
         "vertical_cellfill_position": 50,
         "gantry_move_timeout": 60
     },
+    "GantryReturn": 
+    {
+        "enable": True,
+        "sample_pump_step": "full step",
+        "titrant_pump_step": "full step",
+        "gantry_move_speed": 5,
+        "vertical_base_position": 15,
+        "horizontal_base_position": 25,
+        "gantry_move_timeout": 60
+    },
     "DegasClean": 
     {
         "enable": False,

@@ -488,7 +488,7 @@ def action4_1():
     GV.VALVE_8 = "Water"
     GV.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, HW.VALVE1_P2)
     time.sleep(.5)
-    GV.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, HW.VALVE3_P2)
+    GV.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, HW.VALVE3_P3)
     time.sleep(.5)
     # GV.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,HW.VALVE5_P3)
     GV.pump1.set_valve(HW.TITRANT_PIPETTE_ADDRESS,HW.VALVE5_P3)
