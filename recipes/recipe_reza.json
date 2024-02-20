@@ -105,10 +105,13 @@
     },    
     "GantrytoA": 
     {
-        "enable": false,
+        "enable": true,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
-        "gantry_move_speed": 4,
+        "gantry_move_speed": 5,
+        "vertical_high_position": 15,
+        "horizontal_cellfill_position": 50,
+        "vertical_cellfill_position": 50,
         "gantry_move_timeout": 60
     },
     "DegasClean": 

@@ -86,7 +86,7 @@ RECIPE= {
     },
     "Experiment": 
     {
-        "enable": True,
+        "enable": False,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
         "titrant_pump_speed": 100,
@@ -105,10 +105,13 @@ RECIPE= {
     },      
     "GantrytoA": 
     {
-        "enable": False,
-        "sample_pump_step": "full step",
+        "enable": True,
+        "False": "full step",
         "titrant_pump_step": "full step",
-        "gantry_move_speed": 10,
+        "gantry_move_speed": 5,
+        "vertical_high_position": 15,
+        "horizontal_cellfill_position": 50,
+        "vertical_cellfill_position": 50,
         "gantry_move_timeout": 60
     },
     "DegasClean": 

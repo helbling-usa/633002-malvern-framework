@@ -45,12 +45,13 @@ def action1_0():
         return     
     # h_gantry_homed = GV.horizontal_gantry_homed_led
     v_gantry_homed = GV.vertical_gantry_homed_led    
-    GV.vertical_gantry_active_led = True
+    
     if (v_gantry_homed == False):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "Gantry not homed\n""going to ERROR state"
     else:        
         GV.SM_TEXT_TO_DIAPLAY = "Raize Z actuator to position"
+        GV.vertical_gantry_active_led = True
         GV.next_E = 1
 
 
@@ -79,7 +80,7 @@ def action1_1():
         time.sleep(1)
         cur_motor_pos= GV.motors.read_actual_position()
         print("\t\tcur Z pos: {},  target pos: {}".format(cur_motor_pos, next_pos))
-    GV.vertical_gantry_active_led = False
+
     GV.vertical_gantry_active_led = False  
     GV.SM_TEXT_TO_DIAPLAY = "actuator reached position\n"
     GV.next_E = 2
