@@ -5,21 +5,22 @@ next_E          = 0
 cur_S           = 0
 prev_S          = 0
 terminate_SM    = False
-doescount       = 5       #??????????????????????????????????????????
-dose_number     = 0
-
-
-SM_TEXT_TO_DIAPLAY = "--"       # This is the text that will be displayed on the status section of statemachiens on GUI
-PAUSE = False                   # Boolean that shows if pause button is pressed
-ERROR = False                   # Boolean that shows if an error happened
-NEXT = False                    # Boolean that shows if Next button is pressed
-activate_NEXT_button = False    # boolean that specify if Nex button is enable/disabled
+PAUSE   = False                     # Boolean that shows if pause button is pressed
+ERROR   = False                     # Boolean that shows if an error happened
+SM_TEXT_TO_DIAPLAY = "--"           # This is the text that will be displayed on the 
+                                    #    status section of statemachiens on GUI
+# doescount       = 5       #??????????????????????????????????????????
+# dose_number     = 0
 
 # The following object are used to create instances of hardware classes
 pump1   = None
 motors  = None
 labjack = None
 tec     = None
+
+# these variables are used to deal with NEXT button in GUI
+NEXT    = False                     # Boolean that shows if 'Next' button is pressed
+activate_NEXT_button = False        # boolean that specifies if 'Next' button is enable/disabled
 
 # The followings are boolean variables that are used to turn the pump/gantry LEDs on/off
 pump1_titrant_active_led    = False
@@ -33,11 +34,12 @@ vertical_gantry_homed_led   = False
 mixing_motor_active_led     = False
 mixing_motor_homed_led      = False
 
-
-current_Aspiration_count = 0        #?????????????????????????????
+# ##### Note: 
+# # The following variable may need to be removed from globals, since it's only used in Degas SM
+# current_Aspiration_count = 0        #keeps track of aspiratin number in Degas SM
 
 # Sacling factor for converting volume to pump internal units
-PUMP_SAMPLE_SCALING_FACTOR = 1
+PUMP_SAMPLE_SCALING_FACTOR  = 1
 PUMP_TITRANT_SCALING_FACTOR = 1
 
 # The folloiwng variables hold the voltage read from bubble sensors
@@ -91,18 +93,17 @@ DOSE_COMPLETED  = "0 ul"
 TOTAL_DOSES     = "0 ul"
 MIXING_SPEED    = "0 RPM"
 
-
-SM_list     = None                  # Note: this varialbe must be filled as soon as run_GUI is executed (it's in run_SM_GUI.init)
-SM_list_str = None              # Note: this varialbe must be filled as soon as run_GUI is executed (it's in run_SM_GUI.init)
-SM_enabled_dic = None           # a dictionary that keeps track of what statemchines are enabled in the recipe
+# the following variables are used to keep track/display statemachines in the GUI
+SM_list         = None          # Note: this varialbe must be filled as soon as run_GUI is executed (it's in run_SM_GUI.init)
+SM_list_str     = None          # Note: this varialbe must be filled as soon as run_GUI is executed (it's in run_SM_GUI.init)
+SM_enabled_dic  = None           # a dictionary that keeps track of what statemchines are enabled in the recipe
 
 # the folowwing variables are used to keep track of Dose/Mixing/Equilibrium signals
 DoseSignalRecived   = False     # is the Dose signal recieved from Malvern box?
 EquilibriumReached  = False     # is the equilibrium reached in Malvern box?
 MixingSignalReady   = False     # is the mxing signal ready received from Malvern box?
 current_dose_volume = 0         # current dose number (updates after each dose delivery in Experiment SM)
-
-grPC_Client = None
+grPC_Client = None              # opens a client thread for gpRC comm.
 
 
 

@@ -193,7 +193,7 @@ def action3_0():
         GV.SM_TEXT_TO_DIAPLAY = "going to Error state"
         return 
     #check if dose signal is receved 
-    fill_pos = RECIPE['Constants']['horizontal_cell_fill_position']
+    fill_pos = RECIPE['Startup']['horizontal_cellfill_position']
     GV.motors.select_axis(HW.GANTRY_HOR_AXIS_ID)
     GV.motors.set_POSOKLIM(1)
     abs_pos_tml = int(fill_pos / HW.TML_LENGTH_2_MM_HOR )
@@ -275,7 +275,7 @@ def action4_1():
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "going to Error state"
         return 
-    fill_pos = RECIPE['Constants']['vertical_cell_fill_position']    
+    fill_pos = RECIPE['Constants']['vertical_cellfill_position']    
     GV.motors.select_axis(HW.GANTRY_VER_AXIS_ID)
     GV.motors.set_POSOKLIM(1)
     abs_pos_tml = int(fill_pos / HW.TML_LENGTH_2_MM_VER )

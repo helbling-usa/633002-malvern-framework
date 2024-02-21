@@ -47,7 +47,7 @@ class SM_GUI():
 
       def set_main_window(self):
             # self.root.geometry("1200x800+50+50") 
-            self.root.title("EXPERIMENT RUN MODE (ver x.1.0)") 
+            self.root.title("EXPERIMENT RUN MODE (ver x.1.1)") 
             self.root.resizable(False, False)
             # self.root.overrideredirect(True)
             window_height = 800
@@ -309,10 +309,10 @@ class SM_GUI():
             self.t_cur_state.pack()
             self.t_cur_state.place(x=COL1+5, y=Y1+3*dY1+40)
 
-            Label(self.root, text = "Status:",font=self.Font2 , bg=self.Color1,
+            Label(self.root, text = "Status:",font=self.Font1 , bg=self.Color1,
                   fg='black').place(x = COL4+90,y = Y1 + 2*dY1+0)  
 
-            self.t_status = Text(self.root, height=8, width=40,font=self.Font2 ,bg="#f5f7bc",)
+            self.t_status = Text(self.root, height=8, width=40,font=self.Font8 ,bg="#f5f7bc",)
             self.t_status.pack()
             self.t_status.place(x=COL3-10, y=Y1+2*dY1+30)
 
@@ -564,6 +564,7 @@ class SM_GUI():
             self.Font5 = 'Arial 16'  #valves title label text font
             self.Font6 = "Verdana 10 " # combo box text font
             self.Font7 = "Arial 14" # larger text for terminate/start/stop buttons
+            self.Font8 = "Arial 11" # larger text for terminate/start/stop buttons
             #----- Colors ---------------------------------------
             self.Color1 = '#D9D9D9' #'#F0F0F0'  #'D9D9D9'  #label background color (gray)
             self.Color2 = "#c5ccd1"  #Button bg color (gray)

@@ -39,10 +39,12 @@ state_name = {0:"S0: Initialization", 1:"S1: DegasValvePos", 2:"S2: StartTEC", 3
               4:"S4: DispenseOUT", 5:"S5: DegasComplete", 6:"Pause", 7:"Error"}
 
 heating_wait_time = 0 #to hold how much time is passed since the TEC controller is turned on until now
-settle_wait_start_time  = 0 # keeps track of temperature the settle time
+settle_wait_start_time  = 0     # keeps track of temperature the settle time
+current_Aspiration_count = 0    #keeps track of aspiratin number 
+
 #---------------  ACTIONS  --------------
 def action0_0():
-
+    global current_Aspiration_count
     #seting the scale factor for converting volume to pump position units
     sample_pump_step = RECIPE["Degas"]["sample_pump_step"]
     titrant_pump_step = RECIPE["Degas"]["titrant_pump_step"]
@@ -67,7 +69,8 @@ def action0_0():
     str2 = "-V1 to LinetoPump\n" "-V3 to TitrantLine\n" "-V5 to TitrantPort\n" "-V2 to LinetoGas\n"
     str2 = str1 + "-V4 to SampleLine\n"  "-V7 to SamplePort"
     GV.SM_TEXT_TO_DIAPLAY = str2 + str1 + str0
-    GV.current_Aspiration_count = 0
+    current_Aspiration_count = 0
+    # GV.current_Aspiration_count = 0
     GV.next_E = 0    
 
 
@@ -166,6 +169,7 @@ def action1_4():
 
 #------------------------------------------------------------------------------------------------
 def action2_0():
+    global current_Aspiration_count
     if (GV.PAUSE == True):
         GV.next_E = 4        
         GV.SM_TEXT_TO_DIAPLAY = "S2,E0 -> action2_1\n" "  going to S2/E4"
@@ -191,7 +195,8 @@ def action2_0():
     GV.TEC_TARGET = target_temp
     GV.TEC_ACTUAL = obj_temp
     total_asipiration_number = RECIPE["Degas"]["total_asipiration_number"]    
-    str0 = "\nCurrent Aspiration: {}\nTotal Aspirations: {}".format(GV.current_Aspiration_count+1, total_asipiration_number)
+    str0 = "\nCurrent Aspiration: {}\nTotal Aspirations: {}".format(current_Aspiration_count+1,
+                                                                    total_asipiration_number)
     str1 = "  set TEC to temp\n" "  going to S2/E1"
     GV.SM_TEXT_TO_DIAPLAY =str1 + str0
     GV.next_E = 1
@@ -234,6 +239,7 @@ def action2_1():
 
 def action2_2():
     global settle_wait_start_time
+    global current_Aspiration_count
     timeout = False
     # passed_time = 10 # measure the  heating time
     if (GV.PAUSE == True):
@@ -266,8 +272,8 @@ def action2_2():
     if (time_passed < heat_time):
         GV.next_E = 2
         total_asipiration_number = RECIPE["Degas"]["total_asipiration_number"]    
-        str0 = "\nCurrent Aspiration:{}\nTotal Aspirations:{}".format(GV.current_Aspiration_count+1, 
-                                                                    total_asipiration_number)    
+        str0 = "\nCurrent Aspiration:{}\nTotal Aspirations:{}".format(current_Aspiration_count+1, 
+                                                                      total_asipiration_number)    
         str1= f"elapsed time: {int(time_passed)}\n" + str0
         GV.SM_TEXT_TO_DIAPLAY="Settle time in progress\n" + str1
     else:
@@ -276,6 +282,7 @@ def action2_2():
 
 
 def action2_3():
+    global current_Aspiration_count
     if (GV.PAUSE == True):
         GV.next_E = 4        
         GV.SM_TEXT_TO_DIAPLAY = "S2,E3 -> action2_3\n" "  going to S2/E4"
@@ -287,8 +294,8 @@ def action2_3():
     GV.pump1_titrant_active_led     = True   
     GV.pump2_sample_active_led      = True
     total_asipiration_number = RECIPE["Degas"]["total_asipiration_number"]    
-    str0 = "\nCurrent Aspiration:{}\nTotal Aspirations:{}".format(GV.current_Aspiration_count+1, 
-                                                                    total_asipiration_number)    
+    str0 = "\nCurrent Aspiration:{}\nTotal Aspirations:{}".format(current_Aspiration_count+1, 
+                                                                  total_asipiration_number)    
     str1 ="pump 1 pickup Var.: Tit. Vol. +Asp. Overshoot\n""pump 2 pickup Var.: Sample Vol. +Asp. Overshoot"
     GV.SM_TEXT_TO_DIAPLAY = str1 + str0
     GV.next_E = 0
@@ -401,6 +408,7 @@ def action3_1():
 
 
 def action3_2():
+    global current_Aspiration_count
     if (GV.ERROR == True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0" "  going to S3/E4"
@@ -408,7 +416,8 @@ def action3_2():
     GV.pump1_titrant_active_led     = True   
     GV.pump2_sample_active_led      = True
     total_asipiration_number = RECIPE["Degas"]["total_asipiration_number"]    
-    str0 = "\nCurrent Aspiration:{}\nTotal Aspirations:{}".format(GV.current_Aspiration_count+1, total_asipiration_number)    
+    str0 = "\nCurrent Aspiration:{}\nTotal Aspirations:{}".format(current_Aspiration_count+1,
+                                                                  total_asipiration_number)    
     str1 =  "pump 1 dispense Var.: Tit. Vol. +Asp. Overshoot\n""pump 2 dispense Var.: Sample Vol. +Asp. Overshoot"
     GV.SM_TEXT_TO_DIAPLAY =str1 + str0
     GV.next_E = 0
@@ -507,6 +516,7 @@ def action4_1():
 
 
 def action4_2():    
+    global current_Aspiration_count
     if (GV.PAUSE == True):
         GV.next_E = 5
         GV.SM_TEXT_TO_DIAPLAY = "S4,E2 -> action4_2\n" " going to S4/E5"
@@ -516,12 +526,11 @@ def action4_2():
         GV.SM_TEXT_TO_DIAPLAY = "S4,E2 -> action4_2\n" " going to S4/E6"
         return          
 
-    GV.current_Aspiration_count += 1
+    current_Aspiration_count += 1
     total_asipiration_number = RECIPE["Degas"]["total_asipiration_number"]    
-    # str0 = "current # Aspiration:{}  Total Aspirations:{}".format(GV.current_Aspiration_count, total_asipiration_number)
-    if (GV.current_Aspiration_count < total_asipiration_number):
+    if (current_Aspiration_count < total_asipiration_number):
         GV.next_E = 3
-        str1 = "Aspiration count = {}/{}\n".format(GV.current_Aspiration_count+1, total_asipiration_number) 
+        str1 = "Aspiration count = {}/{}\n".format(current_Aspiration_count+1, total_asipiration_number) 
         str1 += "aspiration count not reached yet\n"
         GV.SM_TEXT_TO_DIAPLAY =str1 
     else:
@@ -646,8 +655,7 @@ def action6_0():
         GV.next_E = 0
     else:
         GV.SM_TEXT_TO_DIAPLAY ="S6,E0 -> action6_0\n" " prepare to resume workflow"
-        GV.next_E = GV. prev_S
-    
+        GV.next_E = GV. prev_S    
 
 def action6_1():
     # logger.info("S6,E1 -> action6_1")
@@ -675,6 +683,7 @@ def action6_6():
     GV.next_E = 0
     # logger.info("S6,E5 -> action6_5")
     GV.SM_TEXT_TO_DIAPLAY ="S6,E6 -> action6_6\n""  going to S6/E6"
+
 
 #--------------
 def action7_0():

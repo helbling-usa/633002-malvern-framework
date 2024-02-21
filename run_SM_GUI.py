@@ -60,40 +60,29 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         logger.info("Initializing global variables")
         # settings.init()
         # self.PortAssignment()
-        self.Init_Pumps_Valves()
-        self.Init__motors_all_axes() 
-        self.InitLabjack()
-        self.InitTecController()
-        self.InitTimer()
+        self.init_pumps_valves()
+        self.init__motors_all_axes() 
+        self.init_labjack()
+        self.init_tec_controller()
+        self.init_timer()
         self.b_nextbutton["state"] = DISABLED
         self.b_start["state"] = DISABLED
-        GV.SM_list = [SM.Constants, SM.Startup, SM.PumpInit_Reload, SM.Degas, SM.Load_Prime, SM.GantrytoB, SM.Experiment, 
+        GV.SM_list = [SM.Startup, SM.PumpInit_Reload, SM.Degas, SM.Load_Prime, SM.GantrytoB, SM.Experiment, 
                       SM.GantrytoA,SM.GantryReturn, SM.DegasClean, SM.SampleLineClean, SM.TitrantLineClean, SM.RecovClean,
                         SM.Func_DiluteDetergent, SM.Func_NewAirSlugs]
-        GV.SM_list_str = ["Constants", "Startup", "PumpInit_Reload", "Degas", "Load_Prime", "GantrytoB", "Experiment", 
+        GV.SM_list_str = ["Startup", "PumpInit_Reload", "Degas", "Load_Prime", "GantrytoB", "Experiment", 
                           "GantrytoA", "GantryReturn","DegasClean", "SampleLineClean", "TitrantLineClean", "RecovClean", 
                           "Func_DiluteDetergent", "Func_NewAirSlugs"]
         GV.grPC_Client = UnaryClient()  #start grPC client service
 
 
-    # def PortAssignment(self):
-
-    #     logger.info("Assigning Ports .....")
-    #     logger.info("tec:",HW.TEC_PORT )
-    #     logger.info("pump1:",HW.PUMP1_PORT )
-    #     logger.info("technosoft:",HW.TECHNOSOFT_PORT)
-    #     logger.info("gantry v:",HW.GANTRY_VER_AXIS_ID)
-    #     logger.info("gantry H:",HW.GANTRY_HOR_AXIS_ID)
-    #     logger.info("mixer",HW.MIXER_AXIS_ID )
-
-
-    def Init_Pumps_Valves(self):        
+    def init_pumps_valves(self):        
         # logger.info("Initializing Pumps/Valves.....")
         com_port = HW.PUMP1_PORT
         GV.pump1 = P.Pump(com_port)
 
 
-    def Init__motors_all_axes(self):
+    def init__motors_all_axes(self):
         logger.info("Initializing motors .....")        
         com_port = HW.TECHNOSOFT_PORT.encode()        
         logger.info('com port = {}'.format( HW.TECHNOSOFT_PORT))
@@ -104,7 +93,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         GV.motors = Motors(com_port, AXIS_ID_01, AXIS_ID_02, AXIS_ID_03 ,primary_axis)   
  
         
-    def InitLabjack(self):
+    def init_labjack(self):
         # # initialize labjack
         logger.info("\t\tInitializing Labjack.....")
         GV.labjack = u6.U6()
@@ -112,14 +101,14 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         logger.info('\t\tlabjack initialized')
 
 
-    def InitTecController(self):
+    def init_tec_controller(self):
         # ------create object of TEC5 
         # logger.info("Initialzing TEC Temperature Controller---------------------")
         GV.tec = TEC.MeerstetterTEC(HW.TEC_PORT)
         logger.info("\t\tTEC controller initialized ")
 
 
-    def InitTimer(self):
+    def init_timer(self):
         # #------ Starts timer
         logger.info('\t\tstarting internal timer')
         self.timer = threading.Timer(1.0, self.timerCallback_1)
@@ -128,24 +117,28 @@ class run_SM_GUI(SM_GUI.SM_GUI):
 
 
     def timerCallback_1(self):  
-        self.updateEXPERIMENT()
-        self.updateVALVES()   
-        self.read_BubbleSensors()
-        self.updateGUI_LEDs()     
+        self.check_next_button()
+        self.update_experiment()
+        self.update_valves()   
+        self.read_bubble_sensors()
+        self.update_gui_leds()     
+        #-------- repeat the timer ----------------------------------------------
+        self.timer = threading.Timer(.5, self.timerCallback_1)
+        self.timer.start()
+
+
+    def check_next_button(self):
+        #take care of NEXT button
+        if  (GV.PAUSE == True):
+            self.b_pause.config(text=' Resume All ')
+
         if (GV.activate_NEXT_button == True):
             self.b_nextbutton["state"] = NORMAL
         else:
             self.b_nextbutton["state"] = DISABLED
-
-        if  (GV.PAUSE == True):
-            self.b_pause.config(text=' Resume All ')
-            
-        #-------- repeat the timer ----------------------------------------------
-        self.timer = threading.Timer(.50, self.timerCallback_1)
-        self.timer.start()
         
 
-    def updateEXPERIMENT(self):
+    def update_experiment(self):
         self.text_tec_target.delete("1.0", END)
         self.text_tec_target.insert(END, GV.TEC_TARGET)
         self.text_tec_actual.delete("1.0", END)
@@ -170,7 +163,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_30.place(x =COL1,y = Y3)
 
 
-    def updateVALVES(self):
+    def update_valves(self):
         self.text_pump_valve1.delete("1.0", END)
         self.text_pump_valve1.insert(END, GV.VALVE_1)
         self.text_loop_valve3.delete("1.0", END)
@@ -191,7 +184,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         self.text_cleaning_valve8.insert(END, GV.VALVE_8)
 
 
-    def read_BubbleSensors(self):
+    def read_bubble_sensors(self):
         # read bubble sensor and update the LEDs
         GV.V_BS1 = (GV.labjack.getAIN(HW.BS1_IO_PORT))
         GV.V_BS2 = (GV.labjack.getAIN(HW.BS2_IO_PORT))
@@ -209,7 +202,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         GV.V_BS14 = (GV.labjack.getAIN(HW.BS14_IO_PORT))
 
 
-    def updateGUI_LEDs(self):
+    def update_gui_leds(self):
         COL7 = 830
         Y1  = 50
         dY1 = 50
@@ -269,7 +262,6 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_6.pack()
             self.led_on_6.place(x =COL7+dist+dd,y = Y1 + 3*dY1)
 
-
         if (GV.vertical_gantry_active_led == False):
             self.led_on_7.place_forget()
             self.led_off_7.pack()
@@ -297,7 +289,6 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             self.led_on_9.pack()
             self.led_on_9.place(x =COL7+dd,y = Y1 + 5*dY1)
         
-
         # Update The GUI with current value of bubble sensors
         COL9 = 1020
         COL11 = 1100
@@ -447,7 +438,7 @@ class run_SM_GUI(SM_GUI.SM_GUI):
 
         
     def decode_recipe(self, recipe_filepath):
-        global GV
+        # global GV
         with open(recipe_filepath , 'r') as f:
             recipe_json = json.load(f)                
         #Sanity check: to see if all statemachines are listed in the json file, if not exit
@@ -474,14 +465,12 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             RECIPE[key] = recipe_json[key]
             if (recipe_json[key]['enable'] == True):
                 GV.SM_enabled_dic[key] = True
-                str_new = "{:20s}{:>20s}\n".format(key,"= Enabled")
+                str_new = "{:.<20s}{:.>20s}\n".format(key,"Enabled")
                 info_str = info_str + str_new
-                # info_str = info_str +key+": Enabled"+ "\n"                
             else:
                 GV.SM_enabled_dic[key] = False                
-                str_new = "{:20s}{:>20s}\n".format(key,"= Disabled")
+                str_new = "{:.<20s}{:.>20s}\n".format(key,"Disabled")
                 info_str = info_str + str_new
-                # info_str = info_str +key+": Disabled"+ "\n"
         #Display SMs enable status in the status box
         self.t_status.delete("1.0", END)
         self.t_status.insert(END, info_str)
@@ -518,8 +507,8 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         GV.cur_S = 0
         GV.prev_S = 0
         GV.terminate_SM = False
-        GV.doescount = 5
-        GV.dose_number = 0
+        # GV.doescount = 5
+        # GV.dose_number = 0
         GV.SM_TEXT_TO_DIAPLAY = "--"
         GV.PAUSE = False
         GV.ERROR = False 

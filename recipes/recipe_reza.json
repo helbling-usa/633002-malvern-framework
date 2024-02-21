@@ -1,33 +1,13 @@
 {
-    "Constants":
-    {
-        "enable": false,
-        "titrant_volume": 30,
-        "sample_volume": 300,
-        "AspirationVolume_Overshoot": 10, 
-        "horizontal_cell_fill_position": 100,
-        "vertical_cell_fill_position": 50,
-        "tc2_volume": 120, 
-        "sc2_volume": 150, 
-        "horizontal_titration_position": 130,
-        "vertical_titration_position": 50,
-        "totalstack_volume":100,
-        "s_port_volume": 300, 
-        "t_port_volume": 50,
-        "sp2_volume": 100,
-        "tp3_volume":100, 
-        "s5_volume":100,
-        "degascleanfluid_volume":100, 
-        "samplecleanfluid_volume":100, 
-        "s4_volume":100
-	},    
     "Startup": 
     {
         "enable": true,
         "gantry_move_speed": 20,
         "gantry_home_timeout": 500,   
         "gantry_homing_speed": 1,
-        "gantry_move_timeout": 60
+        "gantry_move_timeout": 60,
+        "horizontal_cellfill_position": 50,
+        "vertical_cellfill_position": 50
     },
     "PumpInit_Reload": 
     {

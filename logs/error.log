@@ -802,3 +802,4 @@ ERROR:	can't select axis 1
 ERROR:		error in set event on motion complete
 ERROR:	can't select axis 1
 ERROR:		error in set event on motion complete
+ERROR:json file not valid: some statemachines are missing ...
