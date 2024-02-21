@@ -1,9 +1,9 @@
 import serial
 import logging
+import time
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-
 formatter = logging.Formatter("%(asctime)s:%(name)s:%(message)s")
 
 file_handler = logging.FileHandler("./logs/error.log")
@@ -35,6 +35,16 @@ class Pump:
         self.ser.reset_output_buffer()
         self.ser.reset_input_buffer()
         self.config_valve(1, 4)
+
+    def set_pump_assignment(self, axis):
+        str1 = "/" + str(axis) + "U2R\r\n"
+        self.ser.write(str1.encode())
+        self.read()
+        time.sleep(0.5)
+        str1 = "/" + str(axis) + "r\r\n"
+        self.ser.write(str1.encode())
+        self.read()
+
 
     def pump_Zinit(self, axis):
         str1 = "/" + str(axis) + "ZR\r\n"

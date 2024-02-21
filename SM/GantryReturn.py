@@ -75,6 +75,7 @@ def action1_1():
     next_pos = int(high_position / HW.TML_LENGTH_2_MM_VER )
     move_speed = RECIPE['GantryReturn']['gantry_move_speed'] / HW.TML_SPEED_2_MM_PER_SEC_VER
     GV.motors.move_absolute_position(next_pos, move_speed, HW.GANTRY_VER_ACCELERATION)
+    
     cur_motor_pos= GV.motors.read_actual_position()
     while (abs(cur_motor_pos - next_pos) > 10):
         time.sleep(1)
@@ -152,6 +153,7 @@ def action2_1():
     while (abs(cur_motor_pos - next_pos) > 10):
         time.sleep(1)
         cur_motor_pos= GV.motors.read_actual_position()
+        print("\t\tcur Z pos: {},  target pos: {}".format(cur_motor_pos, next_pos))
 
     GV.horizontal_gantry_active_led = False
     GV.SM_TEXT_TO_DIAPLAY = "X actuator in base position"

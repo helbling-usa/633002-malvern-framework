@@ -265,6 +265,7 @@ def action1_1():
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = " going to ERROR state"
         return 
+    GV.pump1.set_pump_assignment(HW.TIRRANT_PUMP_ADDRESS)
     GV.pump1.pump_Zinit(HW.TIRRANT_PUMP_ADDRESS)
     time.sleep(3)
     GV.pump1.pump_Zinit(HW.SAMPLE_PUMP_ADDRESS)    
@@ -340,7 +341,7 @@ def action2_1():
     GV.VALVE_9 = "Waste"
     GV.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, HW.VALVE1_P1)
     time.sleep(.5)
-    GV.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, HW.VALVE3_P2)
+    GV.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, HW.VALVE3_P3)
     time.sleep(.5)
     # GV.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,HW.VALVE5_P3)
     GV.pump1.set_valve(HW.TITRANT_PIPETTE_ADDRESS,HW.VALVE5_P3)
