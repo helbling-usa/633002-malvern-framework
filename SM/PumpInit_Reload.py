@@ -517,7 +517,7 @@ def action4_2():
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = " going to ERROR state"
         return          
-    GV.SM_TEXT_TO_DIAPLAY ="pump1: dispense until bubble sensor\n" "pump2: dispense until bubble sensor"
+    GV.SM_TEXT_TO_DIAPLAY ="going to S4/E0"
     GV.next_E = 0
 
 

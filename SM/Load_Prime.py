@@ -47,6 +47,28 @@ def air_or_liquid( voltage):
 
 #---------------  ACTIONS  --------------
 def action0_0():
+
+    #seting the scale factor for converting volume to pump position units
+    sample_pump_step = RECIPE["Load_Prime"]["sample_pump_step"]
+    titrant_pump_step = RECIPE["Load_Prime"]["titrant_pump_step"]
+    if sample_pump_step == "full step":
+        str0 = 'pump 2: full step\n'
+        GV.PUMP_SAMPLE_SCALING_FACTOR = HW.SAMPLE_PUMP_VOLUM_2_STEP
+    else:
+        str0 = 'pump 2: micro step\n'
+        GV.PUMP_SAMPLE_SCALING_FACTOR = HW.SAMPLE_PUMP_VOLUM_2_MICROSTEP
+
+    if titrant_pump_step == "full step":
+        str1 = 'pump 2: full step\n'
+        GV.PUMP_TITRANT_SCALING_FACTOR = HW.TITRANT_PUMP_VOLUM_2_STEP
+    else:
+        str1 = 'pump 2: micro step\n'
+        GV.PUMP_TITRANT_SCALING_FACTOR = HW.TITRANT_PUMP_VOLUM_2_MICROSTEP
+
+    logger.info("Sample pump scale facotr:{}".format(str0))
+    logger.info("Titranst pump scale facotr:{}".format(str1))
+
+
     str1 = "-V1 to LinetoPump\n" "-V3 to TitrantLine\n" "-V5 to TitrantPort\n" "-V2 to LinetoPump\n"
     str1 = str1 + "-V4 to SampleLine\n" "-V7 to SamplePort\n""-V8 to Air\n" "-V9 to Air\n"
     GV.SM_TEXT_TO_DIAPLAY = str1
@@ -81,9 +103,11 @@ def action1_0():
     time.sleep(.5)
     GV.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS, HW.VALVE9_P2)        
     time.sleep(.5)
-    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["Load_Prime"]["titrant_pump_speed"])
+    pump1_speed = int(RECIPE["Load_Prime"]["titrant_pump_speed"] * GV.PUMP_TITRANT_SCALING_FACTOR)
+    pump2_speed = int(RECIPE["Load_Prime"]["sample_pump_speed"] * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, pump1_speed)
     time.sleep(1)
-    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["Load_Prime"]["sample_pump_speed"])
+    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
     time.sleep(1)  
 
     GV.VALVE_1 = "Line to Pump"    
@@ -166,6 +190,7 @@ def action2_0():
 
 
 def action2_1():
+    timeout_flag = False
     if (GV.PAUSE == True):
         GV.next_E = 3           
         GV.SM_TEXT_TO_DIAPLAY = "S2,E1 -> action2_1" "  goint to S2/E3"
@@ -177,9 +202,16 @@ def action2_1():
     
     bubble_pickup_timeout = RECIPE["Load_Prime"]["pump_move_timeout"]
     logger.info('Pickup until bubble')
-    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
+
+    pump1_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED * GV.PUMP_TITRANT_SCALING_FACTOR)
+    pump2_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED * GV.PUMP_SAMPLE_SCALING_FACTOR)
+
+    print("Scale facotr  -->   target pump: {},  sample pump: {}".format(GV.PUMP_TITRANT_SCALING_FACTOR,
+                                                                           GV.PUMP_SAMPLE_SCALING_FACTOR))
+    print('pickup speed: {}  and {}'.format(pump1_speed, pump2_speed))
+    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, pump1_speed)
     time.sleep(1)        
-    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
+    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
     time.sleep(1)        
     GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, HW.PICKUP_UNTIL_BUBBLE_TARGET)
     time.sleep(1)
@@ -226,10 +258,14 @@ def action2_1():
     # time.sleep(.5)
     # GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
     logger.info('\t\tBubble detection terminated')
-    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["Load_Prime"]["titrant_pump_speed"])
+    pump1_speed = int(RECIPE["Load_Prime"]["titrant_pump_speed"] * GV.PUMP_TITRANT_SCALING_FACTOR)
+    pump2_speed = int(RECIPE["Load_Prime"]["sample_pump_speed"] * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, pump1_speed)
     time.sleep(1)
-    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["Load_Prime"]["sample_pump_speed"])
-    time.sleep(1)  
+    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
+    time.sleep(1) 
+    print('normal speed: {}  and {}'.format(pump1_speed, pump2_speed))
+
     GV.pump1_titrant_active_led    = False
     GV.pump2_sample_active_led     = False
     if (timeout_flag == True):
@@ -351,8 +387,8 @@ def action4_0():
 
 
 def action4_1():
-    timeout = False 
-    if (GV.PAUSE == True or timeout==True):
+    timeout_flag = False 
+    if (GV.PAUSE == True ):
         GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "S4,E1 -> action4_1" "Pgoint to S4/E3"
         return 
@@ -361,11 +397,14 @@ def action4_1():
         GV.SM_TEXT_TO_DIAPLAY = "S4,E1 -> action4_1" "goint to S4/E4"
         return 
     bubble_pickup_timeout = RECIPE["Load_Prime"]["pump_move_timeout"]
-    logger.info('Dispense until bubble')
-    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
+    logger.info('Dispense until bubble')    
+    pump1_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED * GV.PUMP_TITRANT_SCALING_FACTOR)
+    pump2_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    print('dispense speed: {}  and {}'.format(pump1_speed, pump2_speed))
+    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, pump1_speed)
     time.sleep(1)        
-    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
-    time.sleep(1)        
+    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
+    time.sleep(1)  
     GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, HW.DISPENSE_UNTIL_BUBBLE_TARGET)
     time.sleep(1)
     GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, HW.DISPENSE_UNTIL_BUBBLE_TARGET)
@@ -410,10 +449,15 @@ def action4_1():
     # time.sleep(.5)
     # GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
     logger.info('\t\tBubble detection terminated')
-    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["Load_Prime"]["titrant_pump_speed"])
+    pump1_speed = int(RECIPE["Load_Prime"]["titrant_pump_speed"] * GV.PUMP_TITRANT_SCALING_FACTOR)
+    pump2_speed = int(RECIPE["Load_Prime"]["sample_pump_speed"] * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, pump1_speed)
     time.sleep(1)
-    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["Load_Prime"]["sample_pump_speed"])
-    time.sleep(1)  
+    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
+    time.sleep(1) 
+    print('normal speed: {}  and {}'.format(pump1_speed, pump2_speed))
+
+
     GV.pump1_titrant_active_led    = False
     GV.pump2_sample_active_led     = False
     if (timeout_flag == True):
@@ -549,6 +593,7 @@ def action6_0():
 
 
 def action6_1():
+    timeout_flag = False
     if (GV.PAUSE == True):
         GV.next_E = 5
         GV.SM_TEXT_TO_DIAPLAY = "S6,E1 -> action6_1" "Pgoint to S6/E5"
@@ -559,10 +604,12 @@ def action6_1():
         return 
     bubble_pickup_timeout = RECIPE["Load_Prime"]["pump_move_timeout"]
     logger.info('Dispense until bubble')
-    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
+    pump1_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED * GV.PUMP_TITRANT_SCALING_FACTOR)
+    pump2_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, pump1_speed)
     time.sleep(1)        
-    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, HW.BUBBLE_DETECTION_PUMP_SPEED)
-    time.sleep(1)        
+    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
+    time.sleep(1) 
     GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, HW.DISPENSE_UNTIL_BUBBLE_TARGET)
     time.sleep(1)
     GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, HW.DISPENSE_UNTIL_BUBBLE_TARGET)
@@ -608,10 +655,13 @@ def action6_1():
     # time.sleep(.5)
     # GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
     logger.info('\t\tBubble detection terminated')
-    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["Load_Prime"]["titrant_pump_speed"])
+    pump1_speed = int(RECIPE["Load_Prime"]["titrant_pump_speed"] * GV.PUMP_TITRANT_SCALING_FACTOR)
+    pump2_speed = int(RECIPE["Load_Prime"]["sample_pump_speed"] * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, pump1_speed)
     time.sleep(1)
-    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS,RECIPE["Load_Prime"]["sample_pump_speed"])
-    time.sleep(1)  
+    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
+    time.sleep(1) 
+
     str1 = "Bubble sensors 6&7 triggered\n" "go to S6/E2\n"
     str1 = str1 +"Pump 1 to position\n"  " Pump 2 to position"
     if (timeout_flag == True):
@@ -656,7 +706,7 @@ def action6_2():
         cur_pump_pos2 = GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
         pump2_away_from_target = (abs (cur_pump_pos2 - target_pos_2) > 5)
         time.sleep(.5)
-        logger.info("Pump1 cur pos:{}, target:{},   pump2 cur pos{},  target{}".format(cur_pump_pos1,target_pos_1,
+        logger.info("\tPump1 cur pos: {}, target: {},   pump2 cur pos: {},  target: {}".format(cur_pump_pos1,target_pos_1,
                                                                                  cur_pump_pos2, target_pos_2))
     GV.pump1_titrant_active_led    = False
     GV.pump2_sample_active_led     = False

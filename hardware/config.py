@@ -26,7 +26,7 @@ BS3_IO_PORT     = 2
 BS4_IO_PORT     = 3
 BS5_IO_PORT     = 4
 BS6_IO_PORT     = 5
-BS7_IO_PORT     = 6  #set this to 7 for Reza's setupyea
+BS7_IO_PORT     = 7#6  #set this to 7 for Reza's setupyea
 BS8_IO_PORT     = 7
 BS9_IO_PORT     = 8
 BS10_IO_PORT    = 9
@@ -46,11 +46,11 @@ TEC_ACCEPTABLE_TEMP_DIFF        = 1         # This is acceptable temp. differenc
 #------------------------------ Pumps Parameters --------------------------------------------------
 PICKUP_UNTIL_BUBBLE_TARGET      = 20000     # Target position when pickup until bubble
 DISPENSE_UNTIL_BUBBLE_TARGET    = 0         # Target position when pickup until bubble
-BUBBLE_DETECTION_PUMP_SPEED     = 50        # speed of pump during bubble detection
+BUBBLE_DETECTION_PUMP_SPEED     = 5         # speed of pump during bubble detection
 DEFAULT_PUMP_SPEEED             = 1000      # speed of pump at start up
 SAMPLE_PUMP_VOLUM_2_STEP        = 9.6       # conversion ratio fro sample pump for full step mode
 SAMPLE_PUMP_VOLUM_2_MICROSTEP   = 76.8      # conversion ratio fro sample pump for full microstep mode
-TITRANT_PUMP_VOLUM_2_STEP       = 192       # conversion ratio fro titrant pump for full step mode
+TITRANT_PUMP_VOLUM_2_STEP       = 96        # conversion ratio fro titrant pump for full step mode
 TITRANT_PUMP_VOLUM_2_MICROSTEP  = 768       # conversion ratio fro titrant pump for full microstep mode
 
 #------------------------------- Pumps/valves RS485 addresses -------------------------------------

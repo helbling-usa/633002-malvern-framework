@@ -1,7 +1,7 @@
 {
     "Startup": 
     {
-        "enable": true,
+        "enable": false,
         "gantry_move_speed": 20,
         "gantry_home_timeout": 500,   
         "gantry_homing_speed": 1,
@@ -43,11 +43,11 @@
     },
     "Load_Prime": 
     {
-        "enable": false,
+        "enable": true,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
-        "titrant_pump_speed": 1000,
-        "sample_pump_speed": 1000,
+        "titrant_pump_speed": 10,
+        "sample_pump_speed": 10,
         "valve_move_timeout": 60,        
         "pump_move_timeout": 60, 
         "TC2_Volume": 120,
@@ -85,7 +85,7 @@
     },    
     "GantrytoA": 
     {
-        "enable": true,
+        "enable": false,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
         "gantry_move_speed": 5,
@@ -96,7 +96,7 @@
     },
     "GantryReturn": 
     {
-        "enable": true,
+        "enable": false,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
         "gantry_move_speed": 5,
@@ -115,7 +115,9 @@
         "pump_move_timeout": 600, 
         "detergentrinse_count": 1,
         "waterrinse_count": 1,		
-        "meohrinse_count": 1
+        "meohrinse_count": 1,
+        "s4_volume":100,
+        "degascleanfluid_volume": 10
     },
     "SampleLineClean": 
     {
@@ -170,8 +172,8 @@
         "enable": false,
         "sample_pump_step": "full step",
 	    "titrant_pump_step": "full step",
-        "titrant_pump_speed": 400,
-        "sample_pump_speed": 200,
+        "titrant_pump_speed": 40,
+        "sample_pump_speed": 20,
         "valve_move_timeout": 60,
         "pump_move_timeout": 600,
         "AirSlug_Total_count": 2,

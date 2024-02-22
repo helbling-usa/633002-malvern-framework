@@ -115,7 +115,9 @@ RECIPE= {
         "pump_move_timeout": 600, 
         "detergentrinse_count": 1,
         "waterrinse_count": 1,		
-        "meohrinse_count": 1
+        "meohrinse_count": 1,
+        "s4_volume":10,
+        "degascleanfluid_volume": 10
     },
     "SampleLineClean": 
     {
