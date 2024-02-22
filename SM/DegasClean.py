@@ -199,7 +199,7 @@ def action0_0():
         str0 = 'pump 2: micro step\n'
         GV.PUMP_SAMPLE_SCALING_FACTOR = HW.SAMPLE_PUMP_VOLUM_2_MICROSTEP
         GV.pump1.set_microstep_position(HW.SAMPLE_PUMP_ADDRESS,2)
-
+    time.sleep(0.5)
     if titrant_pump_step == "full step":
         str1 = 'pump 2: full step\n'
         GV.PUMP_TITRANT_SCALING_FACTOR = HW.TITRANT_PUMP_VOLUM_2_STEP
