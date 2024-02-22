@@ -194,16 +194,21 @@ def action0_0():
     if sample_pump_step == "full step":
         str0 = 'pump 2: full step\n'
         GV.PUMP_SAMPLE_SCALING_FACTOR = HW.SAMPLE_PUMP_VOLUM_2_STEP
+        GV.pump1.set_microstep_position(HW.SAMPLE_PUMP_ADDRESS,0)
     else:
         str0 = 'pump 2: micro step\n'
         GV.PUMP_SAMPLE_SCALING_FACTOR = HW.SAMPLE_PUMP_VOLUM_2_MICROSTEP
+        GV.pump1.set_microstep_position(HW.SAMPLE_PUMP_ADDRESS,2)
 
     if titrant_pump_step == "full step":
         str1 = 'pump 2: full step\n'
         GV.PUMP_TITRANT_SCALING_FACTOR = HW.TITRANT_PUMP_VOLUM_2_STEP
+        GV.pump1.set_microstep_position(HW.TIRRANT_PUMP_ADDRESS,0)
     else:
         str1 = 'pump 2: micro step\n'
         GV.PUMP_TITRANT_SCALING_FACTOR = HW.TITRANT_PUMP_VOLUM_2_MICROSTEP
+        GV.pump1.set_microstep_position(HW.TIRRANT_PUMP_ADDRESS,2)
+
 
     logger.info("Sample pump scale facotr:{}".format(str0))
     logger.info("Titranst pump scale facotr:{}".format(str1))
@@ -644,7 +649,7 @@ def action5_2():
         return    
 
 
-    GV.terminate_SM = True
+    # GV.terminate_SM = True
     GV.SM_TEXT_TO_DIAPLAY ="going to S6/E0"
     GV.next_E = 0
 
