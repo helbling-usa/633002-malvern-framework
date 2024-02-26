@@ -44,14 +44,15 @@ TEC_ACCEPTABLE_TEMP_DIFF        = 1         # This is acceptable temp. differenc
                                             #  distance from target temp, it will move to next state
 
 #------------------------------ Pumps Parameters --------------------------------------------------
-PICKUP_UNTIL_BUBBLE_TARGET      = 20000     # Target position when pickup until bubble
-DISPENSE_UNTIL_BUBBLE_TARGET    = 0         # Target position when pickup until bubble
-BUBBLE_DETECTION_PUMP_SPEED     = 5         # speed of pump during bubble detection
-DEFAULT_PUMP_SPEEED             = 1000      # speed of pump at start up
-SAMPLE_PUMP_VOLUM_2_STEP        = 9.6       # conversion ratio fro sample pump for full step mode
-SAMPLE_PUMP_VOLUM_2_MICROSTEP   = 76.8      # conversion ratio fro sample pump for full microstep mode
-TITRANT_PUMP_VOLUM_2_STEP       = 96        # conversion ratio fro titrant pump for full step mode
-TITRANT_PUMP_VOLUM_2_MICROSTEP  = 768       # conversion ratio fro titrant pump for full microstep mode
+PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE   = 192000     # Target position when pickup until bubble (sample pump)
+PICKUP_UNTIL_BUBBLE_TARGET_TITRANT  = 192000     # Target position when pickup until bubble (titrant pump)
+DISPENSE_UNTIL_BUBBLE_TARGET        = 0         # Target position when pickup until bubble
+BUBBLE_DETECTION_PUMP_SPEED         = 50        # speed of pump during bubble detection
+DEFAULT_PUMP_SPEEED                 = 1000      # speed of pump at start up
+SAMPLE_PUMP_VOLUM_2_STEP            = 9.6       # conversion ratio fro sample pump for full step mode
+SAMPLE_PUMP_VOLUM_2_MICROSTEP       = 76.8      # conversion ratio fro sample pump for full microstep mode
+TITRANT_PUMP_VOLUM_2_STEP           = 96        # conversion ratio fro titrant pump for full step mode
+TITRANT_PUMP_VOLUM_2_MICROSTEP      = 768       # conversion ratio fro titrant pump for full microstep mode
 
 #------------------------------- Pumps/valves RS485 addresses -------------------------------------
 TIRRANT_PUMP_ADDRESS            = 1         #4way- Pump 1

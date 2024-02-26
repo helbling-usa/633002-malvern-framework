@@ -79,14 +79,6 @@ def action0_0():
 
 #--------------
 def action1_0():
-    if (GV.PAUSE == True):
-        GV.next_E = 3          
-        GV.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" "Prepare to go to Pause State"
-        return 
-    if (GV.ERROR == True):
-        GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" "Prepare to go to error State"
-        return 
     # move the valves to positions
     GV.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, HW.VALVE1_P2)
     time.sleep(.5)
@@ -124,7 +116,16 @@ def action1_0():
     str1 =  "-V1 to LinetoPump\n" "-V3 to TitrantLine\n" "-V5 to TitrantPort\n" 
     str1 = str1 + "-V2 to LinetoGas\n" "-V4 to SampleLine\n"  "-V7 to SamplePort"
     GV.SM_TEXT_TO_DIAPLAY = str1
-    GV.next_E = 1
+    if (GV.PAUSE == True):
+        GV.next_E = 3          
+        GV.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" "Prepare to go to Pause State"
+        return 
+    elif (GV.ERROR == True):
+        GV.next_E = 4
+        GV.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" "Prepare to go to error State"
+        return 
+    else:
+        GV.next_E = 1
 
 
 def action1_1():
@@ -136,10 +137,11 @@ def action1_1():
     if (GV.ERROR == True or timeout==True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S1,E1 -> action1_1\n" "go to S1/E4"
-        return     
-    str1 = "  Valves in position\n"  "  go to S1/E2"
-    GV.SM_TEXT_TO_DIAPLAY = str1
-    GV.next_E = 2
+        return
+    else:
+        str1 = "  Valves in position\n"  "  go to S1/E2"
+        GV.SM_TEXT_TO_DIAPLAY = str1
+        GV.next_E = 2
 
 
 def action1_2():
@@ -150,9 +152,10 @@ def action1_2():
     if (GV.ERROR == True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S1,E2 -> action1_2\n" "go to S1/E4"
-        return     
-    GV.SM_TEXT_TO_DIAPLAY = "  go to S2/E0 state"
-    GV.next_E = 0
+        return  
+    else:   
+        GV.SM_TEXT_TO_DIAPLAY = "  go to S2/E0 state"
+        GV.next_E = 0
 
 
 def action1_3():
@@ -160,10 +163,11 @@ def action1_3():
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S1,E3 -> action1_3\n" "  go to S1/E4"
         return     
-    GV.SM_TEXT_TO_DIAPLAY ="S1,E2 -> action1_2\n"  "  go to PAUSE state"
-    GV.next_E = 0
-    GV. prev_S = 1
-    
+    else:
+        GV.SM_TEXT_TO_DIAPLAY ="S1,E2 -> action1_2\n"  "  go to PAUSE state"
+        GV.next_E = 0
+        GV. prev_S = 1
+        
     
 def action1_4():
     GV.SM_TEXT_TO_DIAPLAY = "S1,E4 -> action1_4\n" "  go to ERROR state"
@@ -173,14 +177,6 @@ def action1_4():
 #------------------------------------------------------------------------------------------------
 def action2_0():
     global current_Aspiration_count
-    if (GV.PAUSE == True):
-        GV.next_E = 4        
-        GV.SM_TEXT_TO_DIAPLAY = "S2,E0 -> action2_1\n" "  going to S2/E4"
-        return 
-    if (GV.ERROR == True):
-        GV.next_E = 5
-        GV.SM_TEXT_TO_DIAPLAY = "S2,E0 -> action2_1\n" "  going to S2/E5"
-        return 
     
     temp = RECIPE['Degas']['degas_temp']
     logger.info("\t\t set temperature: {}".format(temp))
@@ -202,20 +198,21 @@ def action2_0():
                                                                     total_asipiration_number)
     str1 = "  set TEC to temp\n" "  going to S2/E1"
     GV.SM_TEXT_TO_DIAPLAY =str1 + str0
-    GV.next_E = 1
+    if (GV.PAUSE == True):
+        GV.next_E = 4        
+        GV.SM_TEXT_TO_DIAPLAY = "S2,E0 -> action2_1\n" "  going to S2/E4"
+        return 
+    elif (GV.ERROR == True):
+        GV.next_E = 5
+        GV.SM_TEXT_TO_DIAPLAY = "S2,E0 -> action2_1\n" "  going to S2/E5"
+        return 
+    else:
+        GV.next_E = 1
 
 
 def action2_1():
     global heating_wait_time
     global settle_wait_start_time    
-    if (GV.PAUSE == True):
-        GV.next_E = 4        
-        GV.SM_TEXT_TO_DIAPLAY = "S2,E1 -> action2_1\n" "  going to S2/E4"
-        return 
-    if (GV.ERROR == True):
-        GV.next_E = 5
-        # GV.SM_TEXT_TO_DIAPLAY = "S2,E1 -> action2_1\n" "  going to S2/E5"
-        return     
     heating_timeout = RECIPE["Degas"]["temperature_settledown_timeout"]
     if (heating_wait_time > heating_timeout):
         GV.ERROR = True
@@ -230,7 +227,16 @@ def action2_1():
     GV.TEC_ACTUAL = obj_temp
     if (heating_wait_time % 10 == 0):
         logger.info('\t\telapsed time: {} sec. ,   obj temp:{} '.format(heating_wait_time,obj_temp))
-    if ( abs (obj_temp - target_temp) > HW.TEC_ACCEPTABLE_TEMP_DIFF):
+
+    if (GV.PAUSE == True):
+        GV.next_E = 4        
+        GV.SM_TEXT_TO_DIAPLAY = "S2,E1 -> action2_1\n" "  going to S2/E4"
+        return 
+    elif (GV.ERROR == True):
+        GV.next_E = 5
+        # GV.SM_TEXT_TO_DIAPLAY = "S2,E1 -> action2_1\n" "  going to S2/E5"
+        return         
+    elif ( abs (obj_temp - target_temp) > HW.TEC_ACCEPTABLE_TEMP_DIFF):
         GV.next_E = 1
         str1= f"elapsed time: {heating_wait_time}"
         GV.SM_TEXT_TO_DIAPLAY="Waiting to reach target temperature\n" + str1
@@ -245,15 +251,6 @@ def action2_2():
     global current_Aspiration_count
     timeout = False
     # passed_time = 10 # measure the  heating time
-    if (GV.PAUSE == True):
-        GV.next_E = 4        
-        # GV.SM_TEXT_TO_DIAPLAY = "S2,E2 -> action2_2\n" "  going to S2/E4"
-        return 
-    if (GV.ERROR == True  or  timeout==True):
-        GV.next_E = 5
-        GV.SM_TEXT_TO_DIAPLAY = "S2,E2 -> action2_2\n" "  going to S2/E5"
-        return
-    
     # update the current temperature on GUI 
     tec_dic =  GV.tec.get_data()
     obj_temp = round(tec_dic['object temperature'][0], 1)
@@ -272,7 +269,15 @@ def action2_2():
     if (time_passed % 10 == 0):
         logger.info('\t\telapsed time: {}/ ,  settle time:{} '.format(heating_wait_time, heat_time))        
     #decide to reapted or go to next event
-    if (time_passed < heat_time):
+    if (GV.PAUSE == True):
+        GV.next_E = 4        
+        # GV.SM_TEXT_TO_DIAPLAY = "S2,E2 -> action2_2\n" "  going to S2/E4"
+        return 
+    elif (GV.ERROR == True  or  timeout==True):
+        GV.next_E = 5
+        GV.SM_TEXT_TO_DIAPLAY = "S2,E2 -> action2_2\n" "  going to S2/E5"
+        return        
+    elif (time_passed < heat_time):
         GV.next_E = 2
         total_asipiration_number = RECIPE["Degas"]["total_asipiration_number"]    
         str0 = "\nCurrent Aspiration:{}\nTotal Aspirations:{}".format(current_Aspiration_count+1, 
@@ -293,26 +298,27 @@ def action2_3():
     if (GV.ERROR == True):
         GV.next_E = 5
         GV.SM_TEXT_TO_DIAPLAY = "S2,E3 -> action2_3\n" "  going to S2/E5"
-        return
-    GV.pump1_titrant_active_led     = True   
-    GV.pump2_sample_active_led      = True
-    total_asipiration_number = RECIPE["Degas"]["total_asipiration_number"]    
-    str0 = "\nCurrent Aspiration:{}\nTotal Aspirations:{}".format(current_Aspiration_count+1, 
-                                                                  total_asipiration_number)    
-    str1 ="pump 1 pickup Var.: Tit. Vol. +Asp. Overshoot\n""pump 2 pickup Var.: Sample Vol. +Asp. Overshoot"
-    GV.SM_TEXT_TO_DIAPLAY = str1 + str0
-    GV.next_E = 0
+        return    
+    else:
+        GV.pump1_titrant_active_led     = True   
+        GV.pump2_sample_active_led      = True
+        total_asipiration_number = RECIPE["Degas"]["total_asipiration_number"]    
+        str0 = "\nCurrent Aspiration:{}\nTotal Aspirations:{}".format(current_Aspiration_count+1, 
+                                                                    total_asipiration_number)    
+        str1 ="pump 1 pickup Var.: Tit. Vol. +Asp. Overshoot\n""pump 2 pickup Var.: Sample Vol. +Asp. Overshoot"
+        GV.SM_TEXT_TO_DIAPLAY = str1 + str0
+        GV.next_E = 0
 
 
 def action2_4():
     if (GV.ERROR == True):
         GV.next_E = 5
         GV.SM_TEXT_TO_DIAPLAY = "S2,E4 -> action2_4\n" "  going to S2/E5"
-        return         
-    
-    # GV.SM_TEXT_TO_DIAPLAY ="S2,E4 -> action2_4"
-    GV.next_E = 0
-    GV. prev_S = 2
+        return 
+    else:    
+        # GV.SM_TEXT_TO_DIAPLAY ="S2,E4 -> action2_4"
+        GV.next_E = 0
+        GV. prev_S = 2
 
 
 def action2_5():
@@ -321,14 +327,6 @@ def action2_5():
 
 #--------------------------------------------------------------------------------------------
 def action3_0():
-    if (GV.PAUSE == True):
-        GV.next_E = 3          
-        GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0\n" "  going to S3/E3"
-        return 
-    if (GV.ERROR == True):
-        GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0\n" "  going to S3/E4"
-        return 
     # experiment_temp = RECIPE["Degas"]["experiment_temp"]
     # total_asipiration_number = RECIPE["Degas"]["total_asipiration_number"]
     # pump_address = HW.SAMPLE_PUMP_ADDRESS
@@ -345,11 +343,8 @@ def action3_0():
     time.sleep(1)
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
     time.sleep(1) 
-
-
     # AspirationVolume_Overshoot = RECIPE["Degas"]["AspirationVolume_Overshoot"]
     # AspirationVolume_Overshoot = int(RECIPE["Degas"]["AspirationVolume_Overshoot"]* GV.PUMP_TITRANT_SCALING_FACTOR )
-
     AspVol_Overshoot_titrant = int(RECIPE["Degas"]["AspirationVolume_Overshoot"]* GV.PUMP_TITRANT_SCALING_FACTOR )
     AspVol_Overshoot_sample = int(RECIPE["Degas"]["AspirationVolume_Overshoot"]* GV.PUMP_SAMPLE_SCALING_FACTOR )
 
@@ -388,9 +383,20 @@ def action3_0():
     GV.pump1_titrant_active_led     = False   
     GV.pump2_sample_active_led      = False
     #check if dose signal is receved 
-    GV.next_E = 1
-    str1 = "pump 1 pickup Var.:Tit. Vol. +Asp. Overshoot\n""pump 2 pickup Var.: Sample Vol. +Asp. Overshoot"
-    GV.SM_TEXT_TO_DIAPLAY = str1
+
+    if (GV.PAUSE == True):
+        GV.next_E = 3          
+        GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0\n" "  going to S3/E3"
+        return 
+    elif (GV.ERROR == True):
+        GV.next_E = 4
+        GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0\n" "  going to S3/E4"
+        return 
+
+    else:
+        GV.next_E = 1
+        str1 = "pump 1 pickup Var.:Tit. Vol. +Asp. Overshoot\n""pump 2 pickup Var.: Sample Vol. +Asp. Overshoot"
+        GV.SM_TEXT_TO_DIAPLAY = str1
 
 
 def action3_1():
@@ -402,54 +408,52 @@ def action3_1():
     if (GV.ERROR == True or timeout==True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S3,E1 -> action3_1\n" "  going to S3/E4"
-        return    
-         
-    GV.pump1_titrant_homed_led     = False
-    GV.pump2_sample_homed_led      = False
-    GV.next_E = 2
-    GV.SM_TEXT_TO_DIAPLAY ="  go to S3/E2"
+        return
+    else:         
+        GV.pump1_titrant_homed_led     = False
+        GV.pump2_sample_homed_led      = False
+        GV.next_E = 2
+        GV.SM_TEXT_TO_DIAPLAY ="  go to S3/E2"
 
 
 def action3_2():
     global current_Aspiration_count
-    if (GV.ERROR == True):
+    if (GV.PAUSE == True):
+        GV.next_E = 3        
+        GV.SM_TEXT_TO_DIAPLAY = "S3,E1 -> action3_1\n" "  going to S3/E3"
+        return     
+    elif (GV.ERROR == True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0" "  going to S3/E4"
         return 
-    GV.pump1_titrant_active_led     = True   
-    GV.pump2_sample_active_led      = True
-    total_asipiration_number = RECIPE["Degas"]["total_asipiration_number"]    
-    str0 = "\nCurrent Aspiration:{}\nTotal Aspirations:{}".format(current_Aspiration_count+1,
-                                                                  total_asipiration_number)    
-    str1 =  "pump 1 dispense Var.: Tit. Vol. +Asp. Overshoot\n""pump 2 dispense Var.: Sample Vol. +Asp. Overshoot"
-    GV.SM_TEXT_TO_DIAPLAY =str1 + str0
-    GV.next_E = 0
+    else:
+        GV.pump1_titrant_active_led     = True   
+        GV.pump2_sample_active_led      = True
+        total_asipiration_number = RECIPE["Degas"]["total_asipiration_number"]    
+        str0 = "\nCurrent Aspiration:{}\nTotal Aspirations:{}".format(current_Aspiration_count+1,
+                                                                    total_asipiration_number)    
+        str1 =  "pump 1 dispense Var.: Tit. Vol. +Asp. Overshoot\n""pump 2 dispense Var.: Sample Vol. +Asp. Overshoot"
+        GV.SM_TEXT_TO_DIAPLAY =str1 + str0
+        GV.next_E = 0
 
 def action3_3():
     if (GV.ERROR == True):
         GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0" "  going to S3/E3"
         return 
-    
-    GV.SM_TEXT_TO_DIAPLAY ="S3,E2 -> action3_2" "  go to PAUSE state"
-    GV. prev_S = 3
-    GV.next_E = 0
+    else:
+        GV.SM_TEXT_TO_DIAPLAY ="S3,E2 -> action3_2" "  go to PAUSE state"
+        GV. prev_S = 3
+        GV.next_E = 0
 
 def action3_4():
     # logger.info("S3,E3 -> action3_3")
     GV.next_E = 0
     GV.SM_TEXT_TO_DIAPLAY ="S3,E3 -> action3_3" " go to ERROR state"
 
+
 #----------------------------------------------------------------------------------------------
 def action4_0():
-    if (GV.PAUSE == True):
-        GV.next_E = 5
-        GV.SM_TEXT_TO_DIAPLAY = "S4,E0 -> action4_0" "  going to S4/E5"
-        return 
-    if (GV.ERROR == True):
-        GV.next_E = 6
-        GV.SM_TEXT_TO_DIAPLAY = "S4,E0 -> action4_0" " going to S4/E6"
-        return 
     # # pump_speed = RECIPE["Degas"]["pump_speed"]    
     # GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS,RECIPE["Degas"]["titrant_pump_speed"])
     # time.sleep(1)
@@ -461,7 +465,6 @@ def action4_0():
     time.sleep(1)
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
     time.sleep(1) 
-
 
     # AspirationVolume_Overshoot = RECIPE["Degas"]["AspirationVolume_Overshoot"]
     AspVol_Overshoot_titrant = int(RECIPE["Degas"]["AspirationVolume_Overshoot"]* GV.PUMP_TITRANT_SCALING_FACTOR )
@@ -500,7 +503,16 @@ def action4_0():
     GV.pump2_sample_active_led      = False
     str1 =  "pump 1 dispense Var.: Tit. Vol. +Asp. Overshoot\n""pump 2 dispense Var.: Sample Vol. +Asp. Overshoot"
     GV.SM_TEXT_TO_DIAPLAY = str1
-    GV.next_E = 1
+    if (GV.PAUSE == True):
+        GV.next_E = 5
+        GV.SM_TEXT_TO_DIAPLAY = "S4,E0 -> action4_0" "  going to S4/E5"
+        return 
+    elif (GV.ERROR == True):
+        GV.next_E = 6
+        GV.SM_TEXT_TO_DIAPLAY = "S4,E0 -> action4_0" " going to S4/E6"
+        return 
+    else:
+        GV.next_E = 1
 
 
 def action4_1():
@@ -509,29 +521,28 @@ def action4_1():
         GV.next_E = 5
         GV.SM_TEXT_TO_DIAPLAY = "S4,E1 -> action4_1\n" " going to S4/E5"
         return 
-    if (GV.ERROR == True or timeout==True):
+    elif (GV.ERROR == True or timeout==True):
         GV.next_E = 6
         GV.SM_TEXT_TO_DIAPLAY = "S4,E1 -> action4_1\n" " going to S4/E6"
         return 
-    
-    GV.SM_TEXT_TO_DIAPLAY = "  pumps in  position...\n" 
-    GV.next_E = 2
+    else:
+        GV.SM_TEXT_TO_DIAPLAY = "  pumps in  position...\n" 
+        GV.next_E = 2
 
 
 def action4_2():    
     global current_Aspiration_count
+    current_Aspiration_count += 1
+    total_asipiration_number = RECIPE["Degas"]["total_asipiration_number"]    
     if (GV.PAUSE == True):
         GV.next_E = 5
         GV.SM_TEXT_TO_DIAPLAY = "S4,E2 -> action4_2\n" " going to S4/E5"
         return 
-    if (GV.ERROR == True):
+    elif (GV.ERROR == True):
         GV.next_E = 6
         GV.SM_TEXT_TO_DIAPLAY = "S4,E2 -> action4_2\n" " going to S4/E6"
-        return          
-
-    current_Aspiration_count += 1
-    total_asipiration_number = RECIPE["Degas"]["total_asipiration_number"]    
-    if (current_Aspiration_count < total_asipiration_number):
+        return
+    elif (current_Aspiration_count < total_asipiration_number):
         GV.next_E = 3
         str1 = "Aspiration count = {}/{}\n".format(current_Aspiration_count+1, total_asipiration_number) 
         str1 += "aspiration count not reached yet\n"
@@ -546,34 +557,37 @@ def action4_3():
     if (GV.PAUSE == True):
         GV.next_E = 5
         GV.SM_TEXT_TO_DIAPLAY = "S4,E3 -> action4_3" "  going to S4/E5"    
-    if (GV.ERROR == True):
+    elif (GV.ERROR == True):
         GV.next_E = 6
         GV.SM_TEXT_TO_DIAPLAY = "S4,E3 -> action4_3" " going to S4/E6"
         return
-    GV.SM_TEXT_TO_DIAPLAY = "  going back to S2/E0"
-    GV.next_E = 0
+    else:
+        GV.SM_TEXT_TO_DIAPLAY = "  going back to S2/E0"
+        GV.next_E = 0
 
 
 def action4_4():
     if (GV.PAUSE == True):
         GV.next_E = 5
         GV.SM_TEXT_TO_DIAPLAY = "S4,E4 -> action4_4" "  going to S4/E5"
-    if (GV.ERROR == True):
+    elif (GV.ERROR == True):
         GV.next_E = 6
         GV.SM_TEXT_TO_DIAPLAY = "S4,E4 -> action4_4" " going to S4/E6"
         return
-    GV.SM_TEXT_TO_DIAPLAY =  "  going to S5/E0"
-    GV.next_E = 0
+    else:
+        GV.SM_TEXT_TO_DIAPLAY =  "  going to S5/E0"
+        GV.next_E = 0
 
 
 def action4_5():
     if (GV.ERROR == True):
         GV.next_E = 6
         GV.SM_TEXT_TO_DIAPLAY = "S4,E5 -> action4_5" " going to S4/E6"
-        return    
-    GV.next_E = 0
-    GV. prev_S = 4
-    GV.SM_TEXT_TO_DIAPLAY = "S4,E5 -> action4_3" "  going to S6/E0"
+        return  
+    else:  
+        GV.next_E = 0
+        GV. prev_S = 4
+        GV.SM_TEXT_TO_DIAPLAY = "S4,E5 -> action4_3" "  going to S6/E0"
 
 
 def action4_6():
@@ -587,12 +601,13 @@ def action5_0():
         GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "  goint to S5/E3"
         return 
-    if (GV.ERROR == True):
+    elif (GV.ERROR == True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY =  "  goint to S5/E4"
         return    
-    GV.SM_TEXT_TO_DIAPLAY ="Set TEC to experiment temperature"
-    GV.next_E = 1
+    else:
+        GV.SM_TEXT_TO_DIAPLAY ="Set TEC to experiment temperature"
+        GV.next_E = 1
 
 
 def action5_1():
@@ -600,24 +615,20 @@ def action5_1():
         GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "S5,E1 -> action5_1" "  goint to S5/E3"
         return 
-    if (GV.ERROR == True):
+    elif (GV.ERROR == True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S5,E1 -> action5_1" "  goint to S5/E4"
         return 
-    GV.tec.disable()    
-    # experiment_temp = RECIPE["Degas"]["RECIPE"]
-    # GV.TEC_TARGET =   experiment_temp
-    # GV.tec.set_temp(float(experiment_temp))
-    time.sleep(1)
-    tec_dic =  GV.tec.get_data()
-    # obj_temp = round(tec_dic['object temperature'][0], 1)
-    # target_temp = round(tec_dic['target object temperature'][0], 1)
-    TEC_cur_status = tec_dic['loop status'][0]        
-    logger.info('\t\tTurning off the TEC controller:     TEC status is {}'.format( TEC_cur_status))  
-    GV.TEC_IS_ON = False
-    GV.terminate_SM = True
-    GV.next_E = 2
-    GV.SM_TEXT_TO_DIAPLAY = "Degasing completed\n" "returning to the main GUI"
+    else:
+        GV.tec.disable()    
+        time.sleep(1)
+        tec_dic =  GV.tec.get_data()
+        TEC_cur_status = tec_dic['loop status'][0]        
+        logger.info('\t\tTurning off the TEC controller:     TEC status is {}'.format( TEC_cur_status))  
+        GV.TEC_IS_ON = False
+        GV.terminate_SM = True
+        GV.next_E = 2
+        GV.SM_TEXT_TO_DIAPLAY = "Degasing completed\n" "returning to the main GUI"
     
 
 def action5_2():
@@ -625,24 +636,24 @@ def action5_2():
         GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "S5,E2 -> action5_2" "  goint to S5/E3"
         return 
-    if (GV.ERROR == True):
+    elif (GV.ERROR == True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S5,E2 -> action5_2" "  goint to S5/E4"
         return 
-
-    GV.SM_TEXT_TO_DIAPLAY =" terminate the SM"
-    GV.terminate_SM = True
-    GV.next_E = 0
+    else:
+        GV.SM_TEXT_TO_DIAPLAY =" terminate the SM"
+        GV.terminate_SM = True
+        GV.next_E = 0
 
 def action5_3():
     if (GV.ERROR == True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S5,E3 -> action5_3" "  goint to S5/E4"
         return 
-    
-    GV.SM_TEXT_TO_DIAPLAY ="S5,E3 -> action5_3\n "" going to PAUSE state"
-    GV.next_E = 0
-    GV. prev_S = 5
+    else:
+        GV.SM_TEXT_TO_DIAPLAY ="S5,E3 -> action5_3\n "" going to PAUSE state"
+        GV.next_E = 0
+        GV. prev_S = 5
     
 
 def action5_3():

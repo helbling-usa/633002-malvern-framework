@@ -226,8 +226,11 @@ def action3_1():
 
 
 def action3_2():
+    if (GV.PAUSE == True):
+        GV.next_E = 3        
+        GV.SM_TEXT_TO_DIAPLAY = "going to Pause state"    
     if (GV.ERROR == True):
-        GV.next_E = 3
+        GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "going to Pause state"
         return 
     GV.vertical_gantry_active_led = True
@@ -237,7 +240,7 @@ def action3_2():
 
 def action3_3():
     if (GV.ERROR == True):
-        GV.next_E = 3
+        GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "going to Error state"
         return     
     GV.next_E = 0
@@ -264,7 +267,7 @@ def action4_0():
         return 
     GV.next_E = 1
     GV.SM_TEXT_TO_DIAPLAY = "  wait for gantry Z to get to position...\n" 
-
+ 
 
 def action4_1():
     if (GV.PAUSE == True):
