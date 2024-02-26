@@ -855,17 +855,24 @@ def action7_0():
 def action7_1():
     Done = True
     timeout = False
-    # Pumps to positions
-    fill_pos_titrant =int( RECIPE['PumpInit_Reload']['TitrantPumpt_syringe_fill_volume'] * GV.PUMP_TITRANT_SCALING_FACTOR )
-    fill_pos_sample =int( RECIPE['PumpInit_Reload']['SamplePumpt_syringe_fill_volume'] * GV.PUMP_SAMPLE_SCALING_FACTOR )
-    starting_pos_titrant = GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)  
-    starting_pos_sample = GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)  
-    target_pos_titrant = starting_pos_titrant - fill_pos_titrant
-    target_pos_sample = starting_pos_sample - fill_pos_sample
-    GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, target_pos_titrant)
+    # # Pumps to positions
+    # fill_pos_titrant =int( RECIPE['PumpInit_Reload']['TitrantPumpt_syringe_fill_volume'] * GV.PUMP_TITRANT_SCALING_FACTOR )
+    # fill_pos_sample =int( RECIPE['PumpInit_Reload']['SamplePumpt_syringe_fill_volume'] * GV.PUMP_SAMPLE_SCALING_FACTOR )
+    # starting_pos_titrant = GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)  
+    # starting_pos_sample = GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)  
+    # target_pos_titrant = starting_pos_titrant - fill_pos_titrant
+    # target_pos_sample = starting_pos_sample - fill_pos_sample
+    # GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, target_pos_titrant)
+    # time.sleep(.5)
+    # GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, target_pos_sample)
+    # time.sleep(.5)
+    titrantpump_expelair_pos = 0
+    samplepump_expelair_pos = 0
+    GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, titrantpump_expelair_pos)
     time.sleep(.5)
-    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, target_pos_sample)
+    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, samplepump_expelair_pos)
     time.sleep(.5)
+        
     # Wait until pumps fimish their move
     cur_pump_pos1 = 0
     cur_pump_pos2 = 0
@@ -873,13 +880,15 @@ def action7_1():
     pump2_away_from_target = True
     while(  pump1_away_from_target or pump2_away_from_target ):
         cur_pump_pos1 = GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
-        pump1_away_from_target = (abs (cur_pump_pos1 - target_pos_titrant) > 5)
+        pump1_away_from_target = (abs (cur_pump_pos1 - titrantpump_expelair_pos) > 5)
         time.sleep(.5)
         cur_pump_pos2 = GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
-        pump2_away_from_target = (abs (cur_pump_pos2 - target_pos_sample) > 5)
+        pump2_away_from_target = (abs (cur_pump_pos2 - samplepump_expelair_pos) > 5)
         time.sleep(.5)
-        logger.info("\t\tPump1 cur pos: {}, target: {},   pump2 cur pos: {},  target: {}".format(cur_pump_pos1,target_pos_titrant,
-                                                                                 cur_pump_pos2, target_pos_sample))
+        logger.info("\t\tPump1 cur pos: {}, target: {},   pump2 cur pos: {},  target: {}".format(cur_pump_pos1,
+                                                                                                 titrantpump_expelair_pos,
+                                                                                                 cur_pump_pos2, 
+                                                                                                 samplepump_expelair_pos))
     # Pumps are in positin now. Turn off the pumps active LEDs
     GV.pump1_titrant_active_led    = False
     GV.pump2_sample_active_led     = False

@@ -21,9 +21,7 @@ RECIPE= {
         "pump_move_timeout": 60,  
         "loadH2O2_timeout": 600,
         "TitrantPumpt_syringe_fill_volume": 100,
-        "SamplePumpt_syringe_fill_volume": 100,
-        "titrantpump_expelair_volume": 200,
-        "samplepump_expelair_volume": 200
+        "SamplePumpt_syringe_fill_volume": 100
     },   
     "Degas": 
     {
