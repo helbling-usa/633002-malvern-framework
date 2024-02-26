@@ -198,8 +198,8 @@ def action2_1():
     bubble_pickup_timeout = RECIPE["Load_Prime"]["pump_move_timeout"]
     logger.info('Pickup until bubble')
 
-    pump1_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED * GV.PUMP_TITRANT_SCALING_FACTOR)
-    pump2_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    pump1_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED_TITRANT * GV.PUMP_TITRANT_SCALING_FACTOR)
+    pump2_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED_SAMPLE * GV.PUMP_SAMPLE_SCALING_FACTOR)
 
     print("Scale facotr  -->   target pump: {},  sample pump: {}".format(GV.PUMP_TITRANT_SCALING_FACTOR,
                                                                            GV.PUMP_SAMPLE_SCALING_FACTOR))
@@ -401,8 +401,8 @@ def action4_1():
     timeout_flag = False 
     bubble_pickup_timeout = RECIPE["Load_Prime"]["pump_move_timeout"]
     logger.info('Dispense until bubble')    
-    pump1_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED * GV.PUMP_TITRANT_SCALING_FACTOR)
-    pump2_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    pump1_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED_TITRANT * GV.PUMP_TITRANT_SCALING_FACTOR)
+    pump2_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED_SAMPLE * GV.PUMP_SAMPLE_SCALING_FACTOR)
     print('dispense speed: {}  and {}'.format(pump1_speed, pump2_speed))
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, pump1_speed)
     time.sleep(1)        
@@ -611,8 +611,8 @@ def action6_1():
     timeout_flag = False
     bubble_pickup_timeout = RECIPE["Load_Prime"]["pump_move_timeout"]
     logger.info('Dispense until bubble')
-    pump1_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED * GV.PUMP_TITRANT_SCALING_FACTOR)
-    pump2_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    pump1_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED_TITRANT * GV.PUMP_TITRANT_SCALING_FACTOR)
+    pump2_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED_SAMPLE * GV.PUMP_SAMPLE_SCALING_FACTOR)
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, pump1_speed)
     time.sleep(1)        
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
