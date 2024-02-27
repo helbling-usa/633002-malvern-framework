@@ -55,10 +55,32 @@ def air_or_liquid( voltage):
 def NewAirSlugs(pump_address, valve_address):
     if pump_address == HW.TIRRANT_PUMP_ADDRESS:
         scale_factor = GV.PUMP_TITRANT_SCALING_FACTOR
-        pump_speed = int( RECIPE["Func_NewAirSlugs"]["titrant_pump_speed"] * scale_factor)        
+        pump_speed = int( RECIPE["Func_NewAirSlugs"]["titrant_pump_speed"] * scale_factor)    
+        GV.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, HW.VALVE1_P2)
+        time.sleep(.5)
+        GV.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, HW.VALVE3_P3)
+        time.sleep(.5)
+        # GV.pump1.set_multiwayvalve(HW.TITRANT_PIPETTE_ADDRESS,HW.VALVE5_P3)
+        GV.pump1.set_valve(HW.TITRANT_PIPETTE_ADDRESS,HW.VALVE5_P3)
+        time.sleep(.5)
+        GV.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,HW.VALVE9_P2)        
+        time.sleep(.5)
+        value_to_air = HW.VALVE8_P6
+        valve_to_water = HW.VALVE8_P4
     elif pump_address== HW.SAMPLE_PUMP_ADDRESS:
         scale_factor = GV.PUMP_SAMPLE_SCALING_FACTOR
         pump_speed = int(RECIPE["Func_NewAirSlugs"]["sample_pump_speed"] * scale_factor)
+        time.sleep(.5)
+        GV.pump1.set_valve(HW.SAMPLE_PUMP_ADDRESS, HW.VALVE2_P3)
+        time.sleep(.5)
+        GV.pump1.set_valve(HW.SAMPLE_LOOP_ADDRESS, HW.VALVE4_P2)
+        time.sleep(.5)
+        GV.pump1.set_multiwayvalve(HW.DEGASSER_ADDRESS,HW.VALVE7_P1)        
+        time.sleep(.5)
+        GV.pump1.set_multiwayvalve(HW.SAMPLE_CLEANING_ADDRESS,HW.VALVE8_P6)    
+        time.sleep(.5)
+        value_to_air = HW.VALVE9_P2
+        valve_to_water = HW.VALVE9_P3                
     else:
         logger.info("Not a valid pump address")
         exit(1)
@@ -77,20 +99,20 @@ def NewAirSlugs(pump_address, valve_address):
         logger.info(f"\t\tair slug:{airslug_count+1} / {air_slug_total_count}")
         # Air slug
         time.sleep(1)   
-        GV.pump1.set_multiwayvalve(valve_address,HW.VALVE8_P1)        #Valve to Air
+        GV.pump1.set_multiwayvalve(valve_address,value_to_air)        #Valve to Air
         time.sleep(2)   
         next_pos +=  air_slug_volume
         take_slug(pump_address, next_pos)            
         # Water slug
         time.sleep(1)  
-        GV.pump1.set_multiwayvalve(valve_address,HW.VALVE8_P2)        #Valve to water
+        GV.pump1.set_multiwayvalve(valve_address,valve_to_water)        #Valve to water
         time.sleep(2)        
         logger.info("water slug:{}".format(airslug_count+1)) 
         next_pos += WaterSlug_Volume
         take_slug(pump_address, next_pos)
         airslug_count += 1
     # valve to air    
-    GV.pump1.set_multiwayvalve(valve_address,HW.VALVE8_P1)        #Valve to Air
+    GV.pump1.set_multiwayvalve(valve_address,value_to_air)        #Valve to Air
     time.sleep(1) 
     #Last air slug
     next_pos += LastAirSlug_Volume
@@ -634,6 +656,11 @@ def action5_1():
         if (wait_time >  bubble_pickup_timeout):
             logger.error("\t\tpickup timeout. going to Pause state")
             timeout_flag = True
+            time.sleep(.5)
+            GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
+            time.sleep(.5)            
+            GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
+            time.sleep(0.5)             
             break
 
     #Stop both pumps
@@ -1154,6 +1181,11 @@ def action10_1():
         if (wait_time >  bubble_pickup_timeout):
             logger.error("\t\tpickup timeout. going to Pause state")
             timeout_flag = True
+            time.sleep(.5)
+            GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
+            time.sleep(.5)            
+            GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
+            time.sleep(0.5)             
             break
 
     # # Stop pumps

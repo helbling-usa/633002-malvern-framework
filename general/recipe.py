@@ -44,12 +44,14 @@ RECIPE= {
         "enable": False,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
-        "titrant_pump_speed": 1000,
-        "sample_pump_speed": 1000,
+        "titrant_pump_speed": 10,
+        "sample_pump_speed": 10,
         "valve_move_timeout": 60,        
-        "pump_move_timeout": 600, 
+        "pump_move_timeout": 60, 
         "TC2_Volume": 120,
-        "SC2_Volume": 150
+        "SC2_Volume": 150,
+        "titrantwetloop1_volume": 5,
+        "samplewetloop1_volume": 5
     },
     "GantrytoB": 
     {
