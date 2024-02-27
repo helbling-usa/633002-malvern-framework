@@ -40,7 +40,7 @@ def name():
 
 state_name = {0:"S0:  Initialization", 1:"S1: Load1", 2:"S2: Load2", 3:"S3: PurgeAir1", 4:"S4: PurgeAir2", 
               5:"S5: Load3",6:"S6: Load4", 7:"S7: PurgeAir3", 8:"S8: PurgeAir4", 9:"S9: Fill1",
-              10:"S10: Fill2", 7:"S11: Load Prime Complete", 12:"Pause", 13:"Error"}
+              10:"S10: Fill2", 11:"S11: Load Prime Complete", 12:"Pause", 13:"Error"}
 
 
 def air_or_liquid( voltage):
@@ -189,15 +189,16 @@ def action2_0():
     else:   
         GV.pump1_titrant_active_led    = True
         GV.pump2_sample_active_led     = True
-        str1 = "  pump 1 pick up\n" "  pump 2 pickup"
-        GV.SM_TEXT_TO_DIAPLAY ="S2,E0 -> action2_0" +str1
+        str1 = "  pump 1 pick up\n" "  pump 2 pickup\n"
+        GV.SM_TEXT_TO_DIAPLAY ="S2,E0 -> action2_0\n" +str1
         GV.next_E = 1
 
 
 def action2_1():
     titrantwetloop1_volume = int(RECIPE["Load_Prime"]["titrantwetloop1_volume"] * GV.PUMP_TITRANT_SCALING_FACTOR)
-    samplewetloop1_volume = int(RECIPE["Load_Prime"]["samplewetLoop1_volume"] * GV.PUMP_SAMPLE_SCALING_FACTOR)
-    # logger.info('Pickup until bubble')
+    samplewetloop1_volume = int(RECIPE["Load_Prime"]["samplewetloop1_volume"] * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    logger.info('\t\t--> titrant wet loop1 vol: {},  sample wet loop1 vol: {}'.format(titrantwetloop1_volume,
+                                                                                 samplewetloop1_volume ))
     pump1_speed = int(RECIPE["Load_Prime"]["titrant_pump_speed"] * GV.PUMP_TITRANT_SCALING_FACTOR)
     pump2_speed = int(RECIPE["Load_Prime"]["sample_pump_speed"] * GV.PUMP_SAMPLE_SCALING_FACTOR)
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, pump1_speed)
@@ -215,12 +216,13 @@ def action2_1():
     GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, p2_target_pos)
     time.sleep(1)
 
-    while (p1_cur_pos != p1_target_pos or  p2_cur_pos != p1_target_pos ):
+    while (p1_cur_pos != p1_target_pos or  p1_cur_pos != p1_target_pos ):
         p1_cur_pos = GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)        
         time.sleep(0.5)
         p2_cur_pos = GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)        
         time.sleep(0.5)
-        logger.info("\t\tpump1 pos: {}/{}  ,   pump2 pos: {}/{}".format(p1_cur_pos, p1_target_pos, p2_cur_pos, p2_target_pos))
+        logger.info("\t\tpump1 pos: {}/{}  ,   pump2 pos: {}/{}".format(p1_cur_pos, p1_target_pos,
+                                                                         p2_cur_pos, p2_target_pos))
     GV.pump1_titrant_active_led    = False
     GV.pump2_sample_active_led     = False
 
@@ -247,7 +249,7 @@ def action2_2():
         GV.SM_TEXT_TO_DIAPLAY = "S2,E2 -> action2_2\n" "  goint to S2/E4"
         return     
     else:
-        GV.SM_TEXT_TO_DIAPLAY ="  going to S3/E0"
+        GV.SM_TEXT_TO_DIAPLAY ="  going to S2/E0"
         GV.next_E = 0
 
 
@@ -280,7 +282,7 @@ def action3_0():
         return 
     elif (GV.ERROR == True):
         GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0" "  goin to S3/E4"
+        GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0\n" "  goin to S3/E4"
         return 
     else:
         GV.next_E = 1
@@ -332,7 +334,7 @@ def action3_3():
     else:
         GV.SM_TEXT_TO_DIAPLAY = "S3,E3 -> action3_3\n"  "  going to PAUSE state"
         GV.next_E = 0
-        GV.prev_S = 1
+        GV.prev_S = 3
     
     
 def action3_4():
@@ -353,7 +355,7 @@ def action4_0():
     else:   
         GV.pump1_titrant_active_led    = True
         GV.pump2_sample_active_led     = True
-        str1 = "  pump 1 dispense\n" "  pump 2 dispemse"
+        str1 = "  pump 1 dispense\n" "  pump 2 dispense"
         GV.SM_TEXT_TO_DIAPLAY ="S4,E0 -> action4_0\n" +str1
         GV.next_E = 1
 
@@ -365,8 +367,11 @@ def action4_1():
     time.sleep(1)
     GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, p2_target_pos)
     time.sleep(1)
-
-    while (p1_cur_pos != p1_target_pos or  p2_cur_pos != p1_target_pos ):
+    p1_cur_pos = GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)        
+    time.sleep(0.5)
+    p2_cur_pos = GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)        
+    time.sleep(0.5)
+    while (p1_cur_pos != p1_target_pos or  p2_cur_pos != p2_target_pos ):
         p1_cur_pos = GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)        
         time.sleep(0.5)
         p2_cur_pos = GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)        
@@ -411,7 +416,7 @@ def action4_3():
     else:
         GV.SM_TEXT_TO_DIAPLAY =" going to PAUSE state"
         GV.next_E = 0
-        GV.prev_S = 2
+        GV.prev_S = 4
 
 
 def action4_4():
@@ -504,7 +509,7 @@ def action5_3():
         return     
     GV.SM_TEXT_TO_DIAPLAY = "S5,E3 -> action5_3\n"  "  going to PAUSE state"
     GV.next_E = 0
-    GV.prev_S = 1
+    GV.prev_S = 5
     
     
 def action5_4():
@@ -526,7 +531,7 @@ def action6_0():
         GV.pump1_titrant_active_led    = True
         GV.pump2_sample_active_led     = True
         str1 = "  pump 1 pick up\n" "  pump 2 pickup"
-        GV.SM_TEXT_TO_DIAPLAY ="S6,E0 -> action6_0" +str1
+        GV.SM_TEXT_TO_DIAPLAY ="S6,E0 -> action6_0\n" +str1
         GV.next_E = 1
 
 
@@ -549,8 +554,8 @@ def action6_1():
     time.sleep(1)
     GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, HW.PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE)
     time.sleep(1)
-    input1 = GV.labjack.getAIN(HW.BS1_IO_PORT)  #bubble sensor 1
-    input2 = GV.labjack.getAIN(HW.BS2_IO_PORT)   #bubble snesor 2
+    input1 = GV.labjack.getAIN(HW.BS3_IO_PORT)  #bubble sensor 3
+    input2 = GV.labjack.getAIN(HW.BS4_IO_PORT)   #bubble snesor 4
     #check if the bubble semsor detect air or liquid
     cur_state_1 = air_or_liquid(input1)
     cur_state_2 = air_or_liquid(input2)
@@ -562,7 +567,7 @@ def action6_1():
     wait_time = 0      
     while (bubble_1_search  or bubble_2_search) :
         # input1 = GV.labjack.getAIN(0)
-        input1 = GV.labjack.getAIN(HW.BS1_IO_PORT)  #bubble sensor 3
+        input1 = GV.labjack.getAIN(HW.BS3_IO_PORT)  #bubble sensor 3
         cur_state_1 = air_or_liquid(input1)
         pos1 =GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
         if (cur_state_1 != prev_state_1):
@@ -570,8 +575,8 @@ def action6_1():
             GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
             time.sleep(.5)
         time.sleep(.025)
-        # input2 = GV.labjack.getAIN(1)
-        input2 = GV.labjack.getAIN(HW.BS2_IO_PORT)   #bubble snesor 4
+        # input2 = GV.labjack.getAIN(13
+        input2 = GV.labjack.getAIN(HW.BS4_IO_PORT)   #bubble snesor 4
         cur_state_2 = air_or_liquid(input2)
         pos2 =GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
         if (cur_state_2 != prev_state_2):
@@ -631,7 +636,7 @@ def action6_2():
         GV.SM_TEXT_TO_DIAPLAY = "S6,E2 -> action6_2\n" "  goint to S6/E4"
         return     
     else:
-        GV.SM_TEXT_TO_DIAPLAY ="  going to S3/E0"
+        GV.SM_TEXT_TO_DIAPLAY ="  going to S6/E0"
         GV.next_E = 0
 
 
@@ -643,7 +648,7 @@ def action6_3():
     else:
         GV.SM_TEXT_TO_DIAPLAY =" going to PAUSE state"
         GV.next_E = 0
-        GV.prev_S = 2
+        GV.prev_S = 6
 
 
 def action6_4():
@@ -717,7 +722,7 @@ def action7_3():
     else:
         GV.SM_TEXT_TO_DIAPLAY = "S7,E3 -> action7_3\n"  "  going to PAUSE state"
         GV.next_E = 0
-        GV.prev_S = 1
+        GV.prev_S = 7
     
     
 def action7_4():
@@ -739,7 +744,7 @@ def action8_0():
         GV.pump1_titrant_active_led    = True
         GV.pump2_sample_active_led     = True
         str1 = "  pump 1 dispense\n" "  pump 2 dispense"
-        GV.SM_TEXT_TO_DIAPLAY ="S8,E0 -> action8_0" +str1
+        GV.SM_TEXT_TO_DIAPLAY ="S8,E0 -> action8_0\n" +str1
         GV.next_E = 1
 
 
@@ -843,7 +848,7 @@ def action8_2():
         GV.SM_TEXT_TO_DIAPLAY = "S8,E2 -> action8_2\n" "  goint to S8/E4"
         return     
     else:
-        GV.SM_TEXT_TO_DIAPLAY ="  going to S3/E0"
+        GV.SM_TEXT_TO_DIAPLAY ="  going to S8/E0"
         GV.next_E = 0
 
 
@@ -855,7 +860,7 @@ def action8_3():
     else:
         GV.SM_TEXT_TO_DIAPLAY =" going to PAUSE state"
         GV.next_E = 0
-        GV.prev_S = 2
+        GV.prev_S = 8
 
 
 def action8_4():
@@ -935,7 +940,7 @@ def action9_3():
         return     
     GV.SM_TEXT_TO_DIAPLAY = "S9,E3 -> action9_3\n"  "  going to PAUSE state"
     GV.next_E = 0
-    GV.prev_S = 1
+    GV.prev_S = 9
     
     
 def action9_4():
@@ -957,7 +962,7 @@ def action10_0():
         GV.pump1_titrant_active_led    = True
         GV.pump2_sample_active_led     = True
         str1 = "  pump 1 dispense\n" "  pump 2 dispense"
-        GV.SM_TEXT_TO_DIAPLAY ="S10,E0 -> action10_0" +str1
+        GV.SM_TEXT_TO_DIAPLAY ="S10,E0 -> action10_0\n" +str1
         GV.next_E = 1
 
 
@@ -1054,12 +1059,16 @@ def action10_2():
     SC2_pos = int( RECIPE['Load_Prime']['SC2_Volume']* GV.PUMP_SAMPLE_SCALING_FACTOR )
     pump1_pos = GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
     time.sleep(.5)
-    target_pos_1 = pump1_pos + TC2_pos
+    target_pos_1 = pump1_pos - TC2_pos
+    if target_pos_1 < 0:
+        target_pos_1 = 0
     GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, target_pos_1)
     time.sleep(.5)
     pump2_pos = GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
     time.sleep(.5)
-    target_pos_2 = pump2_pos + SC2_pos
+    target_pos_2 = pump2_pos - SC2_pos
+    if target_pos_2 < 0:
+        target_pos_2 = 0
     GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, target_pos_2)
     time.sleep(.5)
     #wait until pumps reach targets
@@ -1102,8 +1111,8 @@ def action10_3():
         GV.SM_TEXT_TO_DIAPLAY = "S10,E2 -> action10_2\n" "  goint to S10/E4"
         return     
     else:
-        GV.SM_TEXT_TO_DIAPLAY ="  going to S3/E0"
-        GV.next_E = 0
+        GV.SM_TEXT_TO_DIAPLAY ="  going to S10/E4"
+        GV.next_E = 4
 
 
 def action10_4():
@@ -1116,7 +1125,7 @@ def action10_4():
         GV.SM_TEXT_TO_DIAPLAY = "S10,E2 -> action10_2\n" "  goint to S10/E4"
         return     
     else:
-        GV.SM_TEXT_TO_DIAPLAY ="  going to S3/E0"
+        GV.SM_TEXT_TO_DIAPLAY ="  going to S11/E0"
         GV.next_E = 0
 
 
@@ -1128,7 +1137,7 @@ def action10_5():
     else:
         GV.SM_TEXT_TO_DIAPLAY =" going to PAUSE state"
         GV.next_E = 0
-        GV.prev_S = 2
+        GV.prev_S = 10
 
 
 def action10_6():
@@ -1179,6 +1188,7 @@ def action11_2():
     else:
         GV.SM_TEXT_TO_DIAPLAY ="S11,E2 -> action11_2\n" "  go to PAUSE state"
         GV.next_E = 0
+        GV.prev_S = 11
 
     
 def action11_3():

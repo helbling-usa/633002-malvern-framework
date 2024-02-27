@@ -528,9 +528,9 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             Next_State = int(S_next[0])    
             Next_action= statemachine.name() + '.'+ S_next[1]
             GV.cur_S = Next_State  
-            # logger.info("next action:", Next_action, '  cur_S:', Next_State)          
+            logger.info("next action: {} cur_S: {}".format( Next_action, Next_State)          )
             eval('SM.'+Next_action+'()')
-            # logger.info(GV.SM_TEXT_TO_DIAPLAY)
+            logger.info(GV.SM_TEXT_TO_DIAPLAY)
             self.t_status.delete("1.0", END)
             self.t_status.insert(END, GV.SM_TEXT_TO_DIAPLAY)
             Event = GV.next_E 

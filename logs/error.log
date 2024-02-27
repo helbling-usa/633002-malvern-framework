@@ -906,3 +906,94 @@ ERROR:		pickup timeout. going to Pause state
 2024-02-26 15:44:35,627:Lib.Pump:exception happened in pump!!
 2024-02-26 15:44:51,902:Lib.Pump:Error reading pump!!!
 2024-02-26 15:44:51,902:Lib.Pump:exception happened in pump!!
+2024-02-27 12:33:21,220:Lib.Pump:Error reading pump!!!
+2024-02-27 12:33:21,226:Lib.Pump:exception happened in pump!!
+2024-02-27 12:36:50,940:Lib.Pump:Error reading pump!!!
+2024-02-27 12:36:50,940:Lib.Pump:exception happened in pump!!
+2024-02-27 12:41:06,927:Lib.Pump:Error reading pump!!!
+2024-02-27 12:41:06,928:Lib.Pump:exception happened in pump!!
+2024-02-27 12:41:26,515:Lib.Pump:Error reading pump!!!
+2024-02-27 12:41:26,515:Lib.Pump:exception happened in pump!!
+2024-02-27 12:44:19,102:Lib.Pump:Error reading pump!!!
+2024-02-27 12:44:19,103:Lib.Pump:exception happened in pump!!
+2024-02-27 12:44:38,709:Lib.Pump:Error reading pump!!!
+2024-02-27 12:44:38,710:Lib.Pump:exception happened in pump!!
+2024-02-27 12:44:48,940:Lib.Pump:Error reading pump!!!
+2024-02-27 12:44:48,941:Lib.Pump:exception happened in pump!!
+2024-02-27 12:45:22,939:Lib.Pump:Error reading pump!!!
+2024-02-27 12:45:22,940:Lib.Pump:exception happened in pump!!
+2024-02-27 12:45:44,647:Lib.Pump:Error reading pump!!!
+2024-02-27 12:45:44,647:Lib.Pump:exception happened in pump!!
+2024-02-27 12:53:53,635:Lib.Pump:Error reading pump!!!
+2024-02-27 12:53:53,635:Lib.Pump:exception happened in pump!!
+2024-02-27 12:54:13,229:Lib.Pump:Error reading pump!!!
+2024-02-27 12:54:13,229:Lib.Pump:exception happened in pump!!
+2024-02-27 12:55:32,621:Lib.Pump:Error reading pump!!!
+2024-02-27 12:55:32,621:Lib.Pump:exception happened in pump!!
+2024-02-27 12:55:55,179:Lib.Pump:Error reading pump!!!
+2024-02-27 12:55:55,181:Lib.Pump:exception happened in pump!!
+2024-02-27 12:56:45,660:Lib.Pump:Error reading pump!!!
+2024-02-27 12:56:45,661:Lib.Pump:exception happened in pump!!
+2024-02-27 12:57:05,282:Lib.Pump:Error reading pump!!!
+2024-02-27 12:57:05,282:Lib.Pump:exception happened in pump!!
+2024-02-27 12:57:15,513:Lib.Pump:Error reading pump!!!
+2024-02-27 12:57:15,514:Lib.Pump:exception happened in pump!!
+2024-02-27 12:57:41,180:Lib.Pump:Error reading pump!!!
+2024-02-27 12:57:41,180:Lib.Pump:exception happened in pump!!
+ERROR:		pickup timeout. going to Pause state
+2024-02-27 13:04:43,320:Lib.Pump:Error reading pump!!!
+2024-02-27 13:04:43,322:Lib.Pump:exception happened in pump!!
+2024-02-27 13:05:02,952:Lib.Pump:Error reading pump!!!
+2024-02-27 13:05:02,952:Lib.Pump:exception happened in pump!!
+2024-02-27 13:05:13,206:Lib.Pump:Error reading pump!!!
+2024-02-27 13:05:13,207:Lib.Pump:exception happened in pump!!
+2024-02-27 13:05:34,359:Lib.Pump:Error reading pump!!!
+2024-02-27 13:05:34,360:Lib.Pump:exception happened in pump!!
+2024-02-27 13:05:51,820:Lib.Pump:Error reading pump!!!
+2024-02-27 13:05:51,821:Lib.Pump:exception happened in pump!!
+2024-02-27 13:14:23,249:Lib.Pump:Error reading pump!!!
+2024-02-27 13:14:23,249:Lib.Pump:exception happened in pump!!
+2024-02-27 13:14:42,857:Lib.Pump:Error reading pump!!!
+2024-02-27 13:14:42,858:Lib.Pump:exception happened in pump!!
+2024-02-27 13:14:53,086:Lib.Pump:Error reading pump!!!
+2024-02-27 13:14:53,087:Lib.Pump:exception happened in pump!!
+2024-02-27 13:15:12,675:Lib.Pump:Error reading pump!!!
+2024-02-27 13:15:12,675:Lib.Pump:exception happened in pump!!
+2024-02-27 13:15:29,273:Lib.Pump:Error reading pump!!!
+2024-02-27 13:15:29,273:Lib.Pump:exception happened in pump!!
+2024-02-27 14:06:02,372:Lib.Pump:Error reading pump!!!
+2024-02-27 14:06:02,374:Lib.Pump:exception happened in pump!!
+ERROR:	Commumication error! -468715632
+2024-02-27 14:06:22,512:Lib.Pump:Error reading pump!!!
+2024-02-27 14:06:22,513:Lib.Pump:exception happened in pump!!
+ERROR:	Commumication error! 1079506832
+2024-02-27 14:06:46,940:Lib.Pump:Error reading pump!!!
+2024-02-27 14:06:46,940:Lib.Pump:exception happened in pump!!
+2024-02-27 14:10:27,778:Lib.Pump:Error reading pump!!!
+2024-02-27 14:10:27,779:Lib.Pump:exception happened in pump!!
+2024-02-27 14:10:47,412:Lib.Pump:Error reading pump!!!
+2024-02-27 14:10:47,412:Lib.Pump:exception happened in pump!!
+2024-02-27 14:10:57,633:Lib.Pump:Error reading pump!!!
+2024-02-27 14:10:57,633:Lib.Pump:exception happened in pump!!
+2024-02-27 14:11:24,804:Lib.Pump:Error reading pump!!!
+2024-02-27 14:11:24,804:Lib.Pump:exception happened in pump!!
+2024-02-27 14:11:46,882:Lib.Pump:Error reading pump!!!
+2024-02-27 14:11:46,882:Lib.Pump:exception happened in pump!!
+2024-02-27 14:24:05,200:Lib.Pump:Error reading pump!!!
+2024-02-27 14:24:05,200:Lib.Pump:exception happened in pump!!
+2024-02-27 14:24:24,790:Lib.Pump:Error reading pump!!!
+2024-02-27 14:24:24,791:Lib.Pump:exception happened in pump!!
+2024-02-27 14:24:35,037:Lib.Pump:Error reading pump!!!
+2024-02-27 14:24:35,038:Lib.Pump:exception happened in pump!!
+2024-02-27 14:24:59,739:Lib.Pump:Error reading pump!!!
+2024-02-27 14:24:59,739:Lib.Pump:exception happened in pump!!
+2024-02-27 14:26:07,536:Lib.Pump:Error reading pump!!!
+2024-02-27 14:26:07,536:Lib.Pump:exception happened in pump!!
+2024-02-27 14:26:27,150:Lib.Pump:Error reading pump!!!
+2024-02-27 14:26:27,150:Lib.Pump:exception happened in pump!!
+2024-02-27 14:26:37,389:Lib.Pump:Error reading pump!!!
+2024-02-27 14:26:37,390:Lib.Pump:exception happened in pump!!
+2024-02-27 14:26:58,447:Lib.Pump:Error reading pump!!!
+2024-02-27 14:26:58,447:Lib.Pump:exception happened in pump!!
+2024-02-27 14:27:13,862:Lib.Pump:Error reading pump!!!
+2024-02-27 14:27:13,863:Lib.Pump:exception happened in pump!!

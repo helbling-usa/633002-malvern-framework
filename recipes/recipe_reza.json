@@ -11,7 +11,7 @@
     },
     "PumpInit_Reload": 
     {
-        "enable": true,
+        "enable": false,
         "sample_pump_step": "micro step",
         "titrant_pump_step": "micro step",
         "titrant_pump_speed": 1000,
@@ -41,15 +41,15 @@
     },
     "Load_Prime": 
     {
-        "enable": false,
-        "sample_pump_step": "full step",
-        "titrant_pump_step": "full step",
+        "enable": true,
+        "sample_pump_step": "micro step",
+        "titrant_pump_step": "micro step",
         "titrant_pump_speed": 10,
         "sample_pump_speed": 10,
         "valve_move_timeout": 60,        
         "pump_move_timeout": 60, 
-        "TC2_Volume": 120,
-        "SC2_Volume": 150,
+        "TC2_Volume": 50,
+        "SC2_Volume": 50,
         "titrantwetloop1_volume": 5,
         "samplewetloop1_volume": 5
     },
