@@ -49,7 +49,9 @@
         "valve_move_timeout": 60,        
         "pump_move_timeout": 60, 
         "TC2_Volume": 120,
-        "SC2_Volume": 150
+        "SC2_Volume": 150,
+        "titrantwetloop1_volume": 5,
+        "samplewetloop1_volume": 5
     },
     "GantrytoB": 
     {

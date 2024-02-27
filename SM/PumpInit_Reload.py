@@ -634,6 +634,11 @@ def action5_1():
         if (wait_time >  bubble_pickup_timeout):
             logger.error("\t\tpickup timeout. going to Pause state")
             timeout_flag = True
+            time.sleep(.5)
+            GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
+            time.sleep(.5)            
+            GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
+            time.sleep(0.5)             
             break
 
     #Stop both pumps
@@ -1154,6 +1159,11 @@ def action10_1():
         if (wait_time >  bubble_pickup_timeout):
             logger.error("\t\tpickup timeout. going to Pause state")
             timeout_flag = True
+            time.sleep(.5)
+            GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
+            time.sleep(.5)            
+            GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
+            time.sleep(0.5)             
             break
 
     # # Stop pumps
