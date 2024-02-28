@@ -1,7 +1,7 @@
 {
     "Startup": 
     {
-        "enable": false,
+        "enable": true,
         "gantry_move_speed": 20,
         "gantry_home_timeout": 500,   
         "gantry_homing_speed": 1,
@@ -41,7 +41,7 @@
     },
     "Load_Prime": 
     {
-        "enable": true,
+        "enable": false,
         "sample_pump_step": "micro step",
         "titrant_pump_step": "micro step",
         "titrant_pump_speed": 10,
@@ -55,7 +55,7 @@
     },
     "GantrytoB": 
     {
-        "enable": false,
+        "enable": true,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
         "gantry_move_speed": 5,
@@ -85,7 +85,7 @@
     },    
     "GantrytoA": 
     {
-        "enable": false,
+        "enable": true,
         "sample_pump_step": "full step",
         "titrant_pump_step": "full step",
         "gantry_move_speed": 5,
@@ -122,6 +122,8 @@
     "SampleLineClean": 
     {
         "enable": false,
+        "sample_pump_step": "full step",
+        "titrant_pump_step": "full step",
         "titrant_pump_speed": 1000,
         "sample_pump_speed": 1000,
         "valve_move_timeout": 60,        

@@ -122,6 +122,8 @@ RECIPE= {
     "SampleLineClean": 
     {
         "enable": False,
+        "sample_pump_step": "full step",
+        "titrant_pump_step": "full step",
         "titrant_pump_speed": 1000,
         "sample_pump_speed": 1000,
         "valve_move_timeout": 60,        

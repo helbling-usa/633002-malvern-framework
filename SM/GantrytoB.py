@@ -39,33 +39,22 @@ def action1_0():
         GV.next_E = 3          
         GV.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" "Prepare to go to Pause State"
         return 
-    if (GV.ERROR == True):
+    elif (GV.ERROR == True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S1,E0 -> action1_0\n" "Prepare to go to error State"
         return     
-    # h_gantry_homed = GV.horizontal_gantry_homed_led
-    v_gantry_homed = GV.vertical_gantry_homed_led    
-    
-    if (v_gantry_homed == False):
-        GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "Gantry not homed\n""going to ERROR state"
-    else:        
-        GV.SM_TEXT_TO_DIAPLAY = "Raize Z actuator to position"
-        GV.vertical_gantry_active_led = True
-        GV.next_E = 1
+    else:
+        v_gantry_homed = GV.vertical_gantry_homed_led            
+        if (v_gantry_homed == False):
+            GV.next_E = 4
+            GV.SM_TEXT_TO_DIAPLAY = "Gantry not homed\n""going to ERROR state"
+        else:        
+            GV.SM_TEXT_TO_DIAPLAY = "Raize Z actuator to position"
+            GV.vertical_gantry_active_led = True
+            GV.next_E = 1
 
 
 def action1_1():
-    timeout = False
-    if (GV.PAUSE == True):
-        GV.next_E = 3
-        GV.SM_TEXT_TO_DIAPLAY = "S1,E1 -> action1_1\n" "go to S1/E3"
-        return 
-    if (GV.ERROR == True or timeout==True):
-        GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "S1,E1 -> action1_1\n" "go to S1/E4"
-        return 
-
     GV.motors.select_axis(HW.GANTRY_VER_AXIS_ID)
     # cur_motor_pos= GV.motors.read_actual_position()    
     high_position = RECIPE["GantrytoB"]["vertical_high_position"]    
@@ -76,39 +65,47 @@ def action1_1():
     GV.motors.move_absolute_position(next_pos, move_speed, HW.GANTRY_VER_ACCELERATION)
 
     cur_motor_pos= GV.motors.read_actual_position()
-    while (abs(cur_motor_pos - next_pos) > 50):
+    while (abs(cur_motor_pos - next_pos) > 10):
         time.sleep(1)
         cur_motor_pos= GV.motors.read_actual_position()
         print("\t\tcur Z pos: {},  target pos: {}".format(cur_motor_pos, next_pos))
 
     GV.vertical_gantry_active_led = False  
-    GV.SM_TEXT_TO_DIAPLAY = "actuator reached position\n"
-    GV.next_E = 2
-
-
+    if (GV.PAUSE == True):
+        GV.next_E = 3
+        GV.SM_TEXT_TO_DIAPLAY = "S1,E1 -> action1_1\n" "go to S1/E3"
+        return 
+    elif (GV.ERROR == True):
+        GV.next_E = 4
+        GV.SM_TEXT_TO_DIAPLAY = "S1,E1 -> action1_1\n" "go to S1/E4"
+        return 
+    else:    
+        GV.SM_TEXT_TO_DIAPLAY = "actuator reached position\n"
+        GV.next_E = 2
 
 def action1_2():
     if (GV.PAUSE == True):
         GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "S1,E2 -> action1_2\n" "go to S1/E3"
-        return     
-    if (GV.ERROR == True):
+        return
+    elif (GV.ERROR == True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S1,E2 -> action1_2\n" "go to S1/E4"
-        return     
-    GV.SM_TEXT_TO_DIAPLAY = "going to S2/E0 state"
-    GV.next_E = 0
+        return
+    else:
+        GV.SM_TEXT_TO_DIAPLAY = "going to S2/E0 state"
+        GV.next_E = 0
 
 
 def action1_3():
     if (GV.ERROR == True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S1,E3 -> action1_3\n" "  go to S1/E4"
-        return     
-    
-    GV.SM_TEXT_TO_DIAPLAY ="S1,E2 -> action1_2\n"  "  go to PAUSE state"
-    GV.next_E = 0
-    GV. prev_S = 1
+        return
+    else:
+        GV.SM_TEXT_TO_DIAPLAY ="S1,E2 -> action1_2\n"  "  go to PAUSE state"
+        GV.next_E = 0
+        GV. prev_S = 1
     
     
 def action1_4():
@@ -121,28 +118,17 @@ def action2_0():
         GV.next_E = 3        
         GV.SM_TEXT_TO_DIAPLAY = "S2,E0 -> action2_1\n" "  going  pasue state"
         return 
-    if (GV.ERROR == True):
+    elif (GV.ERROR == True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S2,E0 -> action2_1\n" "  going to erro state"
-        return     
-    GV.horizontal_gantry_active_led = True
-    GV.SM_TEXT_TO_DIAPLAY ="Moving X actuator to position"
-    GV.next_E = 1
+        return
+    else:  
+        GV.horizontal_gantry_active_led = True
+        GV.SM_TEXT_TO_DIAPLAY ="Moving X actuator to position"
+        GV.next_E = 1
 
 
 def action2_1():
-    timeout = False
-    if (GV.PAUSE == True):
-        GV.next_E = 3
-        GV.SM_TEXT_TO_DIAPLAY = "S2,E1 -> action2_1\n" "  goint to pause state"
-        return 
-    if (GV.ERROR == True  or  timeout==True):
-        GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "S2,E1 -> action2_1\n" "  going to erro state"
-        return 
-    
-
-    
     # HW.vertical_gantry_active_led
     # HW.vertical_gantry_homed_led 
     GV.motors.select_axis(HW.GANTRY_HOR_AXIS_ID)
@@ -161,8 +147,17 @@ def action2_1():
         print("\t\tcur X pos: {},  target pos: {}".format(cur_motor_pos, next_pos))
 
     GV.horizontal_gantry_active_led = False
-    GV.SM_TEXT_TO_DIAPLAY ="X actuator to moved to  position"
-    GV.next_E = 2
+    if (GV.PAUSE == True):
+        GV.next_E = 3
+        GV.SM_TEXT_TO_DIAPLAY = "S2,E1 -> action2_1\n" "  goint to pause state"
+        return 
+    elif (GV.ERROR == True):
+        GV.next_E = 4
+        GV.SM_TEXT_TO_DIAPLAY = "S2,E1 -> action2_1\n" "  going to erro state"
+        return 
+    else:    
+        GV.SM_TEXT_TO_DIAPLAY ="X actuator to moved to  position"
+        GV.next_E = 2
     
 
 def action2_2():
@@ -172,12 +167,13 @@ def action2_2():
         GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "S2,E2 -> action2_2\n" "  goint to pause state"
         return 
-    if (GV.ERROR == True  or  timeout==True):
+    elif (GV.ERROR == True  or  timeout==True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S2,E2 -> action2_2\n" "  going to erro state"
         return
-    GV.SM_TEXT_TO_DIAPLAY ="Lower Z actuator to position"
-    GV.next_E = 0
+    else:
+        GV.SM_TEXT_TO_DIAPLAY ="Lower Z actuator to position"
+        GV.next_E = 0
 
 
 def action2_3():
@@ -185,10 +181,10 @@ def action2_3():
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S2,E4 -> action2_3\n" "  going to erro state"
         return         
-    
-    GV.SM_TEXT_TO_DIAPLAY ="S2,E4 -> action2_3"
-    GV.next_E = 0
-    GV. prev_S = 2
+    else:
+        GV.SM_TEXT_TO_DIAPLAY ="S2,E4 -> action2_3"
+        GV.next_E = 0
+        GV. prev_S = 2
 
 
 def action2_4():
@@ -201,25 +197,17 @@ def action3_0():
         GV.next_E = 3          
         GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0\n" "  going to S3/E3"
         return 
-    if (GV.ERROR == True):
+    elif (GV.ERROR == True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0\n" "  going to S3/E4"
-        return     
-    GV.vertical_gantry_active_led = True
-    GV.SM_TEXT_TO_DIAPLAY = "Lower Z actuator to position"
-    GV.next_E = 1
+        return   
+    else:  
+        GV.vertical_gantry_active_led = True
+        GV.SM_TEXT_TO_DIAPLAY = "Lower Z actuator to position"
+        GV.next_E = 1
 
 
 def action3_1():
-    timeout = False
-    if (GV.PAUSE == True):
-        GV.next_E = 3        
-        GV.SM_TEXT_TO_DIAPLAY = "S3,E1 -> action3_1\n" "  going to S3/E3"
-        return 
-    if (GV.ERROR == True or timeout==True):
-        GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY = "S3,E1 -> action3_1\n" "  going to S3/E4"
-        return    
     GV.motors.select_axis(HW.GANTRY_VER_AXIS_ID)
     # cur_motor_pos= GV.motors.read_actual_position()    
     low_position = RECIPE["GantrytoB"]["vertical_titration_position"]    
@@ -229,14 +217,22 @@ def action3_1():
     move_speed = RECIPE['GantrytoB']['gantry_move_speed'] / HW.TML_SPEED_2_MM_PER_SEC_VER
     GV.motors.move_absolute_position(next_pos, move_speed, HW.GANTRY_VER_ACCELERATION)
     cur_motor_pos= GV.motors.read_actual_position()
-    while ( abs(cur_motor_pos - next_pos) > 50):
+    while ( abs(cur_motor_pos - next_pos) > 10):
         time.sleep(1)
         cur_motor_pos= GV.motors.read_actual_position()
         print("\t\tcur Z pos: {},  target pos: {}".format(cur_motor_pos, next_pos))
     GV.vertical_gantry_active_led = False
-
-    GV.next_E = 2
-    GV.SM_TEXT_TO_DIAPLAY ="going to S3/E2"
+    if (GV.PAUSE == True):
+        GV.next_E = 3        
+        GV.SM_TEXT_TO_DIAPLAY = "S3,E1 -> action3_1\n" "  going to S3/E3"
+        return 
+    elif (GV.ERROR == True):
+        GV.next_E = 4
+        GV.SM_TEXT_TO_DIAPLAY = "S3,E1 -> action3_1\n" "  going to S3/E4"
+        return
+    else:
+        GV.next_E = 2
+        GV.SM_TEXT_TO_DIAPLAY ="going to S3/E2"
 
 
 def action3_2():
@@ -254,10 +250,10 @@ def action3_3():
         GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "S3,E0 -> action3_0\n" "  going to S3/E3"
         return 
-    
-    GV.SM_TEXT_TO_DIAPLAY ="S3,E2 -> action3_2\n" "  go to PAUSE state"
-    GV. prev_S = 3
-    GV.next_E = 0
+    else:
+        GV.SM_TEXT_TO_DIAPLAY ="S3,E2 -> action3_2\n" "  go to PAUSE state"
+        GV. prev_S = 3
+        GV.next_E = 0
 
 def action3_4():
     # print("S3,E3 -> action3_3")
@@ -270,14 +266,13 @@ def action4_0():
         GV.next_E = 5
         GV.SM_TEXT_TO_DIAPLAY = "S4,E0 -> action4_0\n" "  going to S4/E5"
         return 
-    if (GV.ERROR == True):
+    elif (GV.ERROR == True):
         GV.next_E = 6
         GV.SM_TEXT_TO_DIAPLAY = "S4,E0 -> action4_0\n" " going to S4/E6"
         return 
-
-
-    GV.SM_TEXT_TO_DIAPLAY = "Stop components and return control to GUI"
-    GV.next_E = 1
+    else:
+        GV.SM_TEXT_TO_DIAPLAY = "Stop components and return control to GUI"
+        GV.next_E = 1
 
 
 def action4_1():
@@ -286,15 +281,14 @@ def action4_1():
         GV.next_E = 5
         GV.SM_TEXT_TO_DIAPLAY = "S4,E1 -> action4_1\n" " going to S4/E5"
         return 
-    if (GV.ERROR == True):
+    elif (GV.ERROR == True):
         GV.next_E = 6
         GV.SM_TEXT_TO_DIAPLAY = "S4,E1 -> action4_1\n" " going to S4/E6"
         return 
-
-
-    GV.terminate_SM = True
-    GV.SM_TEXT_TO_DIAPLAY ="Terminating statemachine"
-    GV.next_E = 0
+    else:
+        GV.terminate_SM = True
+        GV.SM_TEXT_TO_DIAPLAY ="Terminating statemachine"
+        GV.next_E = 0
 
 
 
@@ -303,10 +297,10 @@ def action4_2():
         GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "S4,E2 -> action4_5\n" " going to Pause state"
         return         
-    
-    GV.next_E = 0
-    GV. prev_S = 4
-    GV.SM_TEXT_TO_DIAPLAY = "S4,E5 -> action4_3\n" "  going to S6/E0"
+    else:
+        GV.next_E = 0
+        GV. prev_S = 4
+        GV.SM_TEXT_TO_DIAPLAY = "S4,E5 -> action4_3\n" "  going to S6/E0"
 
 
 def action4_3():
