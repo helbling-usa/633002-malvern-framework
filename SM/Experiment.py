@@ -75,7 +75,7 @@ def action0_0():
     time.sleep(1)
     GV.pump1.set_valve(HW.TITRANT_LOOP_ADDRESS, HW.VALVE3_P3)
     time.sleep(1)
-    GV.pump1.set_valve(HW.TITRANT_PIPETTE_ADDRESS,HW.VALVE5_P2)
+    GV.pump1.set_valve(HW.TITRANT_PIPETTE_ADDRESS,HW.VALVE5_P1)
     time.sleep(1)
     GV.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,HW.VALVE9_P2)        
     time.sleep(1)
@@ -90,7 +90,8 @@ def action0_0():
     str1 = str1 + "V5 to Titrant Port\n" " V9 to Air\n" 
     GV.VALVE_1 = "Line to Pump"
     GV.VALVE_3 = "Titrant Line"
-    GV.VALVE_4 = "Titrant Port"
+    # GV.VALVE_4 = "Titrant Port"
+    GV.VALVE_5 = "Titrant Cannula"
     GV.VALVE_9 = "V9 to Air"
     GV.SM_TEXT_TO_DIAPLAY = str1
     GV.next_E = 0    
