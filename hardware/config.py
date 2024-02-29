@@ -1,6 +1,6 @@
 #------------------------------ Gantry Parameters -------------------------------------------------
-GANTRY_VER_SPEED                = 15.0      # vertical gantry speed
-GANTRY_HOR_SPEED                = 15.0      # horizontal gantry speed
+GANTRY_VER_HOMING_SPEED        = 5.0        # vertical gantry speed mm/sec
+GANTRY_HOR_HOMING_SPEED        = 5.0        # horizontal gantry speed mm/sec
 GANTRY_VER_ACCELERATION         = 1         # vertical gantry acceleration
 GANTRY_HOR_ACCELERATION         = 1         # horizontal gantry acceleration
 MIXING_ACCELERATION             = 1         # mixing motor acceleration
@@ -26,7 +26,7 @@ BS3_IO_PORT     = 2
 BS4_IO_PORT     = 3
 BS5_IO_PORT     = 4
 BS6_IO_PORT     = 5
-BS7_IO_PORT     = 7#6  #set this to 7 for Reza's setupyea
+BS7_IO_PORT     = 6  #set this to 7 for Reza's setup, due to defective bubble sensor
 BS8_IO_PORT     = 7
 BS9_IO_PORT     = 8
 BS10_IO_PORT    = 9

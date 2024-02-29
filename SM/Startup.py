@@ -60,8 +60,9 @@ def action0_0():
 
 
 #--------------
-def action1_0():    
-    ret_val = GV.motors.homing(HW.GANTRY_VER_AXIS_ID)    
+def action1_0():
+    homing_speed_ver = HW.GANTRY_VER_HOMING_SPEED / HW.TML_SPEED_2_MM_PER_SEC_VER
+    ret_val = GV.motors.homing(HW.GANTRY_VER_AXIS_ID, homing_speed_ver)    
     if ret_val == False:
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY =  "  Homing Error!!!\n""going to Error state"
@@ -130,7 +131,8 @@ def action1_4():
 #--------------    
 def action2_0():
     # print('Homing Gantry Horizontal')
-    ret_val = GV.motors.homing(HW.GANTRY_HOR_AXIS_ID)
+    homing_speed_hor = HW.GANTRY_HOR_HOMING_SPEED / HW.TML_SPEED_2_MM_PER_SEC_HOR
+    ret_val = GV.motors.homing(HW.GANTRY_HOR_AXIS_ID, homing_speed_hor)
     if ret_val == False:
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "  Homing Error!!!\n" "going to Error state"
@@ -280,12 +282,13 @@ def action4_0():
         GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "going to Pause state"
         return 
-    if (GV.ERROR == True):
+    elif (GV.ERROR == True):
         GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = "going to Error state"
         return 
-    GV.next_E = 1
-    GV.SM_TEXT_TO_DIAPLAY = "  wait for gantry Z to get to position...\n" 
+    else:
+        GV.next_E = 1
+        GV.SM_TEXT_TO_DIAPLAY = "  wait for gantry Z to get to position...\n" 
  
 
 def action4_1():

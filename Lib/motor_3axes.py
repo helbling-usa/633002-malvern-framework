@@ -275,13 +275,13 @@ class motor_3axes():
 
 
 
-    def homing(self, AXIS_ID):
+    def homing(self, AXIS_ID, homing_speed):
         #logger.info("\t\t----------MOVE Relative-----------------")
         position = -1000000	#	/* position command [drive internal position units, encoder counts] */
         home_position = -1000	#	/* the homing position [drive internal position units, encoder counts] */
         cap_position = 0		#	/* the position captures at HIGH-LOW transition of negative limit switch */
-        high_speed = 10	    	#	/* the homing travel speed [drive internal speed units, encoder counts/slow loop sampling]*/
-        low_speed = 1.0 		#	/* the homing brake speed [drive internal speed units, encoder counts/slow loop sampling] */
+        # high_speed = 10	    	#	/* the homing travel speed [drive internal speed units, encoder counts/slow loop sampling]*/
+        # homing_speed = 1.0 		#	/* the homing brake speed [drive internal speed units, encoder counts/slow loop sampling] */
         acceleration = 0.6
         #/*Constants used for LSWType*/
         LSW_NEGATIVE = -1
@@ -304,7 +304,7 @@ class motor_3axes():
         x = self.mydll1.TS_MoveRelative
         x.restype = c_bool
         x.argtypes = [c_long,c_double, c_double, c_bool, c_short, c_short]
-        tt = x(position, low_speed, acceleration,NO_ADDITIVE,UPDATE_IMMEDIATE,FROM_REFERENCE)
+        tt = x(position, homing_speed, acceleration,NO_ADDITIVE,UPDATE_IMMEDIATE,FROM_REFERENCE)
         if tt<=0:
             logger.error("\t\tError moving relative")
             return False
@@ -345,7 +345,7 @@ class motor_3axes():
         x.restype = c_bool
         x.argtypes = [c_long,c_double, c_double,  c_short, c_short]
         # abs_pos = -2000
-        tt = x(cap_position, low_speed, acceleration,UPDATE_IMMEDIATE,FROM_REFERENCE)
+        tt = x(cap_position, homing_speed, acceleration,UPDATE_IMMEDIATE,FROM_REFERENCE)
         if (tt == False):
             logger.error("\t\terror in moving to absolute position")
             return False
@@ -361,7 +361,7 @@ class motor_3axes():
         logger.info("\t\tThe limit switchmotor position is set to {} [position internal units]!".format( home_position));
         logger.info("\t\tHoming procedure done!\n")
         logger.info("\t\tAfter homing, the limit switch position is set to: {}".format(self.read_actual_position()))
-        self.move_absolute_position(0 , low_speed, acceleration)
+        self.move_absolute_position(0 , homing_speed, acceleration)
         time.sleep(3)
         # print("----------set position-----------------")
         tt = self.read_actual_position()
