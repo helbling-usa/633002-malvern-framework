@@ -12,16 +12,17 @@ RECIPE= {
     "PumpInit_Reload": 
     {
         "enable": False,
-        "sample_pump_step": "full step",
-        "titrant_pump_step": "full step",
+        "sample_pump_step": "micro step",
+        "titrant_pump_step": "micro step",
         "titrant_pump_speed": 1000,
         "sample_pump_speed": 1000,
         "valve_move_timeout": 60,
         "pump_init_timeout": 60,
         "pump_move_timeout": 60,  
-        "loadH2O2_timeout": 600,
-        "TitrantPumpt_syringe_fill_volume": 100,
-        "SamplePumpt_syringe_fill_volume": 100
+        "titrantpump_syringe_fill_volume": 1,
+        "samplepump_syringe_fill_volume": 1,
+        "samplepump_fill_speed": 200,
+        "titrantpump_fill_speed": 200
     },   
     "Degas": 
     {

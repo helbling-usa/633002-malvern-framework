@@ -12,25 +12,17 @@ import logging
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
-
 # formatter = logging.Formatter('%(levelname)s:%(name)s:%(message)s')
 formatter = logging.Formatter('%(levelname)s:%(message)s')
-
 file_handler = logging.FileHandler('./logs/error.log')
 file_handler.setLevel(logging.ERROR)
 file_handler.setFormatter(formatter)
-
 stream_handler = logging.StreamHandler()
 stream_handler.setFormatter(formatter)
-
 logger.addHandler(file_handler)
 logger.addHandler(stream_handler)
 
-
-
 class SM_GUI():
-
-
       def __init__(self, root):
             self.root = root
             self.set_fonts()
@@ -47,7 +39,7 @@ class SM_GUI():
 
       def set_main_window(self):
             # self.root.geometry("1200x800+50+50") 
-            self.root.title("EXPERIMENT RUN MODE (ver x.1.10)") 
+            self.root.title("EXPERIMENT RUN MODE (ver x.1.11)") 
             self.root.resizable(False, False)
             # self.root.overrideredirect(True)
             window_height = 800
@@ -75,15 +67,15 @@ class SM_GUI():
             self.canvas1.create_line(40,80,40,330, fill='gray', width=2)      #vertical
             self.canvas1.create_line(630,80,630,330, fill='gray', width=2)    #vertical
 
-            self.canvas1.create_line(40,350,830,350, fill='gray', width=2)      #horizontal 
+            self.canvas1.create_line(40,350,830,350, fill='gray', width=2)    #horizontal 
             self.canvas1.create_line(40,450,830,450, fill='gray', width=2)    #horizontal 
-            self.canvas1.create_line(40,350,40,450, fill='gray', width=2)      #vertical
-            self.canvas1.create_line(830,350,830,450, fill='gray', width=2)    #vertical
+            self.canvas1.create_line(40,350,40,450, fill='gray', width=2)     #vertical
+            self.canvas1.create_line(830,350,830,450, fill='gray', width=2)   #vertical
 
-            self.canvas1.create_line(40,470,830,470, fill='gray', width=2)      #horizontal 
+            self.canvas1.create_line(40,470,830,470, fill='gray', width=2)    #horizontal 
             self.canvas1.create_line(40,760,830,760, fill='gray', width=2)    #horizontal 
-            self.canvas1.create_line(40,470,40,760, fill='gray', width=2)      #vertical
-            self.canvas1.create_line(830,470,830,760, fill='gray', width=2)    #vertical            
+            self.canvas1.create_line(40,470,40,760, fill='gray', width=2)     #vertical
+            self.canvas1.create_line(830,470,830,760, fill='gray', width=2)   #vertical            
 
       def set_valve_psoitions_section(self):
             Y1  = 480

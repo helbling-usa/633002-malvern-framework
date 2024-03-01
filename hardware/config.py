@@ -9,17 +9,18 @@ TML_LENGTH_2_MM_VER             = 10. /1000      # tml unit for length to um
 TML_LENGTH_2_MM_HOR             = 7.5 /1000      # tml unit for length to um
 TML_SPEED_2_MM_PER_SEC_HOR      = 7.5
 TML_SPEED_2_MM_PER_SEC_VER      = 7.5
-#------------------------------ Com Ports ---------------------------------------------------------
-TEC_PORT                        = "COM5"                       # port address for TEC controller
-TECHNOSOFT_PORT                 = "COM7"               # port address for mixer motor controller
-PUMP1_PORT                      = "COM6"                     # port address for pump 1
 
 #------------------------------ Technosoft controller axes ----------------------------------------
 MIXER_AXIS_ID                   = 24                      # axis id of mixer motor
 GANTRY_VER_AXIS_ID              =  1                 # axis id of vertical gantry
 GANTRY_HOR_AXIS_ID              =  1                 # axis id of horizontal gantry
 
-#------------------------------ Bubble semsor IO port address on the labjack ----------------------
+#------------------------------ Com Ports ---------------------------------------------------------
+TEC_PORT                        = "COM5"                       # port address for TEC controller
+TECHNOSOFT_PORT                 = "COM7"               # port address for mixer motor controller
+PUMP1_PORT                      = "COM6"                     # port address for pump 1
+
+#------------------------------ Bubble sensor IO port address on the labjack ----------------------
 BS1_IO_PORT     = 0
 BS2_IO_PORT     = 1
 BS3_IO_PORT     = 2
@@ -39,13 +40,14 @@ BS14_IO_PORT    = 13
 BS_THRESHOLD                    = 2.5       # Threshold value for bubble sensor 1
 
 #-------------------------------- Temperature threshold for TEC -----------------------------------
-TEC_ACCEPTABLE_TEMP_DIFF        = 1         # This is acceptable temp. difference of current temp. to the target temp.
-                                            #  is considered close enough once the tec temp reahced this 
-                                            #  distance from target temp, it will move to next state
+TEC_ACCEPTABLE_TEMP_DIFF        = 1         # This is acceptable difference of current temperature with 
+                                            #  the target temperature that is considered close enough. Once the 
+                                            #  tec temp reahced this distance from target temp, it will 
+                                            #  move to next state
 
 #------------------------------ Pumps Parameters --------------------------------------------------
-PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE   = 192000     # Target position when pickup until bubble (sample pump)
-PICKUP_UNTIL_BUBBLE_TARGET_TITRANT  = 192000     # Target position when pickup until bubble (titrant pump)
+PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE   = 192000    # Target position when pickup until bubble (sample pump)
+PICKUP_UNTIL_BUBBLE_TARGET_TITRANT  = 384000    # Target position when pickup until bubble (titrant pump)
 DISPENSE_UNTIL_BUBBLE_TARGET        = 0         # Target position when pickup until bubble
 BUBBLE_DETECTION_PUMP_SPEED_SAMPLE  = 5         # speed of pump during bubble detection
 BUBBLE_DETECTION_PUMP_SPEED_TITRANT = 5         # speed of pump during bubble detection

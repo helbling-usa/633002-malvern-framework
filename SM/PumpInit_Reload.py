@@ -23,7 +23,7 @@ TT = np.array([[( 0, 'action0_0')  ,(0, 'action0_1') ,(0, 'action0_2') ,(1, 'act
                [( 2, 'action2_0')  ,(2, 'action2_1') ,(3, 'action2_2') ,(12,'action2_3') ,(13,'action2_4') ,(0, 'None')      , (0, 'None')     , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ],  #<---STATE2
                [( 3, 'action3_0')  ,(3, 'action3_1') ,(4, 'action3_2') ,(12,'action3_3') ,(12,'action3_4') ,(0, 'None')      , (0, 'None')     , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ],  #<---STATE3
                [( 4, 'action4_0')  ,(4, 'action4_1') ,(5, 'action4_2') ,(12,'action4_3') ,(13,'action4_4') ,(0, 'None')      , (0, 'None')     , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ],  #<---STATE4
-               [( 5, 'action5_0')  ,(5, 'action5_1') ,(5, 'action5_2') ,(5, 'action5_3') ,(6, 'action5_4') ,(12, 'action5_5'), (13,'action5_6'),(0, 'None')       , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ],  #<---STATE5
+               [( 5, 'action5_0')  ,(5, 'action5_1') ,(6, 'action5_2') ,(12,'action5_3') ,(13,'action5_4') ,(0, 'None')      , (0,'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ],  #<---STATE5
                [( 6, 'action6_0')  ,(6, 'action6_1') ,(7, 'action6_2') ,(12,'action6_3') ,(13,'action6_4') ,(0, 'None')      , (0, 'None')     , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ],  #<---STATE6
                [( 7, 'action7_0')  ,(7, 'action7_1') ,(8, 'action7_2') ,(12,'action7_3') ,(13,'action7_4') ,(0, 'None')      , (0, 'None')     , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ],  #<---STATE7
                [( 8, 'action8_0')  ,(8, 'action8_1') ,(9, 'action8_2') ,(12,'action8_3') ,(13,'action8_4') ,(0, 'None')      , (0, 'None')     , (0, 'None')      , (0, 'None')      , (0, 'None')      , (0, 'None')       , (0, 'None')        , (0, 'None')        , (0, 'None')         ],  #<---STATE8
@@ -65,8 +65,8 @@ def NewAirSlugs(pump_address, valve_address):
         time.sleep(.5)
         GV.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,HW.VALVE9_P2)        
         time.sleep(.5)
-        value_to_air = HW.VALVE8_P6
-        valve_to_water = HW.VALVE8_P4
+        value_to_air = HW.VALVE9_P2
+        valve_to_water = HW.VALVE9_P3
     elif pump_address== HW.SAMPLE_PUMP_ADDRESS:
         scale_factor = GV.PUMP_SAMPLE_SCALING_FACTOR
         pump_speed = int(RECIPE["Func_NewAirSlugs"]["sample_pump_speed"] * scale_factor)
@@ -79,8 +79,8 @@ def NewAirSlugs(pump_address, valve_address):
         time.sleep(.5)
         GV.pump1.set_multiwayvalve(HW.SAMPLE_CLEANING_ADDRESS,HW.VALVE8_P6)    
         time.sleep(.5)
-        value_to_air = HW.VALVE9_P2
-        valve_to_water = HW.VALVE9_P3                
+        value_to_air = HW.VALVE8_P6
+        valve_to_water = HW.VALVE8_P4
     else:
         logger.info("Not a valid pump address")
         exit(1)
@@ -290,9 +290,9 @@ def action1_1():
     timeout = False
     GV.pump1.set_pump_assignment(HW.TIRRANT_PUMP_ADDRESS)
     GV.pump1.pump_Zinit(HW.TIRRANT_PUMP_ADDRESS)
-    time.sleep(3)
+    time.sleep(1)
     GV.pump1.pump_Zinit(HW.SAMPLE_PUMP_ADDRESS)    
-    time.sleep(3)
+    time.sleep(10)
     #Turn on the home LEDs for both pumps
     GV.pump1_titrant_homed_led     = True    
     GV.pump2_sample_homed_led      = True
@@ -591,204 +591,93 @@ def action4_4():
 #------------------------------------------------------------------------------------ 
 def action5_0():
     if (GV.PAUSE == True):
-        GV.next_E = 5
+        GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "going to Pause state"
         return 
     elif (GV.ERROR == True):
-        GV.next_E = 6
+        GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = " going to ERROR state"
         return    
     else:
         #Turn on the pump active LEDs    
         GV.pump1_titrant_active_led    = True
         GV.pump2_sample_active_led     = True
-        GV.SM_TEXT_TO_DIAPLAY = "Pump 1 pickup\n" "Pump 2 pickup"
+        GV.SM_TEXT_TO_DIAPLAY = "Pump 1 to pickup position\n" "Pump 2 to pickup position"
         GV.next_E = 1
 
 
 def action5_1():
-    timeout_flag = False
-    bubble_pickup_timeout = RECIPE["PumpInit_Reload"]["pump_move_timeout"]
-    logger.info('Pickup until bubble')
-    pump1_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED_TITRANT * GV.PUMP_TITRANT_SCALING_FACTOR)
-    pump2_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED_SAMPLE * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    titrant_pump_fill_position = HW.PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE
+    sample_pump_fill_position = HW.PICKUP_UNTIL_BUBBLE_TARGET_TITRANT
+    samplepump_fill_speed = RECIPE["PumpInit_Reload"]["samplepump_fill_speed"]
+    titrantpump_fill_speed = RECIPE["PumpInit_Reload"]["titrantpump_fill_speed"]
+    #bubble_pickup_timeout = RECIPE["PumpInit_Reload"]["loadH2O2_timeout"]
+    
+    logger.info('Moving pumps to pickup positions')
+    pump1_speed = int(titrantpump_fill_speed * GV.PUMP_TITRANT_SCALING_FACTOR)
+    pump2_speed = int(samplepump_fill_speed * GV.PUMP_SAMPLE_SCALING_FACTOR)
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, pump1_speed)
     time.sleep(1)        
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
     time.sleep(1)        
-    GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, HW.PICKUP_UNTIL_BUBBLE_TARGET_TITRANT)
-    time.sleep(1)
-    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, HW.PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE)
-    time.sleep(1)
-    input1 = GV.labjack.getAIN(HW.BS1_IO_PORT)      #bubble sensor 1
-    input2 = GV.labjack.getAIN(HW.BS2_IO_PORT)      #bubble sensor 2
-    #check if the bubble semsor detect air or liquid
-    cur_state_1 = air_or_liquid(input1)
-    cur_state_2 = air_or_liquid(input2)
-    prev_state_1 = cur_state_1
-    prev_state_2 = cur_state_2
-    bubble_1_search = True
-    bubble_2_search = True    
-    start_time = time.time()
-    wait_time = 0
-    while (bubble_1_search  or bubble_2_search)  :
-        #bubble sensor 1 & Pump 1
-        input1 = GV.labjack.getAIN(HW.BS1_IO_PORT)      
-        cur_state_1 = air_or_liquid(input1)
-        if (cur_state_1 != prev_state_1):
-            bubble_1_search = False
-            #Stop  pump1
-            time.sleep(.5)
-            GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
-        time.sleep(.025)
+    GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, titrant_pump_fill_position)
+    time.sleep(.5)
+    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, sample_pump_fill_position)
+
+
+    pos1 = 0
+    pos2 = 0
+
+    while ( pos1 != titrant_pump_fill_position   or   pos2 != sample_pump_fill_position)  :
+        time.sleep(.5)
         pos1 =GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
-        #bubble sensor 2 and Pump 2
-        input2 = GV.labjack.getAIN(HW.BS2_IO_PORT)
-        cur_state_2 = air_or_liquid(input2)        
-        if (cur_state_2 != prev_state_2):
-            bubble_2_search = False
-            time.sleep(.5)
-            GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
-        time.sleep(.025)
+        time.sleep(.5)
         pos2 =GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
-        logger.info('\t\tBS1:{:.2f}  position:{},   BS2:{:.2f}  position:{}'.format(input1,pos1,input2, pos2))
-        wait_time = time.time() - start_time
-        if (wait_time >  bubble_pickup_timeout):
-            logger.error("\t\tpickup timeout. going to Pause state")
-            timeout_flag = True
-            time.sleep(.5)
-            GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
-            time.sleep(.5)            
-            GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
-            time.sleep(0.5)             
-            break
-
-    #Stop both pumps
-    # GV.pump1.stop(HW.TIRRANT_PUMP_ADDRESS)
-    # time.sleep(.5)
-    # GV.pump1.stop(HW.SAMPLE_PUMP_ADDRESS)
-    logger.info('\t\tBubble detection terminated')
-    #set pumps speeds to their defaults
-    pump1_speed = int(RECIPE["PumpInit_Reload"]["titrant_pump_speed"] * GV.PUMP_TITRANT_SCALING_FACTOR)
-    pump2_speed = int( RECIPE["PumpInit_Reload"]["sample_pump_speed"] * GV.PUMP_SAMPLE_SCALING_FACTOR)
-    time.sleep(0.5)
-    GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, pump1_speed)
-    time.sleep(0.5)
-    GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
-    time.sleep(0.5)
-
+        logger.info('\t\tPump 1 pos:{}/{},   Pump2 po:{}/{}'.format(pos1,titrant_pump_fill_position
+                                                                    , pos2, sample_pump_fill_position))
+        
+    logger.info('\t\tPumps in pickup positions')
     if (GV.PAUSE == True):
-        GV.next_E = 5
+        GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "going to Pause state"
         return 
     elif (GV.ERROR == True ):
-        GV.next_E = 6
+        GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = " going to ERROR state"
         return    
-    elif (timeout_flag == True):
-        GV.SM_TEXT_TO_DIAPLAY ="Pickup timeout.\n going to Pause state"
-        GV.PAUSE = True
-        GV.next_E = 5
     else:
-        GV.SM_TEXT_TO_DIAPLAY ="pump 1 to position XX\n""pump 2 to position XX"
+        GV.SM_TEXT_TO_DIAPLAY ="pump 1 in pickup  position\n""pump 2 to in pickup position"
         GV.next_E = 2
     
 
 def action5_2():   
-    #Send pumps to positions
-    titrant_target_raw =RECIPE['PumpInit_Reload']['TitrantPumpt_syringe_fill_volume']
-    sample_target_raw = RECIPE['PumpInit_Reload']['SamplePumpt_syringe_fill_volume']    
-    fill_pos_titrant = int(titrant_target_raw * GV.PUMP_TITRANT_SCALING_FACTOR )
-    fill_pos_sample = int( sample_target_raw * GV.PUMP_SAMPLE_SCALING_FACTOR )
-    logger.info("Target Titrant pump pos.   before scaling: {}, after scaling {}".format(titrant_target_raw,
-                                                                                        fill_pos_titrant) )
-    logger.info("Target Sample pump pos.   before scaling: {}, after scaling {}".format(sample_target_raw,
-                                                                                        fill_pos_sample) )
-    starting_pos_titrant = GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)  
-    time.sleep(0.5)
-    starting_pos_sample = GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)  
-    time.sleep(0.5)
-    target_pos_titrant = starting_pos_titrant + fill_pos_titrant
-    target_pos_sample = starting_pos_sample + fill_pos_sample
-    GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, target_pos_titrant)
-    time.sleep(.5)
-    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, target_pos_sample)
-    time.sleep(.5)               
-    # Wait until pumps reach targets
-    cur_pump_pos1 = 0
-    cur_pump_pos2 = 0
-    pump1_away_from_target = True
-    pump2_away_from_target = True
-    while(  pump1_away_from_target or pump2_away_from_target ):
-        cur_pump_pos1 = GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
-        pump1_away_from_target = (abs (cur_pump_pos1 - target_pos_titrant) > 5)
-        time.sleep(.5)
-        cur_pump_pos2 = GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)
-        pump2_away_from_target = (abs (cur_pump_pos2 - target_pos_sample) > 5)
-        time.sleep(.5)
-        logger.info("\t\tPump1 cur pos: {}, target: {},   pump2 cur pos: {},  target: {}".format(cur_pump_pos1,target_pos_titrant,
-                                                                                 cur_pump_pos2, target_pos_sample))
-    # Pumps are now in positions                                      
-        
     if (GV.PAUSE == True):
-        GV.next_E = 5
+        GV.next_E = 3
         GV.SM_TEXT_TO_DIAPLAY = "going to Pause state"
         return 
     elif (GV.ERROR == True):
-        GV.next_E = 6
+        GV.next_E = 4
         GV.SM_TEXT_TO_DIAPLAY = " going to ERROR state"
         return 
     else:
         GV.SM_TEXT_TO_DIAPLAY = "Pump 1 position \n" "Pump 2 to position\n ""  Waiting for pumps to reach positions..."
-        GV.next_E = 3
-
-
-def action5_3():
-    timeout = False
-    if (GV.PAUSE == True):
-        GV.next_E = 5
-        GV.SM_TEXT_TO_DIAPLAY = "going to Pause state"
-        return 
-    elif (GV.ERROR == True  or timeout==True):
-        GV.next_E = 6
-        GV.SM_TEXT_TO_DIAPLAY = " going to ERROR state"
-        return    
-    else:
-        GV.SM_TEXT_TO_DIAPLAY = "pumps in position"
-        GV.next_E = 4
-
-
-def action5_4():
-    if (GV.PAUSE == True):
-        GV.next_E = 5
-        GV.SM_TEXT_TO_DIAPLAY = "going to Pause state"
-        return 
-    elif (GV.ERROR == True):
-        GV.next_E = 6
-        GV.SM_TEXT_TO_DIAPLAY =" going to ERROR state"
-        return    
-    else:
-        # Turn of pumps active LEDs
-        GV.pump1_titrant_active_led    = False
-        GV.pump2_sample_active_led     = False
-        GV.SM_TEXT_TO_DIAPLAY = "-V1 to PumptoAir\n" "-V2 to PumptoAir"
         GV.next_E = 0
 
 
-def action5_5():
+def action5_3():
     if (GV.ERROR == True):
-        GV.next_E = 6
-        GV.SM_TEXT_TO_DIAPLAY = "S5,E5 -> action5_5\n" "   goint to S5/E6"
+        GV.next_E = 4
+        GV.SM_TEXT_TO_DIAPLAY = "S5,E3 -> action5_3\n" "   goint to S5/E4"
         return     
     else:
-        GV.SM_TEXT_TO_DIAPLAY ="S5,E2 -> action5_2 \n----> going to PAUSE state"
+        GV.SM_TEXT_TO_DIAPLAY ="S5,E3 -> action5_3 \n----> going to PAUSE state"
         GV.next_E = 0
         GV.prev_S = 5
         logger.debug("cur. state: 5, going to pause state.  GV.prevS={}".format(GV.prev_S))
     
 
-def action5_6():
-    GV.SM_TEXT_TO_DIAPLAY ="S5,E6 -> action5_6\n"
+def action5_4():
+    GV.SM_TEXT_TO_DIAPLAY ="S5,E4 -> action5_4\n"
     GV.next_E = 0
     GV.prev_S = 5
 
@@ -883,8 +772,8 @@ def action7_1():
     Done = True
     timeout = False
     # # Pumps to positions
-    # fill_pos_titrant =int( RECIPE['PumpInit_Reload']['TitrantPumpt_syringe_fill_volume'] * GV.PUMP_TITRANT_SCALING_FACTOR )
-    # fill_pos_sample =int( RECIPE['PumpInit_Reload']['SamplePumpt_syringe_fill_volume'] * GV.PUMP_SAMPLE_SCALING_FACTOR )
+    # fill_pos_titrant =int( RECIPE['PumpInit_Reload']['titrantpump_syringe_fill_volume'] * GV.PUMP_TITRANT_SCALING_FACTOR )
+    # fill_pos_sample =int( RECIPE['PumpInit_Reload']['samplepump_syringe_fill_volume'] * GV.PUMP_SAMPLE_SCALING_FACTOR )
     # starting_pos_titrant = GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)  
     # starting_pos_sample = GV.pump1.get_plunger_position(HW.SAMPLE_PUMP_ADDRESS)  
     # target_pos_titrant = starting_pos_titrant - fill_pos_titrant
