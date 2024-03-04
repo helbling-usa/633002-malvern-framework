@@ -528,9 +528,11 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             Next_State = int(S_next[0])    
             Next_action= statemachine.name() + '.'+ S_next[1]
             GV.cur_S = Next_State  
-            logger.info("next action: {} cur_S: {}".format( Next_action, Next_State)          )
+            logger.info("    ---> running: {}      next state: {}".format( Next_action, Next_State)          )
             eval('SM.'+Next_action+'()')
-            logger.info(GV.SM_TEXT_TO_DIAPLAY)
+            message = format_string(GV.SM_TEXT_TO_DIAPLAY)
+            logger.info(message)
+            # logger.info(GV.SM_TEXT_TO_DIAPLAY)
             self.t_status.delete("1.0", END)
             self.t_status.insert(END, GV.SM_TEXT_TO_DIAPLAY)
             Event = GV.next_E 
@@ -574,6 +576,14 @@ def is_float(element: any) -> bool:
         return True
     except ValueError:
         return False
+
+"""add 2 tabs to each line of the input string"""
+def format_string(str_in):
+    str_list = str_in.split('\n')
+    str_out =""
+    for row in str_list:
+        str_out +="\t\t"+row+"\n"
+    return str_out
 
 
 class UnaryClient(object):

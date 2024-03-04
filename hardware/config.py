@@ -46,16 +46,23 @@ TEC_ACCEPTABLE_TEMP_DIFF        = 1         # This is acceptable difference of c
                                             #  move to next state
 
 #------------------------------ Pumps Parameters --------------------------------------------------
-PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE   = 192000    # Target position when pickup until bubble (sample pump)
-PICKUP_UNTIL_BUBBLE_TARGET_TITRANT  = 384000    # Target position when pickup until bubble (titrant pump)
-DISPENSE_UNTIL_BUBBLE_TARGET        = 0         # Target position when pickup until bubble
-BUBBLE_DETECTION_PUMP_SPEED_SAMPLE  = 5         # speed of pump during bubble detection
-BUBBLE_DETECTION_PUMP_SPEED_TITRANT = 5         # speed of pump during bubble detection
-DEFAULT_PUMP_SPEEED                 = 1000      # speed of pump at start up
-SAMPLE_PUMP_VOLUM_2_STEP            = 9.6       # conversion ratio fro sample pump for full step mode
-SAMPLE_PUMP_VOLUM_2_MICROSTEP       = 76.8      # conversion ratio fro sample pump for full microstep mode
-TITRANT_PUMP_VOLUM_2_STEP           = 96        # conversion ratio fro titrant pump for full step mode
-TITRANT_PUMP_VOLUM_2_MICROSTEP      = 768       # conversion ratio fro titrant pump for full microstep mode
+PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE           = 192000    #  <--- to be deleted  Target position when pickup until bubble (sample pump)
+PICKUP_UNTIL_BUBBLE_TARGET_TITRANT          = 384000    #  <--- to be deleted  Target position when pickup until bubble (titrant pump)
+DISPENSE_UNTIL_BUBBLE_TARGET                = 0         #  <--- to be deleted  Target position when pickup until bubble
+DISPENSE_UNTIL_BUBBLE_SAMPLE                = 0         #  <--- to be deleted  Target position when pickup until bubble
+
+PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE_VOLLUME   = 2500      # --> will replace TML values above. Target volume position when pickup until bubble (sample pump)
+PICKUP_UNTIL_BUBBLE_TARGET_TITRANT_VILUME   = 500       # --> will replace TML values above. Target position when pickup until bubble (titrant pump)
+DISPENSE_UNTIL_BUBBLE_TARGET_VOLLUME        = 0         # --> will replace TML values above. Target position when pickup until bubble
+DISPENSE_UNTIL_BUBBLE_SAMPLE_VOLLUME        = 0         # --> will replace TML values above. Target position when pickup until bubble
+
+BUBBLE_DETECTION_PUMP_SPEED_SAMPLE          = 5         # speed of pump during bubble detection
+BUBBLE_DETECTION_PUMP_SPEED_TITRANT         = 5         # speed of pump during bubble detection
+DEFAULT_PUMP_SPEEED                         = 1000      # speed of pump at start up
+SAMPLE_PUMP_VOLUM_2_STEP                    = 9.6       # conversion ratio fro sample pump for full step mode
+SAMPLE_PUMP_VOLUM_2_MICROSTEP               = 76.8      # conversion ratio fro sample pump for full microstep mode
+TITRANT_PUMP_VOLUM_2_STEP                   = 96        # conversion ratio fro titrant pump for full step mode
+TITRANT_PUMP_VOLUM_2_MICROSTEP              = 768       # conversion ratio fro titrant pump for full microstep mode
 
 #------------------------------- Pumps/valves RS485 addresses -------------------------------------
 TIRRANT_PUMP_ADDRESS            = 1         #4way- Pump 1

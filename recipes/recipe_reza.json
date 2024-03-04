@@ -11,7 +11,7 @@
     },
     "PumpInit_Reload": 
     {
-        "enable": true,
+        "enable": false,
         "sample_pump_step": "micro step",
         "titrant_pump_step": "micro step",
         "titrant_pump_speed": 1000,
@@ -107,9 +107,9 @@
     },
     "DegasClean": 
     {
-        "enable": false,
-        "sample_pump_step": "full step",
-        "titrant_pump_step": "full step",
+        "enable": true,
+        "sample_pump_step": "micro step",
+        "titrant_pump_step": "micro step",
         "titrant_pump_speed": 150,
         "sample_pump_speed": 50,
         "valve_move_timeout": 60,        
@@ -117,8 +117,12 @@
         "detergentrinse_count": 1,
         "waterrinse_count": 1,		
         "meohrinse_count": 1,
-        "s4_volume":100,
-        "degascleanfluid_volume": 10
+        "s4_volume":1,
+        "degascleanfluid_volume": 1,
+        "s_port_volume": 1,
+        "t_Port_volume": 1,
+        "sp2_volume": 1,
+        "tp3_volume": 1
     },
     "SampleLineClean": 
     {
@@ -131,7 +135,11 @@
         "pump_move_timeout": 600, 
         "detergentrinse_count": 1,
         "waterrinse_count": 1,		
-        "meohrinse_count": 1
+        "meohrinse_count": 1,
+        "S_Port_Volume ": 2,
+        "T_Port_Volume": 2,
+        "SP2_Volume": 2,
+        "TP3_Volume":2
     },
 	"TitrantLineClean": 
     {
