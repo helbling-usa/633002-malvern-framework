@@ -116,7 +116,8 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         logger.info('\t\tInternal timer started')
 
 
-    def timerCallback_1(self):  
+    def timerCallback_1(self):
+        self.update_status_window()        
         self.check_next_button()
         self.update_experiment()
         self.update_valves()   
@@ -125,6 +126,12 @@ class run_SM_GUI(SM_GUI.SM_GUI):
         #-------- repeat the timer ----------------------------------------------
         self.timer = threading.Timer(.5, self.timerCallback_1)
         self.timer.start()
+
+
+    def update_status_window(self):
+        self.t_status.delete("1.0", END)
+        self.t_status.insert(END, GV.SM_TEXT_TO_DIAPLAY)
+    
 
 
     def check_next_button(self):
@@ -533,8 +540,8 @@ class run_SM_GUI(SM_GUI.SM_GUI):
             message = format_string(GV.SM_TEXT_TO_DIAPLAY)
             logger.info(message)
             # logger.info(GV.SM_TEXT_TO_DIAPLAY)
-            self.t_status.delete("1.0", END)
-            self.t_status.insert(END, GV.SM_TEXT_TO_DIAPLAY)
+            # self.t_status.delete("1.0", END)
+            # self.t_status.insert(END, GV.SM_TEXT_TO_DIAPLAY)
             Event = GV.next_E 
             self.t_cur_state.delete("1.0",END)
             self.t_cur_state.insert(END, statemachine.state_name[Next_State])            

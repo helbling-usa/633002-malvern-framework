@@ -79,7 +79,7 @@ def action0_0():
     time.sleep(1)
     GV.pump1.set_multiwayvalve(HW.TITRANT_CLEANING_ADDRESS,HW.VALVE9_P2)        
     time.sleep(1)
-    pump1_speed = int(RECIPE["Experiment"]["titrant_pump_speed"] * GV.PUMP_TITRANT_SCALING_FACTOR)
+    pump1_speed = int(RECIPE["Experiment"]["titrationpump_speed"] * GV.PUMP_TITRANT_SCALING_FACTOR)
     pump2_speed = int(RECIPE["Experiment"]["sample_pump_speed"] * GV.PUMP_SAMPLE_SCALING_FACTOR)
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, pump1_speed)
     time.sleep(1)
