@@ -19,8 +19,6 @@ RECIPE= {
         "valve_move_timeout": 60,
         "pump_init_timeout": 60,
         "pump_move_timeout": 60,  
-        "titrantpump_syringe_fill_volume": 1,
-        "samplepump_syringe_fill_volume": 1,
         "samplepump_fill_speed": 200,
         "titrantpump_fill_speed": 200
     },   
