@@ -1138,3 +1138,7 @@ ERROR:	Commumication error! 521467792
 2024-03-05 11:52:29,495:Lib.Pump:exception happened in pump!!
 2024-03-05 11:52:32,997:Lib.Pump:Error reading pump!!!
 2024-03-05 11:52:32,997:Lib.Pump:exception happened in pump!!
+2024-03-05 13:05:34,145:Lib.Pump:Error reading pump!!!
+2024-03-05 13:05:34,145:Lib.Pump:exception happened in pump!!
+2024-03-05 13:05:37,647:Lib.Pump:Error reading pump!!!
+2024-03-05 13:05:37,648:Lib.Pump:exception happened in pump!!

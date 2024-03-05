@@ -480,7 +480,8 @@ class run_SM_GUI(SM_GUI.SM_GUI):
                 info_str = info_str + str_new
         #Display SMs enable status in the status box
         self.t_status.delete("1.0", END)
-        self.t_status.insert(END, info_str)
+        GV.SM_TEXT_TO_DIAPLAY = info_str
+        self.t_status.insert(END, GV.SM_TEXT_TO_DIAPLAY )
 
 
     def b_start_recipe(self):

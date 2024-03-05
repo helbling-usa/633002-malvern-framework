@@ -55,7 +55,7 @@ def action0_0():
     GV.motors.set_POSOKLIM(1)    
     time.sleep(.5)
     GV.vertical_gantry_active_led = True
-    GV.SM_TEXT_TO_DIAPLAY ="  Homing Gantry Vertical"
+    GV.SM_TEXT_TO_DIAPLAY ="Homing Gantry Vertical"
     GV.next_E = 0    
 
 
@@ -65,8 +65,9 @@ def action1_0():
     ret_val = GV.motors.homing(HW.GANTRY_VER_AXIS_ID, homing_speed_ver)    
     if ret_val == False:
         GV.next_E = 4
-        GV.SM_TEXT_TO_DIAPLAY =  "  Homing Error!!!\n""going to Error state"
+        GV.SM_TEXT_TO_DIAPLAY =  "Homing Error!!!\n""going to Error state"
         return 
+    print('--------------homing is done')
     GV.vertical_gantry_homed_led = True
     GV.vertical_gantry_active_led = False    
     GV.SM_TEXT_TO_DIAPLAY =  "  Gantry Z Homing done\n" 

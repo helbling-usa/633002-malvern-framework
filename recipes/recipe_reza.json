@@ -1,7 +1,7 @@
 {
     "Startup": 
     {
-        "enable": false,
+        "enable": true,
         "gantry_move_speed": 20,
         "gantry_home_timeout": 500,   
         "gantry_homing_speed": 1,
@@ -11,7 +11,7 @@
     },
     "PumpInit_Reload": 
     {
-        "enable": true,
+        "enable": false,
         "sample_pump_step": "micro step",
         "titrant_pump_step": "micro step",
         "titrant_pump_speed": 1000,
