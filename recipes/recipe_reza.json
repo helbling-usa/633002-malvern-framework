@@ -11,7 +11,7 @@
     },
     "PumpInit_Reload": 
     {
-        "enable": false,
+        "enable": true,
         "sample_pump_step": "micro step",
         "titrant_pump_step": "micro step",
         "titrant_pump_speed": 1000,
@@ -22,7 +22,7 @@
         "titrantpump_syringe_fill_volume": 1,
         "samplepump_syringe_fill_volume": 1,
         "samplepump_fill_speed": 200,
-        "titrantpump_fill_speed": 300
+        "titrantpump_fill_speed": 100
     },   
     "Degas": 
     {
@@ -107,7 +107,7 @@
     },
     "DegasClean": 
     {
-        "enable": true,
+        "enable": false,
         "sample_pump_step": "micro step",
         "titrant_pump_step": "micro step",
         "titrant_pump_speed": 150,

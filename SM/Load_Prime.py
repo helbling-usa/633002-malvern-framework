@@ -542,7 +542,8 @@ def action6_1():
 
     pump1_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED_TITRANT * GV.PUMP_TITRANT_SCALING_FACTOR)
     pump2_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED_SAMPLE * GV.PUMP_SAMPLE_SCALING_FACTOR)
-
+    sample_pump_fill_position =  int(HW.PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE_VOLUME * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    titrant_pump_fill_position =  int(HW.PICKUP_UNTIL_BUBBLE_TARGET_TITRANT_VOLUME * GV.PUMP_TITRANT_SCALING_FACTOR)
     logger.info("Scale facotr  -->   target pump: {},  sample pump: {}".format(GV.PUMP_TITRANT_SCALING_FACTOR,
                                                                            GV.PUMP_SAMPLE_SCALING_FACTOR))
     logger.info('pickup speed: {}  and {}'.format(pump1_speed, pump2_speed))
@@ -550,10 +551,10 @@ def action6_1():
     time.sleep(1)        
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
     time.sleep(1)        
-    GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, HW.PICKUP_UNTIL_BUBBLE_TARGET_TITRANT)
-    time.sleep(1)
-    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, HW.PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE)
-    time.sleep(1)
+    GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, titrant_pump_fill_position)
+    time.sleep(0.5)
+    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, sample_pump_fill_position)
+    time.sleep(0.5)
     input1 = GV.labjack.getAIN(HW.BS3_IO_PORT)  #bubble sensor 3
     input2 = GV.labjack.getAIN(HW.BS4_IO_PORT)   #bubble snesor 4
     #check if the bubble semsor detect air or liquid
@@ -755,6 +756,9 @@ def action8_1():
 
     pump1_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED_TITRANT * GV.PUMP_TITRANT_SCALING_FACTOR)
     pump2_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED_SAMPLE * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    target_dispense_volume_sample =  int(HW.DISPENSE_UNTIL_BUBBLE_SAMPLE_VOLUME * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    target_dispense_volume_titrant =  int(HW.DISPENSE_UNTIL_BUBBLE_TITRANT_VOLUME * GV.PUMP_TITRANT_SCALING_FACTOR)
+
 
     logger.info("Scale facotr  -->   target pump: {},  sample pump: {}".format(GV.PUMP_TITRANT_SCALING_FACTOR,
                                                                            GV.PUMP_SAMPLE_SCALING_FACTOR))
@@ -763,9 +767,9 @@ def action8_1():
     time.sleep(1)        
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
     time.sleep(1)        
-    GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, HW.DISPENSE_UNTIL_BUBBLE_TARGET)
+    GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, target_dispense_volume_titrant)
     time.sleep(1)
-    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, HW.DISPENSE_UNTIL_BUBBLE_TARGET)
+    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, target_dispense_volume_sample)
     time.sleep(1)
     input1 = GV.labjack.getAIN(HW.BS1_IO_PORT)  #bubble sensor 1
     input2 = GV.labjack.getAIN(HW.BS2_IO_PORT)   #bubble snesor 2
@@ -972,6 +976,9 @@ def action10_1():
     logger.info('Dispense until bubble')
     pump1_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED_TITRANT * GV.PUMP_TITRANT_SCALING_FACTOR)
     pump2_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED_SAMPLE * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    target_dispense_volume_sample =  int(HW.DISPENSE_UNTIL_BUBBLE_SAMPLE_VOLUME * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    target_dispense_volume_titrant =  int(HW.DISPENSE_UNTIL_BUBBLE_TITRANT_VOLUME * GV.PUMP_TITRANT_SCALING_FACTOR)
+    
     logger.info("Scale facotr  -->   target pump: {},  sample pump: {}".format(GV.PUMP_TITRANT_SCALING_FACTOR,
                                                                            GV.PUMP_SAMPLE_SCALING_FACTOR))
     logger.info('pickup speed: {}  and {}'.format(pump1_speed, pump2_speed))
@@ -979,9 +986,9 @@ def action10_1():
     time.sleep(1)        
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
     time.sleep(1)        
-    GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, HW.DISPENSE_UNTIL_BUBBLE_TARGET)
+    GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, target_dispense_volume_titrant)
     time.sleep(1)
-    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, HW.DISPENSE_UNTIL_BUBBLE_TARGET)
+    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, target_dispense_volume_sample)
     time.sleep(1)
     input1 = GV.labjack.getAIN(HW.BS6_IO_PORT)  #bubble sensor 1
     input2 = GV.labjack.getAIN(HW.BS7_IO_PORT)   #bubble snesor 2

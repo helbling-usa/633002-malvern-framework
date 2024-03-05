@@ -290,7 +290,7 @@ def action1_1():
     timeout = False
     GV.pump1.set_pump_assignment(HW.TIRRANT_PUMP_ADDRESS)
     GV.pump1.pump_Zinit(HW.TIRRANT_PUMP_ADDRESS)
-    time.sleep(1)
+    time.sleep(5)
     GV.pump1.pump_Zinit(HW.SAMPLE_PUMP_ADDRESS)    
     time.sleep(10)
     #Turn on the home LEDs for both pumps
@@ -509,7 +509,7 @@ def action4_0():
         return 
     else:
         str1 = "  -V1 to PumptoLine\n" "  -V3 to PumptoLine\n""  -V5 to Reservoirs\n" "  -V9 to Water\n"
-        str1 = str1 +"  -V6 to V7\n" "  -V2 to PumptoLine\n" "  -V4 to PumptoLine\n" "  -V7 to Reservoirs\n" "  -V8 to Water"
+        str1 = str1 +"  -V2 to PumptoLine\n" "  -V4 to PumptoLine\n" "  -V7 to Reservoirs\n" "  -V8 to Water"
         GV.SM_TEXT_TO_DIAPLAY = str1
         GV.next_E = 1
 
@@ -519,7 +519,7 @@ def action4_1():
     GV.VALVE_3 = "Pump to LIne"
     GV.VALVE_5 = "Reservoirs"
     GV.VALVE_9 = "Water"
-    GV.VALVE_6 = "V7"
+    # GV.VALVE_6 = "V7"
     GV.VALVE_2 = "Pump to Line"
     GV.VALVE_4 = "Pump to Line"
     GV.VALVE_7 = "Reservoirs"
@@ -607,12 +607,13 @@ def action5_0():
 
 
 def action5_1():
-    titrant_pump_fill_position = HW.PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE
-    sample_pump_fill_position = HW.PICKUP_UNTIL_BUBBLE_TARGET_TITRANT
+    # sample_pump_fill_position = HW.PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE
+    sample_pump_fill_position =  int(HW.PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE_VOLUME * GV.PUMP_SAMPLE_SCALING_FACTOR)    
+    # titrant_pump_fill_position = HW.PICKUP_UNTIL_BUBBLE_TARGET_TITRANT
+    titrant_pump_fill_position =  int(HW.PICKUP_UNTIL_BUBBLE_TARGET_TITRANT_VOLUME * GV.PUMP_TITRANT_SCALING_FACTOR)
     samplepump_fill_speed = RECIPE["PumpInit_Reload"]["samplepump_fill_speed"]
     titrantpump_fill_speed = RECIPE["PumpInit_Reload"]["titrantpump_fill_speed"]
-    #bubble_pickup_timeout = RECIPE["PumpInit_Reload"]["loadH2O2_timeout"]
-    
+    #bubble_pickup_timeout = RECIPE["PumpInit_Reload"]["loadH2O2_timeout"]    
     logger.info('Moving pumps to pickup positions')
     pump1_speed = int(titrantpump_fill_speed * GV.PUMP_TITRANT_SCALING_FACTOR)
     pump2_speed = int(samplepump_fill_speed * GV.PUMP_SAMPLE_SCALING_FACTOR)
@@ -620,14 +621,13 @@ def action5_1():
     time.sleep(1)        
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
     time.sleep(1)        
+    # print("pump1 target:", titrant_pump_fill_position, "  pump1 speed:", pump1_speed)
+    # print("pump2 target:", sample_pump_fill_position, "  pump2 speed:", pump2_speed)
     GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, titrant_pump_fill_position)
-    time.sleep(.5)
+    time.sleep(1)
     GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, sample_pump_fill_position)
-
-
     pos1 = 0
     pos2 = 0
-
     while ( pos1 != titrant_pump_fill_position   or   pos2 != sample_pump_fill_position)  :
         time.sleep(.5)
         pos1 =GV.pump1.get_plunger_position(HW.TIRRANT_PUMP_ADDRESS)
@@ -1026,14 +1026,17 @@ def action10_1():
     logger.info('Pickup until bubble')
     pump1_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED_TITRANT * GV.PUMP_TITRANT_SCALING_FACTOR)
     pump2_speed = int(HW.BUBBLE_DETECTION_PUMP_SPEED_SAMPLE * GV.PUMP_SAMPLE_SCALING_FACTOR)
-
+    # titrant_pump_fill_position = HW.PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE
+    sample_pump_fill_position =  int(HW.PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE_VOLUME * GV.PUMP_SAMPLE_SCALING_FACTOR)
+    # titrant_pump_fill_position = HW.PICKUP_UNTIL_BUBBLE_TARGET_TITRANT
+    titrant_pump_fill_position =  int(HW.PICKUP_UNTIL_BUBBLE_TARGET_TITRANT_VOLUME * GV.PUMP_TITRANT_SCALING_FACTOR)
     GV.pump1.set_speed(HW.TIRRANT_PUMP_ADDRESS, pump1_speed)
     time.sleep(1)        
     GV.pump1.set_speed(HW.SAMPLE_PUMP_ADDRESS, pump2_speed)
     time.sleep(1)        
-    GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, HW.PICKUP_UNTIL_BUBBLE_TARGET_TITRANT)
+    GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, titrant_pump_fill_position)
     time.sleep(1)
-    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, HW.PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE)
+    GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, sample_pump_fill_position)
     time.sleep(1)
     input1 = GV.labjack.getAIN(HW.BS3_IO_PORT)   #bubble sensor 3
     input2 = GV.labjack.getAIN(HW.BS4_IO_PORT)   #bubble sensor 4

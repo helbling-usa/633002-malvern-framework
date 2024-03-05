@@ -46,15 +46,16 @@ TEC_ACCEPTABLE_TEMP_DIFF        = 1         # This is acceptable difference of c
                                             #  move to next state
 
 #------------------------------ Pumps Parameters --------------------------------------------------
-PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE           = 192000    #  <--- to be deleted  Target position when pickup until bubble (sample pump)
-PICKUP_UNTIL_BUBBLE_TARGET_TITRANT          = 384000    #  <--- to be deleted  Target position when pickup until bubble (titrant pump)
-DISPENSE_UNTIL_BUBBLE_TARGET                = 0         #  <--- to be deleted  Target position when pickup until bubble
-DISPENSE_UNTIL_BUBBLE_SAMPLE                = 0         #  <--- to be deleted  Target position when pickup until bubble
+# PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE           = 192000    #  <--- to be deleted  Target position when pickup until bubble (sample pump)
+# PICKUP_UNTIL_BUBBLE_TARGET_TITRANT          = 384000    #  <--- to be deleted  Target position when pickup until bubble (titrant pump)
+# DISPENSE_UNTIL_BUBBLE_TARGET                = 0         #  <--- to be deleted  Target position when pickup until bubble
+# DISPENSE_UNTIL_BUBBLE_SAMPLE                = 0         #  <--- to be deleted  Target position when pickup until bubble
 
-PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE_VOLLUME   = 2500      # --> will replace TML values above. Target volume position when pickup until bubble (sample pump)
-PICKUP_UNTIL_BUBBLE_TARGET_TITRANT_VILUME   = 500       # --> will replace TML values above. Target position when pickup until bubble (titrant pump)
-DISPENSE_UNTIL_BUBBLE_TARGET_VOLLUME        = 0         # --> will replace TML values above. Target position when pickup until bubble
-DISPENSE_UNTIL_BUBBLE_SAMPLE_VOLLUME        = 0         # --> will replace TML values above. Target position when pickup until bubble
+PICKUP_UNTIL_BUBBLE_TARGET_SAMPLE_VOLUME    = 2500      # Target volume position when pickup until bubble (sample pump)
+PICKUP_UNTIL_BUBBLE_TARGET_TITRANT_VOLUME   = 500       # Target position when pickup until bubble (titrant pump)
+DISPENSE_UNTIL_BUBBLE_SAMPLE_VOLUME         = 0         # Target position when pickup until bubble (SAMPLE)
+DISPENSE_UNTIL_BUBBLE_TITRANT_VOLUME        = 0         # Target position when pickup until bubble (TITRANT)
+
 
 BUBBLE_DETECTION_PUMP_SPEED_SAMPLE          = 5         # speed of pump during bubble detection
 BUBBLE_DETECTION_PUMP_SPEED_TITRANT         = 5         # speed of pump during bubble detection
