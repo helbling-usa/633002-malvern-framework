@@ -73,7 +73,7 @@ def action1_1():
     high_position = RECIPE["GantryReturn"]["vertical_base_position"]    
     GV.motors.set_POSOKLIM(1)
     next_pos = int(high_position / HW.TML_LENGTH_2_MM_VER )
-    move_speed = RECIPE['GantryReturn']['gantry_move_speed'] / HW.TML_SPEED_2_MM_PER_SEC_VER
+    move_speed = RECIPE['GantryReturn']['gantry_move_speed_ver'] / HW.TML_SPEED_2_MM_PER_SEC_VER
     GV.motors.move_absolute_position(next_pos, move_speed, HW.GANTRY_VER_ACCELERATION)
     
     cur_motor_pos= GV.motors.read_actual_position()
@@ -146,7 +146,7 @@ def action2_1():
     v_position = RECIPE["GantryReturn"]["horizontal_base_position"]
     GV.motors.set_POSOKLIM(1)
     next_pos = int(v_position / HW.TML_LENGTH_2_MM_HOR )
-    move_speed = RECIPE['GantryReturn']['gantry_move_speed'] / HW.TML_SPEED_2_MM_PER_SEC_VER
+    move_speed = RECIPE['GantryReturn']['gantry_move_speed_hor'] / HW.TML_SPEED_2_MM_PER_SEC_HOR
     GV.motors.move_absolute_position(next_pos, move_speed, HW.GANTRY_HOR_ACCELERATION)
 
     cur_motor_pos= GV.motors.read_actual_position()

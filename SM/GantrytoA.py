@@ -66,7 +66,7 @@ def action1_1():
     high_position = RECIPE["GantrytoA"]["vertical_high_position"]    
     GV.motors.set_POSOKLIM(1)
     next_pos = int(high_position / HW.TML_LENGTH_2_MM_VER )
-    move_speed = RECIPE['GantrytoA']['gantry_move_speed'] / HW.TML_SPEED_2_MM_PER_SEC_VER
+    move_speed = RECIPE['GantrytoA']['gantry_move_speed_ver'] / HW.TML_SPEED_2_MM_PER_SEC_VER
     GV.motors.move_absolute_position(next_pos, move_speed, HW.GANTRY_VER_ACCELERATION)
     cur_motor_pos= GV.motors.read_actual_position()
     while (abs(cur_motor_pos - next_pos) > 10):
@@ -138,7 +138,7 @@ def action2_1():
     v_position = RECIPE["GantrytoA"]["horizontal_cellfill_position"]
     GV.motors.set_POSOKLIM(1)
     next_pos = int(v_position / HW.TML_LENGTH_2_MM_HOR )
-    move_speed = RECIPE['GantrytoA']['gantry_move_speed']  / HW.TML_SPEED_2_MM_PER_SEC_VER
+    move_speed = RECIPE['GantrytoA']['gantry_move_speed_hor']  / HW.TML_SPEED_2_MM_PER_SEC_HOR
     GV.motors.move_absolute_position(next_pos, move_speed, HW.GANTRY_HOR_ACCELERATION)
 
     cur_motor_pos= GV.motors.read_actual_position()
@@ -214,7 +214,7 @@ def action3_1():
     
     GV.motors.set_POSOKLIM(1)
     next_pos = int(h_position / HW.TML_LENGTH_2_MM_VER )
-    move_speed = RECIPE['GantrytoA']['gantry_move_speed']  / HW.TML_SPEED_2_MM_PER_SEC_VER
+    move_speed = RECIPE['GantrytoA']['gantry_move_speed_ver']  / HW.TML_SPEED_2_MM_PER_SEC_VER
     GV.motors.move_absolute_position(next_pos, move_speed, HW.GANTRY_VER_ACCELERATION)
 
     cur_motor_pos= GV.motors.read_actual_position()
