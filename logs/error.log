@@ -1142,3 +1142,32 @@ ERROR:	Commumication error! 521467792
 2024-03-05 13:05:34,145:Lib.Pump:exception happened in pump!!
 2024-03-05 13:05:37,647:Lib.Pump:Error reading pump!!!
 2024-03-05 13:05:37,648:Lib.Pump:exception happened in pump!!
+2024-03-06 09:23:08,913:Lib.Pump:Error reading pump!!!
+2024-03-06 09:23:08,919:Lib.Pump:exception happened in pump!!
+2024-03-06 09:23:12,422:Lib.Pump:Error reading pump!!!
+2024-03-06 09:23:12,422:Lib.Pump:exception happened in pump!!
+2024-03-06 09:26:05,965:Lib.Pump:Error reading pump!!!
+2024-03-06 09:26:05,966:Lib.Pump:exception happened in pump!!
+2024-03-06 09:26:09,468:Lib.Pump:Error reading pump!!!
+2024-03-06 09:26:09,469:Lib.Pump:exception happened in pump!!
+2024-03-06 09:26:28,572:Lib.Pump:Error reading pump!!!
+2024-03-06 09:26:28,573:Lib.Pump:exception happened in pump!!
+2024-03-06 09:28:22,855:Lib.Pump:Error reading pump!!!
+2024-03-06 09:28:22,855:Lib.Pump:exception happened in pump!!
+2024-03-06 09:28:26,357:Lib.Pump:Error reading pump!!!
+2024-03-06 09:28:26,357:Lib.Pump:exception happened in pump!!
+ERROR:		pickup timeout. going to Pause state
+2024-03-07 11:24:14,262:Lib.Pump:Error reading pump!!!
+2024-03-07 11:24:14,268:Lib.Pump:exception happened in pump!!
+2024-03-07 11:24:18,270:Lib.Pump:Error reading pump!!!
+2024-03-07 11:24:18,270:Lib.Pump:exception happened in pump!!
+2024-03-07 11:25:55,845:Lib.Pump:Error reading pump!!!
+2024-03-07 11:25:55,847:Lib.Pump:exception happened in pump!!
+2024-03-07 11:25:59,849:Lib.Pump:Error reading pump!!!
+2024-03-07 11:25:59,849:Lib.Pump:exception happened in pump!!
+2024-03-07 11:27:01,518:Lib.Pump:Error reading pump!!!
+2024-03-07 11:27:01,519:Lib.Pump:exception happened in pump!!
+2024-03-07 11:29:13,321:Lib.Pump:Error reading pump!!!
+2024-03-07 11:29:13,322:Lib.Pump:exception happened in pump!!
+2024-03-07 11:29:17,323:Lib.Pump:Error reading pump!!!
+2024-03-07 11:29:17,324:Lib.Pump:exception happened in pump!!

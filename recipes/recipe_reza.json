@@ -65,7 +65,7 @@
     },
     "Experiment": 
     {
-        "enable": false,
+        "enable": true,
         "sample_pump_step": "micro step",
         "titrant_pump_step": "micro step",
         "sample_pump_speed": 200,

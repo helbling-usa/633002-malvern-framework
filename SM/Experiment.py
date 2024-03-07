@@ -68,8 +68,9 @@ def action0_0():
         str1 = 'pump 2: micro step\n'
         GV.PUMP_TITRANT_SCALING_FACTOR = HW.TITRANT_PUMP_VOLUM_2_MICROSTEP
         GV.pump1.set_microstep_position(HW.TIRRANT_PUMP_ADDRESS,2)
-    logger.info("Sample pump scale facotr:{}".format(str0))
-    logger.info("Titranst pump scale facotr:{}".format(str1))
+    time.sleep(0.5)        
+    logger.info("Sample pump scale facotr in {} is :{}".format(str0, GV.PUMP_SAMPLE_SCALING_FACTOR))
+    logger.info("Titrant pump scale facotr in {} is :{}".format(str1, GV.PUMP_TITRANT_SCALING_FACTOR))
 
     GV.pump1.set_valve(HW.TIRRANT_PUMP_ADDRESS, HW.VALVE1_P2)
     time.sleep(1)
@@ -365,10 +366,10 @@ def action4_0():
         GV.SM_TEXT_TO_DIAPLAY = "S4,E0 -> action4_0\n" "Prepare to go to ERROR State"
         return 
     
-    dose_volume = RECIPE["Experiment"]["dose_volume"]
+    dose_volume_raw = RECIPE["Experiment"]["dose_volume"]
     #pump 1 to position xxx
     GV.next_E = 1    
-    GV.SM_TEXT_TO_DIAPLAY ="Pump 1 to position {}".format(dose_volume)
+    GV.SM_TEXT_TO_DIAPLAY ="Pump 1 to position {}".format(dose_volume_raw)
 
 def action4_1():
     if (GV.PAUSE == True):
@@ -380,11 +381,14 @@ def action4_1():
         GV.SM_TEXT_TO_DIAPLAY = "S4,E1 -> action4_1\n" "Prepare to go to GV.ERROR State"
         return 
         
-    dose_volume = RECIPE["Experiment"]["dose_volume"]
-    GV.DOSE_VOLUME = dose_volume        # to update the GUI experiment
+    dose_volume_raw = RECIPE["Experiment"]["dose_volume"]
+    GV.DOSE_VOLUME = dose_volume_raw        # to update the GUI experiment
+    dose_volume = int(dose_volume_raw * GV.PUMP_TITRANT_SCALING_FACTOR)
     pump_address1 = HW.TIRRANT_PUMP_ADDRESS
     pump_pos1 = GV.pump1.get_plunger_position(pump_address1)
     next_pos1 =  pump_pos1 - dose_volume   #it's a dispense motion
+    if next_pos1 < 0:
+        next_pos1 = 0
     time.sleep(1)
     GV.pump1.set_pos_absolute(pump_address1, next_pos1)
     time.sleep(1)

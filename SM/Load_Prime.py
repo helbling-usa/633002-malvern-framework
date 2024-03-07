@@ -363,6 +363,7 @@ def action4_0():
 def action4_1():    
     p1_target_pos = 0
     p2_target_pos = 0
+    time.sleep(1)
     GV.pump1.set_pos_absolute(HW.TIRRANT_PUMP_ADDRESS, p1_target_pos)
     time.sleep(1)
     GV.pump1.set_pos_absolute(HW.SAMPLE_PUMP_ADDRESS, p2_target_pos)

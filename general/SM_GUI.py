@@ -39,7 +39,7 @@ class SM_GUI():
 
       def set_main_window(self):
             # self.root.geometry("1200x800+50+50") 
-            self.root.title("EXPERIMENT RUN MODE (ver x.1.13.1)") 
+            self.root.title("EXPERIMENT RUN MODE (ver x.1.13.3)") 
             self.root.resizable(False, False)
             # self.root.overrideredirect(True)
             window_height = 800
