@@ -1175,3 +1175,11 @@ ERROR:		pickup timeout. going to Pause state
 2024-03-07 12:25:05,512:Lib.Pump:exception happened in pump!!
 2024-03-07 12:25:09,514:Lib.Pump:Error reading pump!!!
 2024-03-07 12:25:09,515:Lib.Pump:exception happened in pump!!
+2024-03-11 15:00:35,076:Lib.Pump:Error reading pump!!!
+2024-03-11 15:00:35,080:Lib.Pump:exception happened in pump!!
+2024-03-11 15:00:39,082:Lib.Pump:Error reading pump!!!
+2024-03-11 15:00:39,083:Lib.Pump:exception happened in pump!!
+2024-03-11 15:01:46,679:Lib.Pump:Error reading pump!!!
+2024-03-11 15:01:46,680:Lib.Pump:exception happened in pump!!
+2024-03-11 15:01:50,682:Lib.Pump:Error reading pump!!!
+2024-03-11 15:01:50,682:Lib.Pump:exception happened in pump!!
