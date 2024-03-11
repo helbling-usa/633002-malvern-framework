@@ -58,7 +58,7 @@ def action1_1():
     GV.motors.select_axis(HW.GANTRY_VER_AXIS_ID)
     # cur_motor_pos= GV.motors.read_actual_position()    
     high_position = RECIPE["GantrytoB"]["vertical_high_position"]    
-    GV.motors.set_POSOKLIM(1)
+    GV.motors.set_POSOKLIM(3)
     abs_pos_tml = int(high_position / HW.TML_LENGTH_2_MM_VER )
     next_pos = abs_pos_tml  #+ cur_motor_pos
     move_speed = RECIPE['GantrytoB']['gantry_move_speed_ver'] / HW.TML_SPEED_2_MM_PER_SEC_VER
@@ -135,7 +135,7 @@ def action2_1():
     # cur_motor_pos= GV.motors.read_actual_position()
     v_position = RECIPE["GantrytoB"]["horizontal_titration_position"]
     
-    GV.motors.set_POSOKLIM(1)
+    GV.motors.set_POSOKLIM(3)
     abs_pos_tml = int(v_position / HW.TML_LENGTH_2_MM_HOR )
     move_speed = RECIPE['GantrytoB']['gantry_move_speed_hor'] / HW.TML_SPEED_2_MM_PER_SEC_HOR
     next_pos = abs_pos_tml   #+ cur_motor_pos
@@ -211,7 +211,7 @@ def action3_1():
     GV.motors.select_axis(HW.GANTRY_VER_AXIS_ID)
     # cur_motor_pos= GV.motors.read_actual_position()    
     low_position = RECIPE["GantrytoB"]["vertical_titration_position"]    
-    GV.motors.set_POSOKLIM(1)
+    GV.motors.set_POSOKLIM(3)
     abs_pos_tml = int(low_position / HW.TML_LENGTH_2_MM_VER )
     next_pos =  abs_pos_tml #- abs_pos_tml
     move_speed = RECIPE['GantrytoB']['gantry_move_speed_ver'] / HW.TML_SPEED_2_MM_PER_SEC_VER

@@ -203,7 +203,7 @@ def action2_0():
         equi_signal_start_time = time.time()
         logger.info("\tWaiting for Equlibrium Signal")
         str1 = "Waiting for  equilibrium signal..." 
-        mixing_speed = RECIPE["Experiment"]["mixing_speed"] / HW.RPM_2_TML_SPEED
+        mixing_speed = RECIPE["Experiment"]["mixing_speed"] * HW.RPM_2_TML_SPEED
         GV.motors.select_axis(HW.MIXER_AXIS_ID)
         acceleration = 1        # mixing motor acceleration
         GV.motors.set_speed(mixing_speed,acceleration)

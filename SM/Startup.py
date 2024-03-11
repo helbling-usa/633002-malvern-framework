@@ -48,11 +48,11 @@ def action0_0():
     AXIS_ID_03 = HW.GANTRY_VER_AXIS_ID
     GV.motors.select_axis(AXIS_ID_03)    
     GV.motors.set_position() 
-    GV.motors.set_POSOKLIM(1)    
+    GV.motors.set_POSOKLIM(3)    
     time.sleep(.5)
     GV.motors.select_axis(AXIS_ID_02)    
     GV.motors.set_position() 
-    GV.motors.set_POSOKLIM(1)    
+    GV.motors.set_POSOKLIM(3)    
     time.sleep(.5)
     GV.vertical_gantry_active_led = True
     GV.SM_TEXT_TO_DIAPLAY ="Homing Gantry Vertical"
@@ -205,7 +205,7 @@ def action3_0():
     #check if dose signal is receved 
     fill_pos = RECIPE['Startup']['horizontal_cellfill_position']
     GV.motors.select_axis(HW.GANTRY_HOR_AXIS_ID)
-    GV.motors.set_POSOKLIM(1)
+    GV.motors.set_POSOKLIM(3)
     abs_pos_tml = int(fill_pos / HW.TML_LENGTH_2_MM_HOR )
     # print("=============>",fill_pos, ' = ', abs_pos_tml)    
     move_speed = RECIPE['Startup']['gantry_move_speed_hor'] / HW.TML_SPEED_2_MM_PER_SEC_HOR
@@ -295,7 +295,7 @@ def action4_0():
 def action4_1():
     fill_pos = RECIPE['Startup']['vertical_cellfill_position']    
     GV.motors.select_axis(HW.GANTRY_VER_AXIS_ID)
-    GV.motors.set_POSOKLIM(1)
+    GV.motors.set_POSOKLIM(3)
     abs_pos_tml = int(fill_pos / HW.TML_LENGTH_2_MM_VER )
     # print("=============>",fill_pos, ' = ', abs_pos_tml)
     move_speed = RECIPE['Startup']['gantry_move_speed_ver']  / HW.TML_SPEED_2_MM_PER_SEC_VER
