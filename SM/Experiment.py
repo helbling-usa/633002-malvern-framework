@@ -207,7 +207,7 @@ def action2_0():
         GV.motors.select_axis(HW.MIXER_AXIS_ID)
         acceleration = 1        # mixing motor acceleration
         GV.motors.set_speed(mixing_speed,acceleration)
-        GV.MIXING_SPEED = mixing_speed                  #to update the GUI experiment    
+        GV.MIXING_SPEED = mixing_speed  / HW.RPM_2_TML_SPEED   #to update the GUI experiment    
     else:        
         GV.next_E = 0
         str1 = "Mixing signal Not Ready\n" "Waiting for mixing signal"
