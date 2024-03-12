@@ -71,15 +71,15 @@ def action0_0():
     time.sleep(0.5)        
     logger.info("Sample pump scale facotr in {} is :{}".format(str0, GV.PUMP_SAMPLE_SCALING_FACTOR))
     logger.info("Titrant pump scale facotr in {} is :{}".format(str1, GV.PUMP_TITRANT_SCALING_FACTOR))
-    str1  = "SM initialized ..." "V1 to Line to Pump\n" "V3 to Titrant Line\n" 
-    str1 = str1 + "V5 to Titrant Port\n" " V9 to Air\n" 
+    str1  = "SM initialized ...\n" "V1 to Pump to Line\n" "V3 to Line to Pump\n" 
+    str1 = str1 + "V5 to Titrant Cannula\n" " V9 to Air\n" 
     GV.VALVE_1 = "Line to Pump"
-    GV.VALVE_3 = "Titrant Line"
+    GV.VALVE_3 = "Line to Pump"
     # GV.VALVE_4 = "Titrant Port"
     GV.VALVE_5 = "Titrant Cannula"
     GV.VALVE_9 = "V9 to Air"
     GV.SM_TEXT_TO_DIAPLAY = str1
-    GV.next_E = 0    
+    GV.next_E = 0 
 
 
 #--------------
